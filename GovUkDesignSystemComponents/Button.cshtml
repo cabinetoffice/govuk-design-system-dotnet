@@ -1,0 +1,58 @@
+﻿@model GovUkDesignSystem.GovUkDesignSystemComponents.ButtonViewModel
+
+@{
+    string classNames =
+        $"govuk-button "
+        + $"{Model.Classes}"
+        + (Model.Disabled ? "govuk-button--disabled" : "")
+        + (Model.IsStartButton ? "govuk-button--start" : "");
+}
+
+@{
+    if (Model.Element?.ToLower() == "input")
+    {
+        <input class="@(classNames)"
+               data-module="govuk-button"
+               value="@(Model.Text)"
+               type="@(Model.Type ?? "submit")"
+               name="@(Model.Name)"
+               @(Html.Raw(Model.Disabled ? "disabled" : ""))
+               aria-disabled="@(Model.Disabled ? "true" : "false")"
+               data-prevent-double-click="@(Model.PreventDoubleClick ? "true" : "false")"
+               @(Html.Raw(Model.Attributes != null ? string.Join(" ", Model.Attributes.Select(a => a.Key + "=\"" + a.Value + "\"")) : ""))/>
+    }
+    else if (Model.Href != null)
+    {
+        <a class="@(classNames)"
+           data-module="govuk-button"
+           href="@(Model.Href ?? "#")"
+           role="button"
+           draggable="false">
+            @*This doesn't work yet - The GenderPayGap.WebUI.Classes.TagHelpers.AnchorTagHelper doesn't currently allow arbitrary attributes*@
+            @*@(Html.Raw( Model.Attributes != null ? string.Join(" ", Model.Attributes.Select(a => a.Key + "=\"" + a.Value + "\"")) : "" ))*@
+            @{ await Html.RenderPartialAsync("/GovUkDesignSystemComponents/SubComponents/HtmlText.cshtml", Model); }
+        </a>
+    }
+    else
+    {
+        <button class="@(classNames)"
+                data-module="govuk-button"
+                value="@(Model.Value)"
+                type="@(Model.Type)"
+                name="@(Model.Name)"
+                @(Html.Raw(Model.Disabled ? "disabled" : ""))
+                aria-disabled="@(Model.Disabled ? "true" : "false")"
+                data-prevent-double-click="@(Model.PreventDoubleClick ? "true" : "false")"
+                @(Html.Raw(Model.Attributes != null ? string.Join(" ", Model.Attributes.Select(a => a.Key + "=\"" + a.Value + "\"")) : ""))>
+            @{ await Html.RenderPartialAsync("/GovUkDesignSystemComponents/SubComponents/HtmlText.cshtml", Model); }
+            @{
+                if (Model.IsStartButton)
+                {
+                    <svg class="govuk-button__start-icon" xmlns="http://www.w3.org/2000/svg" width="17.5" height="19" viewBox="0 0 33 40" role="presentation" focusable="false">
+                        <path fill="currentColor" d="M0 0h13l20 20-20 20H0l20-20z"/>
+                    </svg>
+                }
+            }
+        </button>
+    }
+}

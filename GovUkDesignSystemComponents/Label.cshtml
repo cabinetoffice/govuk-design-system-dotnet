@@ -1,0 +1,23 @@
+﻿@using GovUkDesignSystem.GovUkDesignSystemComponents.SubComponents
+@model GovUkDesignSystem.GovUkDesignSystemComponents.LabelViewModel
+
+@{
+    Func<object, object> componentAsHtml =
+        @<text>
+            <label class="govuk-label @( Model.Classes)"
+                   @( Html.Raw(Model.Attributes != null ? string.Join(" ", Model.Attributes.Select(a => a.Key + "=\"" + a.Value + "\"")) : ""))
+                   for=@( Model.For)>
+                @{ await Html.RenderPartialAsync("/GovUkDesignSystemComponents/SubComponents/HtmlText.cshtml", Model); }
+            </label>
+         </text>;
+}
+
+@{ await Html.RenderPartialAsync(
+       "/GovUkDesignSystemComponents/SubComponents/PageHeadingHtml.cshtml",
+       new PageHeadingHtml
+       {
+           ComponentAsHtml = componentAsHtml,
+           IsPageHeading = Model.IsPageHeading
+       }
+    );
+}

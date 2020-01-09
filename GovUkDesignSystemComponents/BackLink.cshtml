@@ -1,0 +1,38 @@
+﻿@model GovUkDesignSystem.GovUkDesignSystemComponents.BackLinkViewModel
+
+@{
+    bool hrefIsNotEmpty = !string.IsNullOrEmpty(Model.Href);
+
+    // We show the link if (either):
+    // - The HREF has a value
+    // or
+    // - We are overriding the link with a javascript call to window.location.back()
+    // If neither of these is true, the the link cannot work, so we don't show it
+    bool showLink = hrefIsNotEmpty || Model.OverrideWithJavascript;
+}
+@if (showLink)
+{
+    <a href="@(Model.Href ?? "#")" class="govuk-back-link @(Model.Classes)" id="back-link">
+        @*This doesn't work yet - The GenderPayGap.WebUI.Classes.TagHelpers.AnchorTagHelper doesn't currently allow arbitrary attributes*@
+        @*@(Html.Raw( Model.Attributes != null ? string.Join(" ", Model.Attributes.Select(a => a.Key + "=\"" + a.Value + "\"")) : "" ))*@
+
+        @{
+            if (Model.Html == null && Model.Text == null)
+            {
+                Model.Text = "Back";
+            }
+            await Html.RenderPartialAsync("/GovUkDesignSystemComponents/SubComponents/HtmlText.cshtml", Model);
+        }
+    </a>
+}
+@if (Model.OverrideWithJavascript)
+{
+    <script>
+        document.getElementById('back-link')
+            .addEventListener('click',
+                function(event) {
+                    event.preventDefault();
+                    window.history.back();
+                });
+    </script>
+}

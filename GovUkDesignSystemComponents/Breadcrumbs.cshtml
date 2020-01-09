@@ -1,0 +1,28 @@
+﻿@using GovUkDesignSystem.GovUkDesignSystemComponents
+@model GovUkDesignSystem.GovUkDesignSystemComponents.BreadcrumbsViewModel
+
+<div class="govuk-breadcrumbs @(Model.Classes)"
+     @(Html.Raw( Model.Attributes != null ? string.Join(" ", Model.Attributes.Select(a => a.Key + "=\"" + a.Value + "\"")) : "" ))>
+    <ol class="govuk-breadcrumbs__list">
+        @foreach (CrumbViewModel crumb in Model.Crumbs)
+        {
+            @if (!string.IsNullOrEmpty(crumb.Href))
+            {
+                <li class="govuk-breadcrumbs__list-item">
+                    <a class="govuk-breadcrumbs__link" href="@(crumb.Href)">
+                        @*This doesn't work yet - The GenderPayGap.WebUI.Classes.TagHelpers.AnchorTagHelper doesn't currently allow arbitrary attributes*@
+                        @*@(Html.Raw( Model.Attributes != null ? string.Join(" ", Model.Attributes.Select(a => a.Key + "=\"" + a.Value + "\"")) : "" ))*@
+
+                        @{ await Html.RenderPartialAsync("/GovUkDesignSystemComponents/SubComponents/HtmlText.cshtml", crumb); }
+                    </a>
+                </li>
+            }
+            else
+            {
+                <li class="govuk-breadcrumbs__list-item" aria-current="page">
+                    @{ await Html.RenderPartialAsync("/GovUkDesignSystemComponents/SubComponents/HtmlText.cshtml", crumb); }
+                </li>
+            }
+        }
+    </ol>
+</div>
