@@ -10,7 +10,8 @@ It's the C# equivalent of the [Gov.UK Prototyping Kit](https://govuk-prototype-k
 Warning: This is very much a work in progress!  
 Only a subset of the components have been built and there is the possibility of breaking changes as we make bug fixes / add extra features.
 
-Please feel free to use this in your own project.  
+Please feel free to use this in your own project.  You can see our [contributing guide here](CONTRIBUTING.md).
+
 If you do, please let us know, so we can avoid making changes that will cause problems for you.  
 Email: James Griffiths [james.griffiths@softwire.com](mailto:james.griffiths@softwire.com)
 
@@ -145,3 +146,5 @@ public IActionResult ActionName(MyViewModel viewModel)
     }
 }
 ```
+
+C
