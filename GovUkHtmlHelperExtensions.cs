@@ -69,7 +69,9 @@ namespace GovUkDesignSystem
             this IHtmlHelper<TModel> htmlHelper,
             Expression<Func<TModel, List<TPropertyListItem>>> propertyLambdaExpression,
             FieldsetViewModel fieldsetOptions = null,
-            HintViewModel hintOptions = null)
+            HintViewModel hintOptions = null,
+            Dictionary<TPropertyListItem, Func<object, object>> conditionalOptions = null
+            )
             where TModel : GovUkViewModel
             where TPropertyListItem : struct, IConvertible // A fairly good check that TPropertyListItem is an Enum
         {
@@ -77,7 +79,8 @@ namespace GovUkDesignSystem
                 htmlHelper,
                 propertyLambdaExpression,
                 fieldsetOptions,
-                hintOptions);
+                hintOptions,
+                conditionalOptions);
         }
 
         public static IHtmlContent GovUkCheckboxItem(
