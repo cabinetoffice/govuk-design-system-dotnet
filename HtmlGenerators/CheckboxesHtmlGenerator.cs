@@ -17,7 +17,8 @@ namespace GovUkDesignSystem.HtmlGenerators
             IHtmlHelper<TModel> htmlHelper,
             Expression<Func<TModel, List<TPropertyListItem>>> propertyLambdaExpression,
             FieldsetViewModel fieldsetOptions = null,
-            HintViewModel hintOptions = null)
+            HintViewModel hintOptions = null,
+            Dictionary<TPropertyListItem, Func<object, object>> conditionalOptions = null)
             where TModel : GovUkViewModel
             where TPropertyListItem : struct, IConvertible
         {
@@ -42,7 +43,7 @@ namespace GovUkDesignSystem.HtmlGenerators
 
                     string checkboxLabelText = GetCheckboxLabelText(enumValue);
 
-                    return new CheckboxItemViewModel
+                    var checkboxItemViewModel = new CheckboxItemViewModel
                     {
                         Value = enumValue.ToString(),
                         Id = $"GovUk_Checkbox_{propertyName}_{enumValue}",
@@ -52,6 +53,14 @@ namespace GovUkDesignSystem.HtmlGenerators
                             Text = checkboxLabelText
                         }
                     };
+
+                    if (conditionalOptions != null && conditionalOptions.TryGetValue(enumValue, out Func<object, object> conditionalHtml))
+                    {
+                        checkboxItemViewModel.Conditional = new Conditional { Html = conditionalHtml };
+
+                    }
+
+                    return checkboxItemViewModel;
                 })
                 .Cast<ItemViewModel>()
                 .ToList();
@@ -96,6 +105,5 @@ namespace GovUkDesignSystem.HtmlGenerators
 
             return checkboxLabel;
         }
-
     }
 }
