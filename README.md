@@ -130,6 +130,29 @@ public IActionResult ActionName(MyViewModel viewModel)
         return View("ViewName", viewModel);
     }
 
+    //To do mvc data annotation validation
+    
+    TryValidateModel(viewModel);
+
+    if (!ModelState.IsValid)
+    {
+        foreach (var modelStateKey in ViewData.ModelState.Keys.Reverse())
+        {
+            AddressViewModel vm = new AddressViewModel();
+            var value = ViewData.ModelState[modelStateKey];
+
+            PropertyInfo property = ParserHelpers.GetPropertyInfoFromPropertyName(viewModel, modelStateKey.Split('.').Last()); 
+
+            foreach (var error in value.Errors)
+            { 
+                //TODO: Check that error is not already added for the property before adding error 
+                ParserHelpers.AddErrorInModel(viewModel, property, error.ErrorMessage); 
+                //TODO: Check if the property belongs to a nested class only then execute below line
+                ParserHelpers.AddErrorInNested(viewModel, property, error.ErrorMessage);                        
+            }
+        }
+    }
+
     // You can do your own custom validation...
     if (viewModel.NumberOfChildren > 100)
     {
