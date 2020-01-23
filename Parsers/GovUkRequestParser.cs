@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections;
+using System.Collections.Generic;
 using System.Linq.Expressions;
 using System.Reflection;
 using GovUkDesignSystem.Helpers;
@@ -50,7 +52,37 @@ namespace GovUkDesignSystem.Parsers
 
         private static void ThrowIfPropertyHasNonDefaultValue(object model, PropertyInfo property)
         {
-            object currentValue = property.GetValue(model);
+            object currentValue = new object();
+
+            if (model == null)
+            {
+                currentValue = null;
+            }
+            else
+            {
+                Type modelType = model.GetType();
+                PropertyInfo[] modelProperties = modelType.GetProperties(BindingFlags.Public | BindingFlags.Instance);
+                foreach (PropertyInfo modelProperty in modelProperties)
+                {
+
+                    if (!modelProperty.PropertyType.FullName.StartsWith("System"))
+                    {
+                        object nestedObject = modelProperty.GetValue(model, null);
+                        ThrowIfPropertyHasNonDefaultValue(nestedObject, property);
+                        currentValue = null;
+                    }
+                    else if (modelProperty.Name == property.Name)
+                    {
+                        currentValue = property.GetValue(model, null);
+                        break;
+                    }
+                    if (currentValue == null)
+                    {
+                        break;
+                    }
+                }
+            }
+
             object defaultValueOfThisType = TypeHelpers.GetDefaultValue(property.PropertyType);
 
             if (currentValue != defaultValueOfThisType)

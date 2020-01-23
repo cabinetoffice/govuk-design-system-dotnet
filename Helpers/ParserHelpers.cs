@@ -92,5 +92,35 @@ namespace GovUkDesignSystem.Helpers
             model.AddErrorFor(property, errorMessage);
         }
 
+        public static void AddErrorInNested(object model, PropertyInfo property, string error, int nestLevel = 0)
+        {
+            Type t = model.GetType();
+            PropertyInfo[] modelProperties = t.GetProperties(BindingFlags.Public | BindingFlags.Instance);
+            foreach (PropertyInfo modelProperty in modelProperties)
+            {
+                if (!modelProperty.PropertyType.FullName.StartsWith("System"))
+                {
+                    object nestedObject = modelProperty.GetValue(model, null);
+
+                    if (nestedObject == null)
+                    {
+                        nestedObject = modelProperty.PropertyType.GetConstructor(new Type[] { }).Invoke(new object[] { });
+                    }
+
+                    AddErrorInNested(nestedObject, property, error, nestLevel + 1);
+                    modelProperty.SetValue(model, nestedObject, null);
+                    break;
+                }
+                else if (modelProperty.Name == property.Name)
+                {
+                    if (nestLevel > 0)
+                    {
+                        ((GovUkViewModel)model).AddErrorFor(property, error);
+                        nestLevel = -1;
+                    }
+                    break;
+                }
+            }
+        }
     }
 }
