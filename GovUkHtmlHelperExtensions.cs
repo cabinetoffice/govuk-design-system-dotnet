@@ -5,6 +5,7 @@ using GovUkDesignSystem.GovUkDesignSystemComponents;
 using GovUkDesignSystem.GovUkDesignSystemComponents.SubComponents;
 using GovUkDesignSystem.HtmlGenerators;
 using Microsoft.AspNetCore.Html;
+using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace GovUkDesignSystem
@@ -101,6 +102,31 @@ namespace GovUkDesignSystem
             this IHtmlHelper htmlHelper,
             ErrorSummaryViewModel errorSummaryViewModel)
         {
+            return htmlHelper.Partial("/GovUkDesignSystemComponents/ErrorSummary.cshtml", errorSummaryViewModel);
+        }
+
+        public static IHtmlContent GovUkErrorSummary(
+            this IHtmlHelper htmlHelper,
+            ModelStateDictionary modelState)
+        {
+            if (modelState.IsValid)
+            {
+                return null;
+            }
+
+            var errorSummaryItems = modelState.SelectMany(ms => ms.Value.Errors.Select(e => new Tuple<string, string>(ms.Key, e.ErrorMessage)))
+                .Select(tuple => new ErrorSummaryItemViewModel { Href = $"#GovUk_{tuple.Item1}-error", Text = tuple.Item2 })
+                .ToList();
+
+            var errorSummaryViewModel = new ErrorSummaryViewModel
+            {
+                Title = new ErrorSummaryTitle
+                {
+                    Text = "There is a problem"
+                },
+                Errors = errorSummaryItems
+            };
+
             return htmlHelper.Partial("/GovUkDesignSystemComponents/ErrorSummary.cshtml", errorSummaryViewModel);
         }
 
