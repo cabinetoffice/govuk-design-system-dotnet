@@ -7,7 +7,7 @@ using System;
 namespace GovUkDesignSystem.ModelBinders
 {
     /// <summary>
-    /// This model binder can be used to replace the default MVC model binder for a mandatory int property. It will add
+    /// This model binder can be used to replace the default MVC model binder for a required int property. It will add
     /// validation messages to the model state inline with the GovUk Design System guidelines.
     /// This binder must be used alongside a GovUkDisplayNameForErrors attribute.
     /// </summary>
