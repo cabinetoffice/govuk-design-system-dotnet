@@ -273,11 +273,11 @@ namespace GovUkDesignSystem
                 formGroupOptions);
         }
 
-        public static IHtmlContent GovUkTextInput(
+        public static async Task<IHtmlContent> GovUkTextInput(
             this IHtmlHelper htmlHelper,
             TextInputViewModel textInputViewModel)
         {
-            return htmlHelper.Partial("/GovUkDesignSystemComponents/TextInput.cshtml", textInputViewModel);
+            return await htmlHelper.PartialAsync("/GovUkDesignSystemComponents/TextInput.cshtml", textInputViewModel);
         }
 
         public static async Task<IHtmlContent> GovUkTextInputFor<TModel>(
