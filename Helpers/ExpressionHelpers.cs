@@ -4,9 +4,9 @@ using System.Reflection;
 
 namespace GovUkDesignSystem.Helpers
 {
-    //qq:DCC Do we still need this?
     internal static class ExpressionHelpers
     {
+        //qq:DCC Can probably remove this once other changes are complete
         internal static PropertyInfo GetPropertyFromExpression<TModel, TProperty>(
             Expression<Func<TModel, TProperty>> propertyLambdaExpression)
             where TModel : class

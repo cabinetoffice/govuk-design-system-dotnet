@@ -16,6 +16,7 @@ namespace GovUkDesignSystem.Helpers
             return property.GetCustomAttributes(typeof(TAttributeType)).SingleOrDefault() as TAttributeType;
         }
 
+        //qq:DCC Can probably remove this once other changes are complete
         public static string GetCurrentValue<TModel, TProperty>(
             TModel model,
             PropertyInfo property,

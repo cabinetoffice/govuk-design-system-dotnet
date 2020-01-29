@@ -300,29 +300,9 @@ namespace GovUkDesignSystem
                 textInputAppendix);
         }
 
-        public static IHtmlContent GovUkTextInputFor<TModel>(
+        public static async Task<IHtmlContent> GovUkTextInputFor<TModel>(
             this IHtmlHelper<TModel> htmlHelper,
-            Expression<Func<TModel, int?>> propertyLambdaExpression,
-            LabelViewModel labelOptions = null,
-            HintViewModel hintOptions = null,
-            FormGroupViewModel formGroupOptions = null,
-            string classes = null,
-            TextInputAppendixViewModel textInputAppendix = null)
-            where TModel : GovUkViewModel
-        {
-            return TextInputHtmlGenerator.GenerateHtml(
-                htmlHelper,
-                propertyLambdaExpression,
-                labelOptions,
-                hintOptions,
-                formGroupOptions,
-                classes,
-                textInputAppendix);
-        }
-
-        public static async Task<IHtmlContent> GovUkTextInputForDcc<TModel>(//qq:DCC
-            this IHtmlHelper<TModel> htmlHelper,
-            Expression<Func<TModel, int>> propertyLambdaExpression,
+            Expression<Func<TModel, int?>> propertyExpression,
             LabelViewModel labelOptions = null,
             HintViewModel hintOptions = null,
             FormGroupViewModel formGroupOptions = null,
@@ -330,29 +310,9 @@ namespace GovUkDesignSystem
             TextInputAppendixViewModel textInputAppendix = null)
             where TModel : class
         {
-            return await TextInputHtmlGenerator.GenerateHtmlDcc(
+            return await TextInputHtmlGenerator.GenerateHtmlUsingModelState(
                 htmlHelper,
-                propertyLambdaExpression,
-                labelOptions,
-                hintOptions,
-                formGroupOptions,
-                classes,
-                textInputAppendix);
-        }
-
-        public static async Task<IHtmlContent> GovUkTextInputForDcc<TModel>(//qq:DCC
-            this IHtmlHelper<TModel> htmlHelper,
-            Expression<Func<TModel, int?>> propertyLambdaExpression,
-            LabelViewModel labelOptions = null,
-            HintViewModel hintOptions = null,
-            FormGroupViewModel formGroupOptions = null,
-            string classes = null,
-            TextInputAppendixViewModel textInputAppendix = null)
-            where TModel : class
-        {
-            return await TextInputHtmlGenerator.GenerateHtmlDcc(
-                htmlHelper,
-                propertyLambdaExpression,
+                propertyExpression,
                 labelOptions,
                 hintOptions,
                 formGroupOptions,
