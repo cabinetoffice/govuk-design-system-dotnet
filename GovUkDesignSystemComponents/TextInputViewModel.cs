@@ -6,7 +6,6 @@ namespace GovUkDesignSystem.GovUkDesignSystemComponents
 {
     public class TextInputViewModel
     {
-
         /// <summary>
         ///     Required. The id of the input.
         /// </summary>

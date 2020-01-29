@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Linq.Expressions;
 using GovUkDesignSystem.GovUkDesignSystemComponents;
 using GovUkDesignSystem.GovUkDesignSystemComponents.SubComponents;
@@ -318,5 +319,44 @@ namespace GovUkDesignSystem
                 textInputAppendix);
         }
 
+        public static IHtmlContent GovUkTextInputForDcc<TModel>(//qq:DCC
+            this IHtmlHelper<TModel> htmlHelper,
+            Expression<Func<TModel, int>> propertyLambdaExpression,
+            LabelViewModel labelOptions = null,
+            HintViewModel hintOptions = null,
+            FormGroupViewModel formGroupOptions = null,
+            string classes = null,
+            TextInputAppendixViewModel textInputAppendix = null)
+            where TModel : class
+        {
+            return TextInputHtmlGenerator.GenerateHtmlDcc(
+                htmlHelper,
+                propertyLambdaExpression,
+                labelOptions,
+                hintOptions,
+                formGroupOptions,
+                classes,
+                textInputAppendix);
+        }
+
+        public static IHtmlContent GovUkTextInputForDcc<TModel>(//qq:DCC
+            this IHtmlHelper<TModel> htmlHelper,
+            Expression<Func<TModel, int?>> propertyLambdaExpression,
+            LabelViewModel labelOptions = null,
+            HintViewModel hintOptions = null,
+            FormGroupViewModel formGroupOptions = null,
+            string classes = null,
+            TextInputAppendixViewModel textInputAppendix = null)
+            where TModel : class
+        {
+            return TextInputHtmlGenerator.GenerateHtmlDcc(
+                htmlHelper,
+                propertyLambdaExpression,
+                labelOptions,
+                hintOptions,
+                formGroupOptions,
+                classes,
+                textInputAppendix);
+        }
     }
 }
