@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
+using System.Threading.Tasks;
 using GovUkDesignSystem.GovUkDesignSystemComponents;
 using GovUkDesignSystem.GovUkDesignSystemComponents.SubComponents;
 using GovUkDesignSystem.HtmlGenerators;
@@ -319,7 +320,7 @@ namespace GovUkDesignSystem
                 textInputAppendix);
         }
 
-        public static IHtmlContent GovUkTextInputForDcc<TModel>(//qq:DCC
+        public static async Task<IHtmlContent> GovUkTextInputForDcc<TModel>(//qq:DCC
             this IHtmlHelper<TModel> htmlHelper,
             Expression<Func<TModel, int>> propertyLambdaExpression,
             LabelViewModel labelOptions = null,
@@ -329,7 +330,7 @@ namespace GovUkDesignSystem
             TextInputAppendixViewModel textInputAppendix = null)
             where TModel : class
         {
-            return TextInputHtmlGenerator.GenerateHtmlDcc(
+            return await TextInputHtmlGenerator.GenerateHtmlDcc(
                 htmlHelper,
                 propertyLambdaExpression,
                 labelOptions,
@@ -339,7 +340,7 @@ namespace GovUkDesignSystem
                 textInputAppendix);
         }
 
-        public static IHtmlContent GovUkTextInputForDcc<TModel>(//qq:DCC
+        public static async Task<IHtmlContent> GovUkTextInputForDcc<TModel>(//qq:DCC
             this IHtmlHelper<TModel> htmlHelper,
             Expression<Func<TModel, int?>> propertyLambdaExpression,
             LabelViewModel labelOptions = null,
@@ -349,7 +350,7 @@ namespace GovUkDesignSystem
             TextInputAppendixViewModel textInputAppendix = null)
             where TModel : class
         {
-            return TextInputHtmlGenerator.GenerateHtmlDcc(
+            return await TextInputHtmlGenerator.GenerateHtmlDcc(
                 htmlHelper,
                 propertyLambdaExpression,
                 labelOptions,

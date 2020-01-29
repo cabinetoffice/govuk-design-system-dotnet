@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Linq.Expressions;
 using System.Reflection;
+using System.Threading.Tasks;
 using GovUkDesignSystem.GovUkDesignSystemComponents;
 using GovUkDesignSystem.Helpers;
 using Microsoft.AspNetCore.Html;
@@ -56,7 +57,7 @@ namespace GovUkDesignSystem.HtmlGenerators
             return htmlHelper.Partial("/GovUkDesignSystemComponents/TextInput.cshtml", textInputViewModel);
         }
 
-        internal static IHtmlContent GenerateHtmlDcc<TModel, TProperty>(//qq:DCC
+        internal static async Task<IHtmlContent> GenerateHtmlDcc<TModel, TProperty>(
             IHtmlHelper<TModel> htmlHelper,
             Expression<Func<TModel, TProperty>> propertyLambdaExpression,
             LabelViewModel labelOptions = null,
@@ -106,7 +107,7 @@ namespace GovUkDesignSystem.HtmlGenerators
                 textInputViewModel.ErrorMessage = new ErrorMessageViewModel { Text = modelStateEntry.Errors[0].ErrorMessage };
             }
 
-            return htmlHelper.Partial("/GovUkDesignSystemComponents/TextInputDcc.cshtml", textInputViewModel);
+            return await htmlHelper.PartialAsync("/GovUkDesignSystemComponents/TextInputDcc.cshtml", textInputViewModel);
         }
     }
 }
