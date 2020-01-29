@@ -300,6 +300,26 @@ namespace GovUkDesignSystem
                 textInputAppendix);
         }
 
+        public static async Task<IHtmlContent> GovUkTextInputUsingModelStateFor<TModel>(
+            this IHtmlHelper<TModel> htmlHelper,
+            Expression<Func<TModel, string>> propertyLambdaExpression,
+            LabelViewModel labelOptions = null,
+            HintViewModel hintOptions = null,
+            FormGroupViewModel formGroupOptions = null,
+            string classes = null,
+            TextInputAppendixViewModel textInputAppendix = null)
+            where TModel : GovUkViewModel
+        {
+            return await TextInputHtmlGenerator.GenerateHtmlUsingModelState(
+                htmlHelper,
+                propertyLambdaExpression,
+                labelOptions,
+                hintOptions,
+                formGroupOptions,
+                classes,
+                textInputAppendix);
+        }
+
         public static async Task<IHtmlContent> GovUkTextInputFor<TModel>(
             this IHtmlHelper<TModel> htmlHelper,
             Expression<Func<TModel, int?>> propertyExpression,
