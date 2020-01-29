@@ -69,12 +69,13 @@ namespace GovUkDesignSystem.HtmlGenerators
         {
             string propertyId = htmlHelper.IdFor(propertyLambdaExpression);
             string propertyName = htmlHelper.NameFor(propertyLambdaExpression);
+            htmlHelper.ViewData.ModelState.TryGetValue(propertyName, out var modelStateEntry);
 
             // Get the value to put in the input from the post data if possible, otherwise use the value in the model
             string inputValue;
-            if (htmlHelper.ViewContext.ViewData.ModelState.TryGetValue(propertyName, out var entry) && entry.RawValue != null)
+            if (modelStateEntry != null && modelStateEntry.RawValue != null)
             {
-                inputValue = entry.RawValue as string;
+                inputValue = modelStateEntry.RawValue as string;
             }
             else
             {
@@ -99,11 +100,11 @@ namespace GovUkDesignSystem.HtmlGenerators
                 Value = inputValue
             };
 
-            //qq:DCC check ModelState instead
-            //if (model.HasErrorFor(property))
-            //{
-            //    textInputViewModel.ErrorMessage = new ErrorMessageViewModel { Text = model.GetErrorFor(property) };
-            //}
+            if (modelStateEntry != null && modelStateEntry.Errors.Count > 0)
+            {
+                // qq:DCC Are we OK with only displaying the first error message here?
+                textInputViewModel.ErrorMessage = new ErrorMessageViewModel { Text = modelStateEntry.Errors[0].ErrorMessage };
+            }
 
             return htmlHelper.Partial("/GovUkDesignSystemComponents/TextInputDcc.cshtml", textInputViewModel);
         }
