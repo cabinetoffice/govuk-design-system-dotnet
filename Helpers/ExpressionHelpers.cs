@@ -4,11 +4,12 @@ using System.Reflection;
 
 namespace GovUkDesignSystem.Helpers
 {
+    //qq:DCC Do we still need this?
     internal static class ExpressionHelpers
     {
         internal static PropertyInfo GetPropertyFromExpression<TModel, TProperty>(
             Expression<Func<TModel, TProperty>> propertyLambdaExpression)
-            where TModel : GovUkViewModel
+            where TModel : class
         {
             MemberExpression memberExpression = propertyLambdaExpression.Body as MemberExpression;
             return memberExpression.Member as PropertyInfo;
@@ -17,6 +18,7 @@ namespace GovUkDesignSystem.Helpers
         public static TProperty GetPropertyValueFromModelAndExpression<TModel, TProperty>(
             TModel model,
             Expression<Func<TModel, TProperty>> propertyLambdaExpression)
+            where TModel : class
         {
             Func<TModel, TProperty> compiledExpression = propertyLambdaExpression.Compile();
             TProperty currentPropertyValue = compiledExpression(model);

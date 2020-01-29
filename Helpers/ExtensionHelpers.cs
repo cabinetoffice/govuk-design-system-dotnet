@@ -6,6 +6,7 @@ using Microsoft.Extensions.Primitives;
 
 namespace GovUkDesignSystem.Helpers
 {
+    //qq:DCC do we still need these?
     public static class ExtensionHelpers
     {
 
@@ -37,6 +38,5 @@ namespace GovUkDesignSystem.Helpers
             string unparsedValueOrNull = unparsedValues.Count > 0 ? unparsedValues[0] : null;
             return unparsedValueOrNull;
         }
-
     }
 }
