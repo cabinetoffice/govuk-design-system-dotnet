@@ -1,6 +1,8 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Linq.Expressions;
+using System.Threading.Tasks;
 using GovUkDesignSystem.GovUkDesignSystemComponents;
 using GovUkDesignSystem.GovUkDesignSystemComponents.SubComponents;
 using GovUkDesignSystem.HtmlGenerators;
@@ -271,14 +273,14 @@ namespace GovUkDesignSystem
                 formGroupOptions);
         }
 
-        public static IHtmlContent GovUkTextInput(
+        public static async Task<IHtmlContent> GovUkTextInput(
             this IHtmlHelper htmlHelper,
             TextInputViewModel textInputViewModel)
         {
-            return htmlHelper.Partial("/GovUkDesignSystemComponents/TextInput.cshtml", textInputViewModel);
+            return await htmlHelper.PartialAsync("/GovUkDesignSystemComponents/TextInput.cshtml", textInputViewModel);
         }
 
-        public static IHtmlContent GovUkTextInputFor<TModel>(
+        public static async Task<IHtmlContent> GovUkTextInputFor<TModel>(
             this IHtmlHelper<TModel> htmlHelper,
             Expression<Func<TModel, string>> propertyLambdaExpression,
             LabelViewModel labelOptions = null,
@@ -288,7 +290,7 @@ namespace GovUkDesignSystem
             TextInputAppendixViewModel textInputAppendix = null)
             where TModel : GovUkViewModel
         {
-            return TextInputHtmlGenerator.GenerateHtml(
+            return await TextInputHtmlGenerator.GenerateHtml(
                 htmlHelper,
                 propertyLambdaExpression,
                 labelOptions,
@@ -298,25 +300,24 @@ namespace GovUkDesignSystem
                 textInputAppendix);
         }
 
-        public static IHtmlContent GovUkTextInputFor<TModel>(
+        public static async Task<IHtmlContent> GovUkTextInputFor<TModel>(
             this IHtmlHelper<TModel> htmlHelper,
-            Expression<Func<TModel, int?>> propertyLambdaExpression,
+            Expression<Func<TModel, int?>> propertyExpression,
             LabelViewModel labelOptions = null,
             HintViewModel hintOptions = null,
             FormGroupViewModel formGroupOptions = null,
             string classes = null,
             TextInputAppendixViewModel textInputAppendix = null)
-            where TModel : GovUkViewModel
+            where TModel : class
         {
-            return TextInputHtmlGenerator.GenerateHtml(
+            return await TextInputHtmlGenerator.GenerateHtml(
                 htmlHelper,
-                propertyLambdaExpression,
+                propertyExpression,
                 labelOptions,
                 hintOptions,
                 formGroupOptions,
                 classes,
                 textInputAppendix);
         }
-
     }
 }
