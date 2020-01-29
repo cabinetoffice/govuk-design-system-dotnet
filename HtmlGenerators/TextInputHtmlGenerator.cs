@@ -12,7 +12,6 @@ namespace GovUkDesignSystem.HtmlGenerators
 {
     internal static class TextInputHtmlGenerator
     {
-
         internal static IHtmlContent GenerateHtml<TModel, TProperty>(
             IHtmlHelper<TModel> htmlHelper,
             Expression<Func<TModel, TProperty>> propertyLambdaExpression,
@@ -57,9 +56,9 @@ namespace GovUkDesignSystem.HtmlGenerators
             return htmlHelper.Partial("/GovUkDesignSystemComponents/TextInput.cshtml", textInputViewModel);
         }
 
-        internal static async Task<IHtmlContent> GenerateHtmlDcc<TModel, TProperty>(
+        internal static async Task<IHtmlContent> GenerateHtmlUsingModelState<TModel, TProperty>(
             IHtmlHelper<TModel> htmlHelper,
-            Expression<Func<TModel, TProperty>> propertyLambdaExpression,
+            Expression<Func<TModel, TProperty>> propertyExpression,
             LabelViewModel labelOptions = null,
             HintViewModel hintOptions = null,
             FormGroupViewModel formGroupOptions = null,
@@ -68,8 +67,8 @@ namespace GovUkDesignSystem.HtmlGenerators
         )
             where TModel : class
         {
-            string propertyId = htmlHelper.IdFor(propertyLambdaExpression);
-            string propertyName = htmlHelper.NameFor(propertyLambdaExpression);
+            string propertyId = htmlHelper.IdFor(propertyExpression);
+            string propertyName = htmlHelper.NameFor(propertyExpression);
             htmlHelper.ViewData.ModelState.TryGetValue(propertyName, out var modelStateEntry);
 
             // Get the value to put in the input from the post data if possible, otherwise use the value in the model
@@ -81,7 +80,7 @@ namespace GovUkDesignSystem.HtmlGenerators
             else
             {
                 TModel model = htmlHelper.ViewData.Model;
-                inputValue = ExpressionHelpers.GetPropertyValueFromModelAndExpression(model, propertyLambdaExpression).ToString();
+                inputValue = ExpressionHelpers.GetPropertyValueFromModelAndExpression(model, propertyExpression).ToString();
             }
 
             if (labelOptions != null)
