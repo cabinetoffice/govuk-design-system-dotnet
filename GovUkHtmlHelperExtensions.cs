@@ -280,7 +280,7 @@ namespace GovUkDesignSystem
             return htmlHelper.Partial("/GovUkDesignSystemComponents/TextInput.cshtml", textInputViewModel);
         }
 
-        public static IHtmlContent GovUkTextInputFor<TModel>(
+        public static async Task<IHtmlContent> GovUkTextInputFor<TModel>(
             this IHtmlHelper<TModel> htmlHelper,
             Expression<Func<TModel, string>> propertyLambdaExpression,
             LabelViewModel labelOptions = null,
@@ -290,27 +290,7 @@ namespace GovUkDesignSystem
             TextInputAppendixViewModel textInputAppendix = null)
             where TModel : GovUkViewModel
         {
-            return TextInputHtmlGenerator.GenerateHtml(
-                htmlHelper,
-                propertyLambdaExpression,
-                labelOptions,
-                hintOptions,
-                formGroupOptions,
-                classes,
-                textInputAppendix);
-        }
-
-        public static async Task<IHtmlContent> GovUkTextInputUsingModelStateFor<TModel>(
-            this IHtmlHelper<TModel> htmlHelper,
-            Expression<Func<TModel, string>> propertyLambdaExpression,
-            LabelViewModel labelOptions = null,
-            HintViewModel hintOptions = null,
-            FormGroupViewModel formGroupOptions = null,
-            string classes = null,
-            TextInputAppendixViewModel textInputAppendix = null)
-            where TModel : GovUkViewModel
-        {
-            return await TextInputHtmlGenerator.GenerateHtmlUsingModelState(
+            return await TextInputHtmlGenerator.GenerateHtml(
                 htmlHelper,
                 propertyLambdaExpression,
                 labelOptions,
@@ -330,7 +310,7 @@ namespace GovUkDesignSystem
             TextInputAppendixViewModel textInputAppendix = null)
             where TModel : class
         {
-            return await TextInputHtmlGenerator.GenerateHtmlUsingModelState(
+            return await TextInputHtmlGenerator.GenerateHtml(
                 htmlHelper,
                 propertyExpression,
                 labelOptions,
