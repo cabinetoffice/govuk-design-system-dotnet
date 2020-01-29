@@ -1,26 +1,25 @@
 ﻿using Microsoft.AspNetCore.Mvc.ModelBinding;
 using System.Linq;
 using System.Threading.Tasks;
-using GovUkDesignSystem.Attributes;
 using System;
+using GovUkDesignSystem.Attributes.DataBinding;
 
 namespace GovUkDesignSystem.ModelBinders
 {
     /// <summary>
     /// This model binder can be used to replace the default MVC model binder for a required string property. It will add
     /// validation messages to the model state inline with the GovUk Design System guidelines.
-    /// This binder must be used alongside a GovUkDisplayNameForErrors attribute.
+    /// This binder must be used alongside a GovUkDataBindingStringErrorTextAttribute attribute.
     /// </summary>
     public class GovUkMandatoryStringBinder : IModelBinder
     {
         public Task BindModelAsync(ModelBindingContext bindingContext)
         {
-            var names = bindingContext.ModelMetadata.ValidatorMetadata.OfType<GovUkDisplayNameForErrorsAttribute>().SingleOrDefault();
-            if (names == null)
+            var errorText = bindingContext.ModelMetadata.ValidatorMetadata.OfType<GovUkDataBindingStringErrorTextAttribute>().SingleOrDefault();
+            if (errorText == null)
             {
-                throw new System.Exception("When using the GovUkMandatoryIntBinder you must also provide a GovUkDisplayNameForErrors attribute and ensure that you register GovUkValidationMetadataProvider in your application's Startup.ConfigureServices method.");
+                throw new Exception("When using the GovUkMandatoryStringBinder you must also provide a GovUkDataBindingStringErrorTextAttribute attribute and ensure that you register GovUkDataBindingErrorTextProvider in your application's Startup.ConfigureServices method.");
             }
-            var nameWithinSentence = names.NameWithinSentence;
 
             var modelName = bindingContext.ModelName;
 
@@ -29,7 +28,7 @@ namespace GovUkDesignSystem.ModelBinders
             // Ensure that a value was sent to us in the request
             if (valueProviderResult == ValueProviderResult.None)
             {
-                bindingContext.ModelState.TryAddModelError(modelName, $"Enter {nameWithinSentence}");
+                bindingContext.ModelState.TryAddModelError(modelName, errorText.ErrorMessageIfMissing);
                 return Task.CompletedTask;
             }
 
@@ -49,7 +48,7 @@ namespace GovUkDesignSystem.ModelBinders
             // Ensure that the value we have isn't empty
             if (string.IsNullOrEmpty(value))
             {
-                bindingContext.ModelState.TryAddModelError(modelName, $"Enter {nameWithinSentence}");
+                bindingContext.ModelState.TryAddModelError(modelName, errorText.ErrorMessageIfMissing);
                 return Task.CompletedTask;
             }
 
