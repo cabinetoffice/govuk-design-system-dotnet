@@ -82,11 +82,10 @@ namespace GovUkDesignSystem.HtmlGenerators
                 inputValue = ExpressionHelpers.GetPropertyValueFromModelAndExpression(model, propertyLambdaExpression).ToString();
             }
 
-            // qq:DCC Give the label template the property name instead?
-            //if (labelOptions != null)
-            //{
-            //    labelOptions.For = id;
-            //}
+            if (labelOptions != null)
+            {
+                labelOptions.For = propertyId;
+            }
 
             var textInputViewModel = new TextInputViewModel
             {
