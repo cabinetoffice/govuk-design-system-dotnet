@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Reflection;
+using System.Threading.Tasks;
 using GovUkDesignSystem.Attributes;
 using GovUkDesignSystem.GovUkDesignSystemComponents;
 using GovUkDesignSystem.Helpers;
@@ -13,36 +14,47 @@ namespace GovUkDesignSystem.HtmlGenerators
 {
     internal static class RadiosHtmlGenerator
     {
-        public static IHtmlContent GenerateHtml<TModel, TProperty>(
+        public static async Task<IHtmlContent> GenerateHtml<TModel, TEnum>(
             IHtmlHelper<TModel> htmlHelper,
-            Expression<Func<TModel, TProperty>> propertyLambdaExpression,
+            Expression<Func<TModel, TEnum?>> propertyExpression,
             FieldsetViewModel fieldsetOptions = null,
             HintViewModel hintOptions = null)
-            where TModel : GovUkViewModel
+            where TModel : class
+            where TEnum : struct, Enum
         {
-            PropertyInfo property = ExpressionHelpers.GetPropertyFromExpression(propertyLambdaExpression);
-            ThrowIfPropertyTypeIsNotNullableEnum(property);
-            string propertyName = property.Name;
+            string propertyId = htmlHelper.IdFor(propertyExpression);
+            string propertyName = htmlHelper.NameFor(propertyExpression);
+            htmlHelper.ViewData.ModelState.TryGetValue(propertyName, out var modelStateEntry);
 
-            TModel model = htmlHelper.ViewData.Model;
-            TProperty currentlySelectedValue =
-                ExpressionHelpers.GetPropertyValueFromModelAndExpression(model, propertyLambdaExpression);
+            // Get the value to put in the input from the post data if possible, otherwise use the value in the model
+            string selectedValue = null;
+            if (modelStateEntry != null && modelStateEntry.RawValue != null)
+            {
+                selectedValue = modelStateEntry.RawValue as string;
+            }
+            else
+            {
+                var modelValue = ExpressionHelpers.GetPropertyValueFromModelAndExpression(htmlHelper.ViewData.Model, propertyExpression);
+                if (modelValue != null)
+                {
+                    selectedValue = modelValue.ToString();
+                }
+            }
 
-            Type enumType = Nullable.GetUnderlyingType(typeof(TProperty));
+            var enumType = typeof(TEnum);
             Array allEnumValues = Enum.GetValues(enumType);
-
 
             List<ItemViewModel> radios = allEnumValues
                 .OfType<object>()
                 .Select(enumValue =>
                 {
-                    bool isEnumValueCurrentlySelected = enumValue.ToString() == currentlySelectedValue.ToString();
+                    bool isEnumValueCurrentlySelected = enumValue.ToString() == selectedValue;
                     string radioLabelText = GetRadioLabelText(enumType, enumValue);
 
                     return new RadioItemViewModel
                     {
                         Value = enumValue.ToString(),
-                        Id = $"GovUk_Radio_{propertyName}_{enumValue}",
+                        Id = $"{propertyId}_{enumValue}",
                         Checked = isEnumValueCurrentlySelected,
                         Label = new LabelViewModel
                         {
@@ -55,34 +67,22 @@ namespace GovUkDesignSystem.HtmlGenerators
 
             var radiosViewModel = new RadiosViewModel
             {
-                Name = $"GovUk_Radio_{propertyName}",
-                IdPrefix = $"GovUk_{propertyName}",
+                Name = propertyName,
+                IdPrefix = propertyId,
                 Items = radios,
                 Fieldset = fieldsetOptions,
                 Hint = hintOptions
             };
-            if (model.HasErrorFor(property))
+
+            if (modelStateEntry != null && modelStateEntry.Errors.Count > 0)
             {
-                radiosViewModel.ErrorMessage = new ErrorMessageViewModel
-                {
-                    Text = model.GetErrorFor(property)
-                };
+                // qq:DCC Are we OK with only displaying the first error message here?
+                radiosViewModel.ErrorMessage = new ErrorMessageViewModel { Text = modelStateEntry.Errors[0].ErrorMessage };
             }
 
-            return htmlHelper.Partial("/GovUkDesignSystemComponents/Radios.cshtml", radiosViewModel);
+            return await htmlHelper.PartialAsync("/GovUkDesignSystemComponents/Radios.cshtml", radiosViewModel);
         }
-
-        private static void ThrowIfPropertyTypeIsNotNullableEnum(PropertyInfo property)
-        {
-            if (!TypeHelpers.IsNullableEnum(property.PropertyType))
-            {
-                throw new ArgumentException(
-                    "GovUkRadiosFor can only be used on Nullable Enum properties, " +
-                    $"but was actually used on property [{property.Name}] of type [{property.PropertyType.FullName}] "
-                );
-            }
-        }
-
+ 
         private static string GetRadioLabelText(Type enumType, object enumValue)
         {
             string textFromAttribute = GovUkRadioCheckboxLabelTextAttribute.GetValueForEnum(enumType, enumValue);
