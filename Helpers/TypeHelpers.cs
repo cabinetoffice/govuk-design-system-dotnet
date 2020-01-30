@@ -5,6 +5,7 @@ namespace GovUkDesignSystem.Helpers
 {
     public static class TypeHelpers
     {
+        //qq:DCC is this still needed?
         public static bool IsNullableEnum(Type type)
         {
             var underlyingType = Nullable.GetUnderlyingType(type);

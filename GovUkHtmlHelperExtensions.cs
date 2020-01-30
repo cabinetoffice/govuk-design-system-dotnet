@@ -220,6 +220,21 @@ namespace GovUkDesignSystem
             return htmlHelper.Partial("/GovUkDesignSystemComponents/PhaseBanner.cshtml", phaseBannerViewModel);
         }
 
+        public static async Task<IHtmlContent> GovUkRadiosFromModelStateFor<TModel, TEnum>(
+            this IHtmlHelper<TModel> htmlHelper,
+            Expression<Func<TModel, TEnum?>> propertyLambdaExpression,
+            FieldsetViewModel fieldsetOptions = null,
+            HintViewModel hintOptions = null)
+            where TModel : class
+            where TEnum : struct, Enum
+        {
+            return await RadiosHtmlGenerator.GenerateHtmlFromModelState(
+                htmlHelper,
+                propertyLambdaExpression,
+                fieldsetOptions,
+                hintOptions);
+        }
+
         public static IHtmlContent GovUkRadiosFor<TModel, TProperty>(
             this IHtmlHelper<TModel> htmlHelper,
             Expression<Func<TModel, TProperty>> propertyLambdaExpression,
