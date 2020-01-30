@@ -30,11 +30,7 @@ namespace GovUkDesignSystem.Parsers
 
             ThrowIfPropertyHasNonDefaultValue(model, property);
 
-            if (TypeHelpers.IsNullableEnum(typeof(TProperty)))
-            {
-                RadioToNullableEnumParser.ParseAndValidate(model, property, httpRequest);
-            }
-            else if (TypeHelpers.IsListOfEnums(typeof(TProperty)))
+            if (TypeHelpers.IsListOfEnums(typeof(TProperty)))
             {
                 CheckboxToListOfEnumsParser.ParseAndValidate(model, property, httpRequest);
             }
@@ -45,6 +41,10 @@ namespace GovUkDesignSystem.Parsers
             else if (typeof(TProperty) == typeof(int?))
             {
                 NullableIntParser.ParseAndValidate(model, property, httpRequest);
+            }
+            else
+            {
+                throw new ArgumentException($"Can't parse a property of type {typeof(TProperty)}");
             }
         }
 
