@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Linq.Expressions;
 using System.Reflection;
+using System.Threading.Tasks;
 using GovUkDesignSystem.GovUkDesignSystemComponents;
 using GovUkDesignSystem.Helpers;
 using Microsoft.AspNetCore.Html;
@@ -10,43 +11,55 @@ namespace GovUkDesignSystem.HtmlGenerators
 {
     internal static class TextAreaHtmlGenerator
     {
-
-        internal static IHtmlContent GenerateHtml<TModel>(
+        internal static async Task<IHtmlContent> GenerateHtml<TModel>(
             IHtmlHelper<TModel> htmlHelper,
-            Expression<Func<TModel, string>> propertyLambdaExpression,
+            Expression<Func<TModel, string>> propertyExpression,
             int? rows = null,
             LabelViewModel labelOptions = null,
             HintViewModel hintOptions = null,
             FormGroupViewModel formGroupOptions = null
         )
-            where TModel : GovUkViewModel
+            where TModel : class
         {
-            PropertyInfo property = ExpressionHelpers.GetPropertyFromExpression(propertyLambdaExpression);
+            string propertyId = htmlHelper.IdFor(propertyExpression);
+            string propertyName = htmlHelper.NameFor(propertyExpression);
+            htmlHelper.ViewData.ModelState.TryGetValue(propertyName, out var modelStateEntry);
 
-            string propertyName = property.Name;
+            // Get the value to put in the input from the post data if possible, otherwise use the value in the model
+            string inputValue = null;
+            if (modelStateEntry != null && modelStateEntry.RawValue != null)
+            {
+                inputValue = modelStateEntry.RawValue as string;
+            }
+            else
+            {
+                var modelValue = ExpressionHelpers.GetPropertyValueFromModelAndExpression(htmlHelper.ViewData.Model, propertyExpression);
+                if (modelValue != null)
+                {
+                    inputValue = modelValue.ToString();
+                }
+            }
 
-            TModel model = htmlHelper.ViewData.Model;
+            //qq:DCC Update label for property
 
-            string currentValue = ExtensionHelpers.GetCurrentValue(model, property, propertyLambdaExpression);
-
-
-            var textAreaViewModel = new TextAreaViewModel {
-                Name = $"GovUk_Text_{propertyName}",
-                Id = $"GovUk_{propertyName}",
-                Value = currentValue,
+            var textAreaViewModel = new TextAreaViewModel
+            {
+                Name = propertyName,
+                Id = propertyId,
+                Value = inputValue,
                 Rows = rows,
                 Label = labelOptions,
                 Hint = hintOptions,
                 FormGroup = formGroupOptions
             };
 
-            if (model.HasErrorFor(property))
+            if (modelStateEntry != null && modelStateEntry.Errors.Count > 0)
             {
-                textAreaViewModel.ErrorMessage = new ErrorMessageViewModel {Text = model.GetErrorFor(property)};
+                // qq:DCC Are we OK with only displaying the first error message here?
+                textAreaViewModel.ErrorMessage = new ErrorMessageViewModel { Text = modelStateEntry.Errors[0].ErrorMessage };
             }
 
-            return htmlHelper.Partial("/GovUkDesignSystemComponents/Textarea.cshtml", textAreaViewModel);
+            return await htmlHelper.PartialAsync("/GovUkDesignSystemComponents/Textarea.cshtml", textAreaViewModel);
         }
-
     }
 }
