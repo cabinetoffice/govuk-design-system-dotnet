@@ -248,14 +248,14 @@ namespace GovUkDesignSystem
             return htmlHelper.Partial("/GovUkDesignSystemComponents/Tag.cshtml", tagViewModel);
         }
 
-        public static IHtmlContent GovUkTextArea(
+        public static async Task<IHtmlContent> GovUkTextArea(
             this IHtmlHelper htmlHelper,
             TextAreaViewModel textAreaViewModel)
         {
-            return htmlHelper.Partial("/GovUkDesignSystemComponents/TextArea.cshtml", textAreaViewModel);
+            return await htmlHelper.PartialAsync("/GovUkDesignSystemComponents/TextArea.cshtml", textAreaViewModel);
         }
 
-        public static IHtmlContent GovUkTextAreaFor<TModel>(
+        public static async Task<IHtmlContent> GovUkTextAreaFor<TModel>(
             this IHtmlHelper<TModel> htmlHelper,
             Expression<Func<TModel, string>> propertyLambdaExpression,
             int? rows = null,
@@ -264,25 +264,7 @@ namespace GovUkDesignSystem
             FormGroupViewModel formGroupOptions = null)
             where TModel : GovUkViewModel
         {
-            return TextAreaHtmlGenerator.GenerateHtml(
-                htmlHelper,
-                propertyLambdaExpression,
-                rows,
-                labelOptions,
-                hintOptions,
-                formGroupOptions);
-        }
-
-        public static async Task<IHtmlContent> GovUkTextAreaFromModelStateFor<TModel>(
-            this IHtmlHelper<TModel> htmlHelper,
-            Expression<Func<TModel, string>> propertyLambdaExpression,
-            int? rows = null,
-            LabelViewModel labelOptions = null,
-            HintViewModel hintOptions = null,
-            FormGroupViewModel formGroupOptions = null)
-            where TModel : GovUkViewModel
-        {
-            return await TextAreaHtmlGenerator.GenerateHtmlFromModelState(
+            return await TextAreaHtmlGenerator.GenerateHtml(
                 htmlHelper,
                 propertyLambdaExpression,
                 rows,
