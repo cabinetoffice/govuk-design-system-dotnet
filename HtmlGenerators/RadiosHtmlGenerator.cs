@@ -41,15 +41,12 @@ namespace GovUkDesignSystem.HtmlGenerators
                 }
             }
 
-            var enumType = typeof(TEnum);
-            Array allEnumValues = Enum.GetValues(enumType);
-
-            List<ItemViewModel> radios = allEnumValues
-                .OfType<object>()
+            List<ItemViewModel> radios = Enum.GetValues(typeof(TEnum))
+                .Cast<TEnum>()
                 .Select(enumValue =>
                 {
                     bool isEnumValueCurrentlySelected = enumValue.ToString() == selectedValue;
-                    string radioLabelText = GetRadioLabelText(enumType, enumValue);
+                    string radioLabelText = GovUkRadioCheckboxLabelTextAttribute.GetLabelText(enumValue);
 
                     return new RadioItemViewModel
                     {
@@ -82,15 +79,5 @@ namespace GovUkDesignSystem.HtmlGenerators
 
             return await htmlHelper.PartialAsync("/GovUkDesignSystemComponents/Radios.cshtml", radiosViewModel);
         }
- 
-        private static string GetRadioLabelText(Type enumType, object enumValue)
-        {
-            string textFromAttribute = GovUkRadioCheckboxLabelTextAttribute.GetValueForEnum(enumType, enumValue);
-
-            string radioLabel = textFromAttribute ?? enumValue.ToString();
-
-            return radioLabel;
-        }
-
     }
 }
