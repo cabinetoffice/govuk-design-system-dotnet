@@ -9,7 +9,7 @@ namespace GovUkDesignSystem.Helpers
     //qq:DCC do we still need these?
     public static class ExtensionHelpers
     {
-
+        //qq:DCC remove eventually?
         public static TAttributeType GetSingleCustomAttribute<TAttributeType>(this MemberInfo property)
             where TAttributeType : Attribute
         {

@@ -68,15 +68,15 @@ namespace GovUkDesignSystem
             return htmlHelper.Partial("/GovUkDesignSystemComponents/Checkboxes.cshtml", checkboxesViewModel);
         }
 
-        public static IHtmlContent GovUkCheckboxesFor<TModel, TPropertyListItem>(
+        public static IHtmlContent GovUkCheckboxesFor<TModel, TEnum>(
             this IHtmlHelper<TModel> htmlHelper,
-            Expression<Func<TModel, List<TPropertyListItem>>> propertyLambdaExpression,
+            Expression<Func<TModel, List<TEnum>>> propertyLambdaExpression,
             FieldsetViewModel fieldsetOptions = null,
             HintViewModel hintOptions = null,
-            Dictionary<TPropertyListItem, Func<object, object>> conditionalOptions = null
+            Dictionary<TEnum, Func<object, object>> conditionalOptions = null
             )
             where TModel : GovUkViewModel
-            where TPropertyListItem : struct, IConvertible // A fairly good check that TPropertyListItem is an Enum
+            where TEnum : Enum
         {
             return CheckboxesHtmlGenerator.GenerateHtml(
                 htmlHelper,
