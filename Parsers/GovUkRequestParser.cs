@@ -34,14 +34,6 @@ namespace GovUkDesignSystem.Parsers
             {
                 CheckboxToListOfEnumsParser.ParseAndValidate(model, property, httpRequest);
             }
-            else if (typeof(TProperty) == typeof(string))
-            {
-                TextParser.ParseAndValidate(model, property, httpRequest);
-            }
-            else if (typeof(TProperty) == typeof(int?))
-            {
-                NullableIntParser.ParseAndValidate(model, property, httpRequest);
-            }
             else
             {
                 throw new ArgumentException($"Can't parse a property of type {typeof(TProperty)}");
