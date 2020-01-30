@@ -40,7 +40,10 @@ namespace GovUkDesignSystem.HtmlGenerators
                 }
             }
 
-            //qq:DCC Update label for property
+            if (labelOptions != null)
+            {
+                labelOptions.For = propertyId;
+            }
 
             var textAreaViewModel = new TextAreaViewModel
             {
