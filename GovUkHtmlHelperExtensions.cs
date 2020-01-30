@@ -273,6 +273,24 @@ namespace GovUkDesignSystem
                 formGroupOptions);
         }
 
+        public static async Task<IHtmlContent> GovUkTextAreaFromModelStateFor<TModel>(
+            this IHtmlHelper<TModel> htmlHelper,
+            Expression<Func<TModel, string>> propertyLambdaExpression,
+            int? rows = null,
+            LabelViewModel labelOptions = null,
+            HintViewModel hintOptions = null,
+            FormGroupViewModel formGroupOptions = null)
+            where TModel : GovUkViewModel
+        {
+            return await TextAreaHtmlGenerator.GenerateHtmlFromModelState(
+                htmlHelper,
+                propertyLambdaExpression,
+                rows,
+                labelOptions,
+                hintOptions,
+                formGroupOptions);
+        }
+
         public static async Task<IHtmlContent> GovUkTextInput(
             this IHtmlHelper htmlHelper,
             TextInputViewModel textInputViewModel)
