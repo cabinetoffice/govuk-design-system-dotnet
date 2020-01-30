@@ -220,7 +220,7 @@ namespace GovUkDesignSystem
             return htmlHelper.Partial("/GovUkDesignSystemComponents/PhaseBanner.cshtml", phaseBannerViewModel);
         }
 
-        public static async Task<IHtmlContent> GovUkRadiosFromModelStateFor<TModel, TEnum>(
+        public static async Task<IHtmlContent> GovUkRadiosFor<TModel, TEnum>(
             this IHtmlHelper<TModel> htmlHelper,
             Expression<Func<TModel, TEnum?>> propertyLambdaExpression,
             FieldsetViewModel fieldsetOptions = null,
@@ -228,32 +228,18 @@ namespace GovUkDesignSystem
             where TModel : class
             where TEnum : struct, Enum
         {
-            return await RadiosHtmlGenerator.GenerateHtmlFromModelState(
+            return await RadiosHtmlGenerator.GenerateHtml(
                 htmlHelper,
                 propertyLambdaExpression,
                 fieldsetOptions,
                 hintOptions);
         }
 
-        public static IHtmlContent GovUkRadiosFor<TModel, TProperty>(
-            this IHtmlHelper<TModel> htmlHelper,
-            Expression<Func<TModel, TProperty>> propertyLambdaExpression,
-            FieldsetViewModel fieldsetOptions = null,
-            HintViewModel hintOptions = null)
-            where TModel : GovUkViewModel
-        {
-            return RadiosHtmlGenerator.GenerateHtml(
-                htmlHelper,
-                propertyLambdaExpression,
-                fieldsetOptions,
-                hintOptions);
-        }
-
-        public static IHtmlContent GovUkRadioItem(
+        public static async Task<IHtmlContent> GovUkRadioItem(
             this IHtmlHelper htmlHelper,
             RadioItemViewModel radioItemViewModel)
         {
-            return htmlHelper.Partial("/GovUkDesignSystemComponents/RadioItem.cshtml", radioItemViewModel);
+            return await htmlHelper.PartialAsync("/GovUkDesignSystemComponents/RadioItem.cshtml", radioItemViewModel);
         }
 
         public static IHtmlContent GovUkTag(
