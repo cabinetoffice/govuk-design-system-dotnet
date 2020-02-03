@@ -26,19 +26,14 @@ namespace GovUkDesignSystem.HtmlGenerators
             string propertyName = htmlHelper.NameFor(propertyExpression);
             htmlHelper.ViewData.ModelState.TryGetValue(propertyName, out var modelStateEntry);
 
-            // Get the value to put in the input from the post data if possible, otherwise use the value in the model
+            // Normally we'd want to get our values from the post data first. However with a list of radio buttons we only
+            // care about valid submitted values (invalid values mean someone is messing around with PostMan or similar)
+            // so we can just use the model values straight away.
             string selectedValue = null;
-            if (modelStateEntry != null && modelStateEntry.RawValue != null)
+            var modelValue = ExpressionHelpers.GetPropertyValueFromModelAndExpression(htmlHelper.ViewData.Model, propertyExpression);
+            if (modelValue != null)
             {
-                selectedValue = modelStateEntry.RawValue as string;
-            }
-            else
-            {
-                var modelValue = ExpressionHelpers.GetPropertyValueFromModelAndExpression(htmlHelper.ViewData.Model, propertyExpression);
-                if (modelValue != null)
-                {
-                    selectedValue = modelValue.ToString();
-                }
+                selectedValue = modelValue.ToString();
             }
 
             List<ItemViewModel> radios = Enum.GetValues(typeof(TEnum))
