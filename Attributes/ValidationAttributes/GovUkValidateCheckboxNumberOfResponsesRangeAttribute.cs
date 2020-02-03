@@ -9,13 +9,13 @@ namespace GovUkDesignSystem.Attributes.ValidationAttributes
         ///     The minimum number of checkboxes the user must select for us not to show an error
         ///     <br/>If this is omitted, or has the value null, then there is no minimum
         /// </summary>
-        public int? MinimumSelected { get; set; }
+        public int MinimumSelected { get; set; } = int.MinValue;
 
         /// <summary>
         ///     The maximum number of checkboxes the user can select before we show an error
         ///     <br/>If this is omitted, or has the value null, then there is no maximum
         /// </summary>
-        public int? MaximumSelected { get; set; }
+        public int MaximumSelected { get; set; } = int.MaxValue;
 
         /// <summary>
         /// The error message to show to the user if they don't select an option
