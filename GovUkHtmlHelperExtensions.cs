@@ -86,6 +86,24 @@ namespace GovUkDesignSystem
                 conditionalOptions);
         }
 
+        public static async Task<IHtmlContent> GovUkCheckboxesDccFor<TModel, TEnum>(
+            this IHtmlHelper<TModel> htmlHelper,
+            Expression<Func<TModel, List<TEnum>>> propertyLambdaExpression,
+            FieldsetViewModel fieldsetOptions = null,
+            HintViewModel hintOptions = null,
+            Dictionary<TEnum, Func<object, object>> conditionalOptions = null
+            )
+            where TModel : class
+            where TEnum : Enum
+        {
+            return await CheckboxesHtmlGenerator.GenerateHtmlDcc(
+                htmlHelper,
+                propertyLambdaExpression,
+                fieldsetOptions,
+                hintOptions,
+                conditionalOptions);
+        }
+
         public static IHtmlContent GovUkCheckboxItem(
             this IHtmlHelper htmlHelper,
             CheckboxItemViewModel checkboxItemViewModel)

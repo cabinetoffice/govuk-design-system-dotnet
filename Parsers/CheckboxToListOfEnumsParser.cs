@@ -89,11 +89,10 @@ namespace GovUkDesignSystem.Parsers
             var responsesRangeAttribute =
                 property.GetSingleCustomAttribute<GovUkValidateCheckboxNumberOfResponsesRangeAttribute>();
 
-            bool isRangeEnforced = responsesRangeAttribute != null &&
-                                   responsesRangeAttribute.MinimumSelected.HasValue;
+            bool isRangeEnforced = responsesRangeAttribute != null;
 
             bool tooFewSelected = isRangeEnforced &&
-                                  parameterValues.Count < responsesRangeAttribute.MinimumSelected.Value;
+                                  parameterValues.Count < responsesRangeAttribute.MinimumSelected;
 
             return tooFewSelected;
         }
@@ -103,11 +102,10 @@ namespace GovUkDesignSystem.Parsers
             var responsesRangeAttribute =
                 property.GetSingleCustomAttribute<GovUkValidateCheckboxNumberOfResponsesRangeAttribute>();
 
-            bool isRangeEnforced = responsesRangeAttribute != null &&
-                                   responsesRangeAttribute.MaximumSelected.HasValue;
+            bool isRangeEnforced = responsesRangeAttribute != null;
 
             bool tooManySelected = isRangeEnforced &&
-                                   parameterValues.Count > responsesRangeAttribute.MaximumSelected.Value;
+                                   parameterValues.Count > responsesRangeAttribute.MaximumSelected;
 
             return tooManySelected;
         }
