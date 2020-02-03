@@ -30,14 +30,7 @@ namespace GovUkDesignSystem.Parsers
 
             ThrowIfPropertyHasNonDefaultValue(model, property);
 
-            if (TypeHelpers.IsListOfEnums(typeof(TProperty)))
-            {
-                CheckboxToListOfEnumsParser.ParseAndValidate(model, property, httpRequest);
-            }
-            else
-            {
-                throw new ArgumentException($"Can't parse a property of type {typeof(TProperty)}");
-            }
+            throw new ArgumentException($"Can't parse a property of type {typeof(TProperty)}");
         }
 
         private static void ThrowIfPropertyHasNonDefaultValue(object model, PropertyInfo property)

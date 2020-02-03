@@ -61,32 +61,14 @@ namespace GovUkDesignSystem
                 formGroupOptions);
         }
 
-        public static IHtmlContent GovUkCheckboxes(
+        public static async Task<IHtmlContent> GovUkCheckboxes(
             this IHtmlHelper htmlHelper,
             CheckboxesViewModel checkboxesViewModel)
         {
-            return htmlHelper.Partial("/GovUkDesignSystemComponents/Checkboxes.cshtml", checkboxesViewModel);
+            return await htmlHelper.PartialAsync("/GovUkDesignSystemComponents/Checkboxes.cshtml", checkboxesViewModel);
         }
 
-        public static IHtmlContent GovUkCheckboxesFor<TModel, TEnum>(
-            this IHtmlHelper<TModel> htmlHelper,
-            Expression<Func<TModel, List<TEnum>>> propertyLambdaExpression,
-            FieldsetViewModel fieldsetOptions = null,
-            HintViewModel hintOptions = null,
-            Dictionary<TEnum, Func<object, object>> conditionalOptions = null
-            )
-            where TModel : GovUkViewModel
-            where TEnum : Enum
-        {
-            return CheckboxesHtmlGenerator.GenerateHtml(
-                htmlHelper,
-                propertyLambdaExpression,
-                fieldsetOptions,
-                hintOptions,
-                conditionalOptions);
-        }
-
-        public static async Task<IHtmlContent> GovUkCheckboxesDccFor<TModel, TEnum>(
+        public static async Task<IHtmlContent> GovUkCheckboxesFor<TModel, TEnum>(
             this IHtmlHelper<TModel> htmlHelper,
             Expression<Func<TModel, List<TEnum>>> propertyLambdaExpression,
             FieldsetViewModel fieldsetOptions = null,
@@ -96,7 +78,7 @@ namespace GovUkDesignSystem
             where TModel : class
             where TEnum : Enum
         {
-            return await CheckboxesHtmlGenerator.GenerateHtmlDcc(
+            return await CheckboxesHtmlGenerator.GenerateHtml(
                 htmlHelper,
                 propertyLambdaExpression,
                 fieldsetOptions,
@@ -104,11 +86,11 @@ namespace GovUkDesignSystem
                 conditionalOptions);
         }
 
-        public static IHtmlContent GovUkCheckboxItem(
+        public static async Task<IHtmlContent> GovUkCheckboxItem(
             this IHtmlHelper htmlHelper,
             CheckboxItemViewModel checkboxItemViewModel)
         {
-            return htmlHelper.Partial("/GovUkDesignSystemComponents/CheckboxItem.cshtml", checkboxItemViewModel);
+            return await htmlHelper.PartialAsync("/GovUkDesignSystemComponents/CheckboxItem.cshtml", checkboxItemViewModel);
         }
 
         public static IHtmlContent GovUkErrorMessage(
