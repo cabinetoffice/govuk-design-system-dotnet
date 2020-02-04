@@ -14,7 +14,15 @@ namespace GovUkDesignSystem.Attributes.ValidationAttributes
         /// <summary>
         /// The error message to show to the user if they don't select an option
         /// <br/>
-        /// <br/>GDS guidance:
+        /// <br/>GDS guidance for text input:
+        /// <br/>
+        /// <br/>If the input is empty
+        /// <br/>- Say ‘Enter [whatever it is]’.
+        /// <br/>- For example, ‘Enter your first name’..
+        /// <br/>
+        /// <br/>from <see cref="https://design-system.service.gov.uk/components/text-input/#error-messages"/>
+        /// <br/>
+        /// <br/>GDS guidance for radio buttons:
         /// <br/>
         /// <br/>If nothing is selected and the options are ‘yes’ and ‘no’
         /// <br/>- Say "Select yes if [whatever it is is true]".
