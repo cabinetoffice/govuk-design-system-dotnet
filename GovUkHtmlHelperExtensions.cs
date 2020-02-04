@@ -61,6 +61,24 @@ namespace GovUkDesignSystem
                 formGroupOptions);
         }
 
+        public static IHtmlContent GovUkCharacterCountDccFor<TModel>(
+            this IHtmlHelper<TModel> htmlHelper,
+            Expression<Func<TModel, string>> propertyLambdaExpression,
+            int? rows = null,
+            LabelViewModel labelOptions = null,
+            HintViewModel hintOptions = null,
+            FormGroupViewModel formGroupOptions = null)
+            where TModel : class
+        {
+            return CharacterCountHtmlGenerator.GenerateHtmlDcc(
+                htmlHelper,
+                propertyLambdaExpression,
+                rows,
+                labelOptions,
+                hintOptions,
+                formGroupOptions);
+        }
+
         public static async Task<IHtmlContent> GovUkCheckboxes(
             this IHtmlHelper htmlHelper,
             CheckboxesViewModel checkboxesViewModel)
