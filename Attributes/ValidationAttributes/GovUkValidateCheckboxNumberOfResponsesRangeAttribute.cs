@@ -20,24 +20,12 @@ namespace GovUkDesignSystem.Attributes.ValidationAttributes
         public int MaximumSelected { get; set; } = int.MaxValue;
 
         /// <summary>
-        /// The error message to show to the user if they don't select an option
-        /// <br/>
-        /// <br/>GDS guidance:
-        /// <br/>
-        /// <br/>If nothing is selected and the question has options in it
-        /// <br/>- Say "Select if [whatever it is]".
-        /// <br/>- For example, "Select if you are British, Irish or a citizen of a different country".
-        /// <br/>
-        /// <br/>If nothing is selected and the question does not have options in it
-        /// <br/>- Say "Select [whatever it is]".
-        /// <br/>- For example, "Select your nationality or nationalities".
-        /// <br/>
-        /// <br/>from <see cref="https://design-system.service.gov.uk/components/checkboxes/#error-messages"/>
+        /// Whether a value must be supplied
         /// </summary>
-        public string ErrorMessageIfNothingSelected { get; set; }
+        public bool IsRequired { get; set; } = false;
 
         /// <summary>
-        /// The name to use in error messages about the number of selected options
+        /// The name to use within error messages about the number of selected options
         /// </summary>
         public string PropertyNameForErrorMessage { get; set; }
 
@@ -45,10 +33,10 @@ namespace GovUkDesignSystem.Attributes.ValidationAttributes
         {
             var selectedValues = (IList)value;
 
-            if (selectedValues.Count == 0 &&
-                !string.IsNullOrEmpty(ErrorMessageIfNothingSelected))
+            if (IsRequired &&
+                selectedValues.Count == 0)
             {
-                return new ValidationResult(ErrorMessageIfNothingSelected);
+                return new ValidationResult($"Enter {PropertyNameForErrorMessage}");
             }
 
             if (selectedValues.Count < MinimumSelected)
