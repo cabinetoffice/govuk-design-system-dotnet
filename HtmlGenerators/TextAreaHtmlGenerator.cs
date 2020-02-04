@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Linq.Expressions;
 using System.Reflection;
 using System.Threading.Tasks;
@@ -58,8 +59,7 @@ namespace GovUkDesignSystem.HtmlGenerators
 
             if (modelStateEntry != null && modelStateEntry.Errors.Count > 0)
             {
-                // qq:DCC Are we OK with only displaying the first error message here?
-                textAreaViewModel.ErrorMessage = new ErrorMessageViewModel { Text = modelStateEntry.Errors[0].ErrorMessage };
+                textAreaViewModel.ErrorMessage = new ErrorMessageViewModel { Text = string.Join(", ", modelStateEntry.Errors.Select(e => e.ErrorMessage)) };
             }
 
             return htmlHelper.Partial("/GovUkDesignSystemComponents/Textarea.cshtml", textAreaViewModel);

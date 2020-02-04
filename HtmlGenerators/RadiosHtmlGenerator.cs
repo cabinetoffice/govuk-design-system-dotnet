@@ -68,8 +68,7 @@ namespace GovUkDesignSystem.HtmlGenerators
 
             if (modelStateEntry != null && modelStateEntry.Errors.Count > 0)
             {
-                // qq:DCC Are we OK with only displaying the first error message here?
-                radiosViewModel.ErrorMessage = new ErrorMessageViewModel { Text = modelStateEntry.Errors[0].ErrorMessage };
+                radiosViewModel.ErrorMessage = new ErrorMessageViewModel { Text = string.Join(", ", modelStateEntry.Errors.Select(e => e.ErrorMessage)) };
             }
 
             return htmlHelper.Partial("/GovUkDesignSystemComponents/Radios.cshtml", radiosViewModel);
