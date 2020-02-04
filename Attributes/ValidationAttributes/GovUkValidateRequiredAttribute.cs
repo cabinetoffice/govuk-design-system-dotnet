@@ -1,9 +1,15 @@
 ﻿using System;
+using System.ComponentModel.DataAnnotations;
 
 namespace GovUkDesignSystem.Attributes.ValidationAttributes
 {
+    /// <summary>
+    /// This class isn't strictly required anymore - it could be replace with RequiredAttribute.
+    /// Leaving it for backwards compatibility, and because it may be useful to easily identify
+    /// all attributes relevant to this library.
+    /// </summary>
     [AttributeUsage(AttributeTargets.Property)]
-    public class GovUkValidateRequiredAttribute : Attribute
+    public class GovUkValidateRequiredAttribute : RequiredAttribute
     {
         /// <summary>
         /// The error message to show to the user if they don't select an option
@@ -24,6 +30,16 @@ namespace GovUkDesignSystem.Attributes.ValidationAttributes
         /// <br/>
         /// <br/>from <see cref="https://design-system.service.gov.uk/components/radios/#error-messages"/>
         /// </summary>
-        public string ErrorMessageIfMissing { get; set; }
+        public string ErrorMessageIfMissing
+        {
+            get
+            {
+                return ErrorMessage;
+            }
+            set
+            {
+                ErrorMessage = value;
+            }
+        }
     }
 }
