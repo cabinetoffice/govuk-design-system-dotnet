@@ -14,7 +14,7 @@ namespace GovUkDesignSystem.HtmlGenerators
 {
     internal static class RadiosHtmlGenerator
     {
-        public static async Task<IHtmlContent> GenerateHtml<TModel, TEnum>(
+        public static IHtmlContent GenerateHtml<TModel, TEnum>(
             IHtmlHelper<TModel> htmlHelper,
             Expression<Func<TModel, TEnum?>> propertyExpression,
             FieldsetViewModel fieldsetOptions = null,
@@ -72,7 +72,7 @@ namespace GovUkDesignSystem.HtmlGenerators
                 radiosViewModel.ErrorMessage = new ErrorMessageViewModel { Text = modelStateEntry.Errors[0].ErrorMessage };
             }
 
-            return await htmlHelper.PartialAsync("/GovUkDesignSystemComponents/Radios.cshtml", radiosViewModel);
+            return htmlHelper.Partial("/GovUkDesignSystemComponents/Radios.cshtml", radiosViewModel);
         }
     }
 }

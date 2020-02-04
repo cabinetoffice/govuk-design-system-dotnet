@@ -11,7 +11,7 @@ namespace GovUkDesignSystem.HtmlGenerators
 {
     internal static class TextAreaHtmlGenerator
     {
-        internal static async Task<IHtmlContent> GenerateHtml<TModel>(
+        internal static IHtmlContent GenerateHtml<TModel>(
             IHtmlHelper<TModel> htmlHelper,
             Expression<Func<TModel, string>> propertyExpression,
             int? rows = null,
@@ -62,7 +62,7 @@ namespace GovUkDesignSystem.HtmlGenerators
                 textAreaViewModel.ErrorMessage = new ErrorMessageViewModel { Text = modelStateEntry.Errors[0].ErrorMessage };
             }
 
-            return await htmlHelper.PartialAsync("/GovUkDesignSystemComponents/Textarea.cshtml", textAreaViewModel);
+            return htmlHelper.Partial("/GovUkDesignSystemComponents/Textarea.cshtml", textAreaViewModel);
         }
     }
 }

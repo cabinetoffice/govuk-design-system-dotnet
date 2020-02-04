@@ -61,14 +61,14 @@ namespace GovUkDesignSystem
                 formGroupOptions);
         }
 
-        public static async Task<IHtmlContent> GovUkCheckboxes(
+        public static IHtmlContent GovUkCheckboxes(
             this IHtmlHelper htmlHelper,
             CheckboxesViewModel checkboxesViewModel)
         {
-            return await htmlHelper.PartialAsync("/GovUkDesignSystemComponents/Checkboxes.cshtml", checkboxesViewModel);
+            return htmlHelper.Partial("/GovUkDesignSystemComponents/Checkboxes.cshtml", checkboxesViewModel);
         }
 
-        public static async Task<IHtmlContent> GovUkCheckboxesFor<TModel, TEnum>(
+        public static IHtmlContent GovUkCheckboxesFor<TModel, TEnum>(
             this IHtmlHelper<TModel> htmlHelper,
             Expression<Func<TModel, List<TEnum>>> propertyLambdaExpression,
             FieldsetViewModel fieldsetOptions = null,
@@ -78,7 +78,7 @@ namespace GovUkDesignSystem
             where TModel : class
             where TEnum : Enum
         {
-            return await CheckboxesHtmlGenerator.GenerateHtml(
+            return CheckboxesHtmlGenerator.GenerateHtml(
                 htmlHelper,
                 propertyLambdaExpression,
                 fieldsetOptions,
@@ -86,11 +86,11 @@ namespace GovUkDesignSystem
                 conditionalOptions);
         }
 
-        public static async Task<IHtmlContent> GovUkCheckboxItem(
+        public static IHtmlContent GovUkCheckboxItem(
             this IHtmlHelper htmlHelper,
             CheckboxItemViewModel checkboxItemViewModel)
         {
-            return await htmlHelper.PartialAsync("/GovUkDesignSystemComponents/CheckboxItem.cshtml", checkboxItemViewModel);
+            return htmlHelper.Partial("/GovUkDesignSystemComponents/CheckboxItem.cshtml", checkboxItemViewModel);
         }
 
         public static IHtmlContent GovUkErrorMessage(
@@ -220,7 +220,7 @@ namespace GovUkDesignSystem
             return htmlHelper.Partial("/GovUkDesignSystemComponents/PhaseBanner.cshtml", phaseBannerViewModel);
         }
 
-        public static async Task<IHtmlContent> GovUkRadiosFor<TModel, TEnum>(
+        public static IHtmlContent GovUkRadiosFor<TModel, TEnum>(
             this IHtmlHelper<TModel> htmlHelper,
             Expression<Func<TModel, TEnum?>> propertyLambdaExpression,
             FieldsetViewModel fieldsetOptions = null,
@@ -228,18 +228,18 @@ namespace GovUkDesignSystem
             where TModel : class
             where TEnum : struct, Enum
         {
-            return await RadiosHtmlGenerator.GenerateHtml(
+            return RadiosHtmlGenerator.GenerateHtml(
                 htmlHelper,
                 propertyLambdaExpression,
                 fieldsetOptions,
                 hintOptions);
         }
 
-        public static async Task<IHtmlContent> GovUkRadioItem(
+        public static IHtmlContent GovUkRadioItem(
             this IHtmlHelper htmlHelper,
             RadioItemViewModel radioItemViewModel)
         {
-            return await htmlHelper.PartialAsync("/GovUkDesignSystemComponents/RadioItem.cshtml", radioItemViewModel);
+            return htmlHelper.Partial("/GovUkDesignSystemComponents/RadioItem.cshtml", radioItemViewModel);
         }
 
         public static IHtmlContent GovUkTag(
@@ -249,14 +249,14 @@ namespace GovUkDesignSystem
             return htmlHelper.Partial("/GovUkDesignSystemComponents/Tag.cshtml", tagViewModel);
         }
 
-        public static async Task<IHtmlContent> GovUkTextArea(
+        public static IHtmlContent GovUkTextArea(
             this IHtmlHelper htmlHelper,
             TextAreaViewModel textAreaViewModel)
         {
-            return await htmlHelper.PartialAsync("/GovUkDesignSystemComponents/TextArea.cshtml", textAreaViewModel);
+            return htmlHelper.Partial("/GovUkDesignSystemComponents/TextArea.cshtml", textAreaViewModel);
         }
 
-        public static async Task<IHtmlContent> GovUkTextAreaFor<TModel>(
+        public static IHtmlContent GovUkTextAreaFor<TModel>(
             this IHtmlHelper<TModel> htmlHelper,
             Expression<Func<TModel, string>> propertyLambdaExpression,
             int? rows = null,
@@ -265,7 +265,7 @@ namespace GovUkDesignSystem
             FormGroupViewModel formGroupOptions = null)
             where TModel : GovUkViewModel
         {
-            return await TextAreaHtmlGenerator.GenerateHtml(
+            return TextAreaHtmlGenerator.GenerateHtml(
                 htmlHelper,
                 propertyLambdaExpression,
                 rows,
@@ -274,26 +274,26 @@ namespace GovUkDesignSystem
                 formGroupOptions);
         }
 
-        public static async Task<IHtmlContent> GovUkTextInput(
+        public static IHtmlContent GovUkTextInput(
             this IHtmlHelper htmlHelper,
             TextInputViewModel textInputViewModel)
         {
-            return await htmlHelper.PartialAsync("/GovUkDesignSystemComponents/TextInput.cshtml", textInputViewModel);
+            return htmlHelper.Partial("/GovUkDesignSystemComponents/TextInput.cshtml", textInputViewModel);
         }
 
-        public static async Task<IHtmlContent> GovUkTextInputFor<TModel>(
+        public static IHtmlContent GovUkTextInputFor<TModel>(
             this IHtmlHelper<TModel> htmlHelper,
-            Expression<Func<TModel, string>> propertyLambdaExpression,
+            Expression<Func<TModel, string>> propertyExpression,
             LabelViewModel labelOptions = null,
             HintViewModel hintOptions = null,
             FormGroupViewModel formGroupOptions = null,
             string classes = null,
             TextInputAppendixViewModel textInputAppendix = null)
-            where TModel : GovUkViewModel
+            where TModel : class
         {
-            return await TextInputHtmlGenerator.GenerateHtml(
+            return TextInputHtmlGenerator.GenerateHtml(
                 htmlHelper,
-                propertyLambdaExpression,
+                propertyExpression,
                 labelOptions,
                 hintOptions,
                 formGroupOptions,
@@ -301,7 +301,7 @@ namespace GovUkDesignSystem
                 textInputAppendix);
         }
 
-        public static async Task<IHtmlContent> GovUkTextInputFor<TModel>(
+        public static IHtmlContent GovUkTextInputFor<TModel>(
             this IHtmlHelper<TModel> htmlHelper,
             Expression<Func<TModel, int?>> propertyExpression,
             LabelViewModel labelOptions = null,
@@ -311,7 +311,7 @@ namespace GovUkDesignSystem
             TextInputAppendixViewModel textInputAppendix = null)
             where TModel : class
         {
-            return await TextInputHtmlGenerator.GenerateHtml(
+            return TextInputHtmlGenerator.GenerateHtml(
                 htmlHelper,
                 propertyExpression,
                 labelOptions,
