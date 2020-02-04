@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Linq.Expressions;
 using System.Reflection;
 using GovUkDesignSystem.Attributes.ValidationAttributes;
@@ -58,8 +59,7 @@ namespace GovUkDesignSystem.HtmlGenerators
 
             if (modelStateEntry != null && modelStateEntry.Errors.Count > 0)
             {
-                // qq:DCC Are we OK with only displaying the first error message here?
-                characterCountViewModel.ErrorMessage = new ErrorMessageViewModel { Text = modelStateEntry.Errors[0].ErrorMessage };
+                characterCountViewModel.ErrorMessage = new ErrorMessageViewModel { Text = string.Join(", ", modelStateEntry.Errors.Select(e => e.ErrorMessage)) };
             }
 
             return htmlHelper.Partial("/GovUkDesignSystemComponents/CharacterCount.cshtml", characterCountViewModel);
