@@ -10,7 +10,7 @@ namespace GovUkDesignSystem.HtmlGenerators
 {
     internal static class TextInputHtmlGenerator
     {
-        internal static async Task<IHtmlContent> GenerateHtml<TModel, TProperty>(
+        internal static IHtmlContent GenerateHtml<TModel, TProperty>(
             IHtmlHelper<TModel> htmlHelper,
             Expression<Func<TModel, TProperty>> propertyExpression,
             LabelViewModel labelOptions = null,
@@ -63,7 +63,7 @@ namespace GovUkDesignSystem.HtmlGenerators
                 textInputViewModel.ErrorMessage = new ErrorMessageViewModel { Text = modelStateEntry.Errors[0].ErrorMessage };
             }
 
-            return await htmlHelper.PartialAsync("/GovUkDesignSystemComponents/TextInput.cshtml", textInputViewModel);
+            return htmlHelper.Partial("/GovUkDesignSystemComponents/TextInput.cshtml", textInputViewModel);
         }
     }
 }
