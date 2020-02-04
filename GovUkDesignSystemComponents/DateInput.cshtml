@@ -1,0 +1,61 @@
+﻿@using GovUkDesignSystem.GovUkDesignSystemComponents
+@model GovUkDesignSystem.GovUkDesignSystemComponents.DateInputViewModel
+
+@{
+    string id = Model.Id;
+    string errorId = Model.ErrorMessage != null ? id + "-error" : null;
+    string hintId = Model.Hint != null ? id + "-hint" : null;
+
+    Func<object, object> innerHtml =
+    @<text>
+        @{
+        if (Model.Hint != null)
+        {
+            Model.Hint.Id = hintId;
+            await Html.RenderPartialAsync("/GovUkDesignSystemComponents/Hint.cshtml", Model.Hint);
+        }
+        if (Model.ErrorMessage != null)
+        {
+            Model.ErrorMessage.Id = errorId;
+            await Html.RenderPartialAsync("/GovUkDesignSystemComponents/ErrorMessage.cshtml", Model.ErrorMessage);
+        }
+        }
+
+        <div class="govuk-date-input @(Model.Classes)">
+            @for (var index = 0; index < Model.Items.Count; index++)
+            {
+                DateInputItemViewModel currentItem = Model.Items[index];
+                if (currentItem.Id == null)
+                {
+                    currentItem.Id = Model.Id + "-" + currentItem.Name;
+                }
+                if (currentItem.Label == null)
+                {
+                    var lowerCaseName = currentItem.Name.ToLower();
+                    currentItem.Label = char.ToUpper(lowerCaseName[0]) + lowerCaseName.Substring(1);
+                }
+                if (Model.NamePrefix != null)
+                {
+                    currentItem.Name = Model.NamePrefix + "-" + currentItem.Name;
+                }
+                await Html.RenderPartialAsync("/GovUkDesignSystemComponents/DateInputItem.cshtml", currentItem);
+            }
+        </div>
+    </text>;
+
+    if (Model.Fieldset != null)
+    {
+        Model.Fieldset.InnerHtml = innerHtml;
+        Model.Fieldset.DescribedBy = Model.Fieldset.DescribedBy + errorId + hintId;
+
+        <div class="govuk-form-group @(Model.FormGroup?.Classes) @( Html.Raw(Model.ErrorMessage != null ? "govuk-form-group--error" : ""))">
+            @{await Html.RenderPartialAsync("/GovUkDesignSystemComponents/Fieldset.cshtml", Model.Fieldset);}
+        </div>;
+    }
+    else
+    {
+        <div class="govuk-form-group @( Model.FormGroup?.Classes) @( Html.Raw(Model.ErrorMessage != null ? "govuk-form-group--error" : ""))">
+            @innerHtml(new object())
+        </div>;
+    }
+}

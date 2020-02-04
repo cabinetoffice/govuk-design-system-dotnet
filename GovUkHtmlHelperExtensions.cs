@@ -93,6 +93,45 @@ namespace GovUkDesignSystem
             return htmlHelper.Partial("/GovUkDesignSystemComponents/CheckboxItem.cshtml", checkboxItemViewModel);
         }
 
+        /// <summary>
+        /// This doesn't work for more than three items in the DateInputViewModel and only if they have ids 'day', 'month', and 'year'.
+        /// <returns></returns>
+        public static IHtmlContent GovUkDateInput(
+            this IHtmlHelper htmlHelper,
+            DateInputViewModel dateInputViewModel)
+        {
+            return htmlHelper.Partial("/GovUkDesignSystemComponents/DateInput.cshtml", dateInputViewModel);
+        }
+
+        /// <summary>
+        /// This doesn't work for more than three items and only if they have ids 'day', 'month', and 'year'.
+        /// <returns></returns>
+        public static async Task<IHtmlContent> GovUkDateInputFor<TModel>(
+            this IHtmlHelper<TModel> htmlHelper,
+            Expression<Func<TModel, DateTime?>> propertyLambdaExpression,
+            string classes = null,
+            LabelViewModel labelOptions = null,
+            HintViewModel hintOptions = null,
+            FieldsetViewModel fieldsetOptions = null,
+            FormGroupViewModel formGroupOptions = null,
+            Dictionary<string, string> attributes = null,
+            List<DateInputItemViewModel> items = null
+            )
+            where TModel : GovUkViewModel
+        {
+            return await DateInputHtmlGenerator.GenerateHtml(
+                htmlHelper,
+                propertyLambdaExpression,
+                classes,
+                labelOptions,
+                hintOptions,
+                fieldsetOptions,
+                formGroupOptions,
+                attributes,
+                items
+                );
+        }
+
         public static IHtmlContent GovUkErrorMessage(
             this IHtmlHelper htmlHelper,
             ErrorMessageViewModel errorMessageViewModel)
