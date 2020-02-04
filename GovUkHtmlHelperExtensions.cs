@@ -263,7 +263,7 @@ namespace GovUkDesignSystem
             LabelViewModel labelOptions = null,
             HintViewModel hintOptions = null,
             FormGroupViewModel formGroupOptions = null)
-            where TModel : GovUkViewModel
+            where TModel : class
         {
             return TextAreaHtmlGenerator.GenerateHtml(
                 htmlHelper,
