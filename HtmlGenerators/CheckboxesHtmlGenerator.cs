@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Reflection;
+using System.Threading.Tasks;
 using GovUkDesignSystem.Attributes;
 using GovUkDesignSystem.GovUkDesignSystemComponents;
 using GovUkDesignSystem.Helpers;
@@ -13,40 +14,35 @@ namespace GovUkDesignSystem.HtmlGenerators
 {
     internal static class CheckboxesHtmlGenerator
     {
-        public static IHtmlContent GenerateHtml<TModel, TPropertyListItem>(
+        public static async Task<IHtmlContent> GenerateHtml<TModel, TEnum>(
             IHtmlHelper<TModel> htmlHelper,
-            Expression<Func<TModel, List<TPropertyListItem>>> propertyLambdaExpression,
+            Expression<Func<TModel, List<TEnum>>> propertyExpression,
             FieldsetViewModel fieldsetOptions = null,
             HintViewModel hintOptions = null,
-            Dictionary<TPropertyListItem, Func<object, object>> conditionalOptions = null)
-            where TModel : GovUkViewModel
-            where TPropertyListItem : struct, IConvertible
+            Dictionary<TEnum, Func<object, object>> conditionalOptions = null)
+            where TModel : class
+            where TEnum : Enum
         {
-            PropertyInfo property = ExpressionHelpers.GetPropertyFromExpression(propertyLambdaExpression);
-            ThrowIfPropertyTypeIsNotListOfEnums<TPropertyListItem>(property);
-            string propertyName = property.Name;
+            string propertyId = htmlHelper.IdFor(propertyExpression);
+            string propertyName = htmlHelper.NameFor(propertyExpression);
+            htmlHelper.ViewData.ModelState.TryGetValue(propertyName, out var modelStateEntry);
 
-            TModel model = htmlHelper.ViewData.Model;
-            List<TPropertyListItem> currentlySelectedValues =
-                ExpressionHelpers.GetPropertyValueFromModelAndExpression(model, propertyLambdaExpression);
+            // Normally we'd want to get our values from the post data first. However with a list of checkboxes we only
+            // care about valid submitted values (invalid values mean someone is messing around with PostMan or similar)
+            // so we can just use the model values straight away.
+            var selectedValues = ExpressionHelpers.GetPropertyValueFromModelAndExpression(htmlHelper.ViewData.Model, propertyExpression);
 
-            List<TPropertyListItem> allEnumValues =
-                Enum.GetValues(typeof(TPropertyListItem))
-                    .Cast<TPropertyListItem>()
-                    .ToList();
-
-            List<ItemViewModel> checkboxes = allEnumValues
+            List<ItemViewModel> checkboxes = Enum.GetValues(typeof(TEnum))
+                .Cast<TEnum>()
                 .Select(enumValue =>
                 {
-                    var isEnumValueInListOfCurrentlySelectedValues =
-                        currentlySelectedValues != null && currentlySelectedValues.Contains(enumValue);
-
-                    string checkboxLabelText = GetCheckboxLabelText(enumValue);
+                    var isEnumValueInListOfCurrentlySelectedValues = selectedValues.Contains(enumValue);
+                    string checkboxLabelText = GovUkRadioCheckboxLabelTextAttribute.GetLabelText(enumValue);
 
                     var checkboxItemViewModel = new CheckboxItemViewModel
                     {
                         Value = enumValue.ToString(),
-                        Id = $"GovUk_Checkbox_{propertyName}_{enumValue}",
+                        Id = $"{propertyName}_{enumValue}",
                         Checked = isEnumValueInListOfCurrentlySelectedValues,
                         Label = new LabelViewModel
                         {
@@ -57,7 +53,6 @@ namespace GovUkDesignSystem.HtmlGenerators
                     if (conditionalOptions != null && conditionalOptions.TryGetValue(enumValue, out Func<object, object> conditionalHtml))
                     {
                         checkboxItemViewModel.Conditional = new Conditional { Html = conditionalHtml };
-
                     }
 
                     return checkboxItemViewModel;
@@ -67,21 +62,20 @@ namespace GovUkDesignSystem.HtmlGenerators
 
             var checkboxesViewModel = new CheckboxesViewModel
             {
-                Name = $"GovUk_Checkbox_{propertyName}",
-                IdPrefix = $"GovUk_{propertyName}",
+                Name = propertyName,
+                IdPrefix = propertyId,
                 Items = checkboxes,
                 Fieldset = fieldsetOptions,
                 Hint = hintOptions
             };
-            if (model.HasErrorFor(property))
+
+            if (modelStateEntry != null && modelStateEntry.Errors.Count > 0)
             {
-                checkboxesViewModel.ErrorMessage = new ErrorMessageViewModel
-                {
-                    Text = model.GetErrorFor(property)
-                };
+                // qq:DCC Are we OK with only displaying the first error message here?
+                checkboxesViewModel.ErrorMessage = new ErrorMessageViewModel { Text = modelStateEntry.Errors[0].ErrorMessage };
             }
 
-            return htmlHelper.Partial("/GovUkDesignSystemComponents/Checkboxes.cshtml", checkboxesViewModel);
+            return await htmlHelper.PartialAsync("/GovUkDesignSystemComponents/Checkboxes.cshtml", checkboxesViewModel);
         }
 
         private static void ThrowIfPropertyTypeIsNotListOfEnums<TPropertyListItem>(PropertyInfo property)
@@ -93,17 +87,6 @@ namespace GovUkDesignSystem.HtmlGenerators
                     $"but was actually used on property [{property.Name}] which is a List of type [{property.PropertyType.FullName}] "
                 );
             }
-        }
-
-        private static string GetCheckboxLabelText<TEnum>(
-            TEnum enumValue)
-            where TEnum : struct, IConvertible
-        {
-            string textFromAttribute = GovUkRadioCheckboxLabelTextAttribute.GetValueForEnum(typeof(TEnum), enumValue);
-
-            string checkboxLabel = textFromAttribute ?? enumValue.ToString();
-
-            return checkboxLabel;
         }
     }
 }
