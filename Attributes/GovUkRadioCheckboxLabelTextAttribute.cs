@@ -8,8 +8,6 @@ namespace GovUkDesignSystem.Attributes
     /// <summary>
     ///     Label text for Radio buttons and Checkboxes
     ///     <br/> Note: this attribute should only be applied to Enum values
-    ///     
-    ///     qq:DCC Currently this could be replaced with the standard DisplayAttribute
     /// </summary>
     [AttributeUsage(AttributeTargets.Field)]
     public class GovUkRadioCheckboxLabelTextAttribute : Attribute

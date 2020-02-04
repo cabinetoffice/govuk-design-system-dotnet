@@ -6,7 +6,6 @@ namespace GovUkDesignSystem.Helpers
 {
     internal static class ExpressionHelpers
     {
-        //qq:DCC Can probably remove this once other changes are complete
         internal static PropertyInfo GetPropertyFromExpression<TModel, TProperty>(
             Expression<Func<TModel, TProperty>> propertyLambdaExpression)
             where TModel : class
