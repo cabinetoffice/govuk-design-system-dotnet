@@ -30,7 +30,14 @@ namespace GovUkDesignSystem.Parsers
 
             ThrowIfPropertyHasNonDefaultValue(model, property);
 
-            throw new ArgumentException($"Can't parse a property of type {typeof(TProperty)}");
+            if (typeof(TProperty) == typeof(string))
+            {
+                TextParser.ParseAndValidate(model, property, httpRequest);
+            }
+            else
+            {
+                throw new ArgumentException($"Can't parse a property of type {typeof(TProperty)}");
+            }
         }
 
         private static void ThrowIfPropertyHasNonDefaultValue(object model, PropertyInfo property)
