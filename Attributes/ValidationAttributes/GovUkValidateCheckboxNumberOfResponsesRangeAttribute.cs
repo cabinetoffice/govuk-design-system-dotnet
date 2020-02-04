@@ -20,9 +20,22 @@ namespace GovUkDesignSystem.Attributes.ValidationAttributes
         public int MaximumSelected { get; set; } = int.MaxValue;
 
         /// <summary>
-        /// Whether a value must be supplied
+        /// The error message to show to the user if they don't select an option.
+        /// Leave null if the value is not required
+        /// <br/>
+        /// <br/>GDS guidance:
+        /// <br/>
+        /// <br/>If nothing is selected and the question has options in it
+        /// <br/>- Say "Select if [whatever it is]".
+        /// <br/>- For example, ‘Select if you are British, Irish or a citizen of a different country’.
+        /// <br/>
+        /// <br/>If nothing is selected and the question does not have options in it
+        /// <br/>- Say "Select [whatever it is]".
+        /// <br/>- For example, ‘Select your nationality or nationalities’.
+        /// <br/>
+        /// <br/>from <see cref="https://design-system.service.gov.uk/components/checkboxes/#error-messages"/>
         /// </summary>
-        public bool IsRequired { get; set; } = false;
+        public string ErrorMessageIfMissing { get; set; }
 
         /// <summary>
         /// The name to use within error messages about the number of selected options
@@ -33,10 +46,10 @@ namespace GovUkDesignSystem.Attributes.ValidationAttributes
         {
             var selectedValues = (IList)value;
 
-            if (IsRequired &&
+            if (!string.IsNullOrEmpty(ErrorMessageIfMissing) &&
                 selectedValues.Count == 0)
             {
-                return new ValidationResult($"Enter {PropertyNameForErrorMessage}");
+                return new ValidationResult(ErrorMessageIfMissing);
             }
 
             if (selectedValues.Count < MinimumSelected)
