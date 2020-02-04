@@ -50,27 +50,9 @@ namespace GovUkDesignSystem
             LabelViewModel labelOptions = null,
             HintViewModel hintOptions = null,
             FormGroupViewModel formGroupOptions = null)
-            where TModel : GovUkViewModel
-        {
-            return CharacterCountHtmlGenerator.GenerateHtml(
-                htmlHelper,
-                propertyLambdaExpression,
-                rows,
-                labelOptions,
-                hintOptions,
-                formGroupOptions);
-        }
-
-        public static IHtmlContent GovUkCharacterCountDccFor<TModel>(
-            this IHtmlHelper<TModel> htmlHelper,
-            Expression<Func<TModel, string>> propertyLambdaExpression,
-            int? rows = null,
-            LabelViewModel labelOptions = null,
-            HintViewModel hintOptions = null,
-            FormGroupViewModel formGroupOptions = null)
             where TModel : class
         {
-            return CharacterCountHtmlGenerator.GenerateHtmlDcc(
+            return CharacterCountHtmlGenerator.GenerateHtml(
                 htmlHelper,
                 propertyLambdaExpression,
                 rows,

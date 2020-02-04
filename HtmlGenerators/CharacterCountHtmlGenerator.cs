@@ -11,7 +11,7 @@ namespace GovUkDesignSystem.HtmlGenerators
 {
     internal static class CharacterCountHtmlGenerator
     {
-        internal static IHtmlContent GenerateHtmlDcc<TModel>(
+        internal static IHtmlContent GenerateHtml<TModel>(
             IHtmlHelper<TModel> htmlHelper,
             Expression<Func<TModel, string>> propertyExpression,
             int? rows = null,
@@ -60,46 +60,6 @@ namespace GovUkDesignSystem.HtmlGenerators
             {
                 // qq:DCC Are we OK with only displaying the first error message here?
                 characterCountViewModel.ErrorMessage = new ErrorMessageViewModel { Text = modelStateEntry.Errors[0].ErrorMessage };
-            }
-
-            return htmlHelper.Partial("/GovUkDesignSystemComponents/CharacterCount.cshtml", characterCountViewModel);
-        }
-
-        internal static IHtmlContent GenerateHtml<TModel>(
-            IHtmlHelper<TModel> htmlHelper,
-            Expression<Func<TModel, string>> propertyLambdaExpression,
-            int? rows = null,
-            LabelViewModel labelOptions = null,
-            HintViewModel hintOptions = null,
-            FormGroupViewModel formGroupOptions = null
-        )
-            where TModel : GovUkViewModel
-        {
-            PropertyInfo property = ExpressionHelpers.GetPropertyFromExpression(propertyLambdaExpression);
-            ThrowIfPropertyDoesNotHaveCharacterCountAttribute(property);
-
-            string propertyName = property.Name;
-
-            TModel model = htmlHelper.ViewData.Model;
-
-            string currentValue = ExtensionHelpers.GetCurrentValue(model, property, propertyLambdaExpression);
-
-            int maximumCharacters = GetMaximumCharacters(property);
-
-            var characterCountViewModel = new CharacterCountViewModel {
-                Name = $"GovUk_Text_{propertyName}",
-                Id = $"GovUk_{propertyName}",
-                MaxLength = maximumCharacters,
-                Value = currentValue,
-                Rows = rows,
-                Label = labelOptions,
-                Hint = hintOptions,
-                FormGroup = formGroupOptions
-            };
-
-            if (model.HasErrorFor(property))
-            {
-                characterCountViewModel.ErrorMessage = new ErrorMessageViewModel {Text = model.GetErrorFor(property)};
             }
 
             return htmlHelper.Partial("/GovUkDesignSystemComponents/CharacterCount.cshtml", characterCountViewModel);
