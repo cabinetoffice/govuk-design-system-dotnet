@@ -27,15 +27,15 @@ namespace GovUkDesignSystem.Attributes.ValidationAttributes
         /// <br/>
         /// <br/>If nothing is selected and the question has options in it
         /// <br/>- Say "Select if [whatever it is]".
-        /// <br/>- For example, ‘Select if you are British, Irish or a citizen of a different country’.
+        /// <br/>- For example, "Select if you are British, Irish or a citizen of a different country".
         /// <br/>
         /// <br/>If nothing is selected and the question does not have options in it
         /// <br/>- Say "Select [whatever it is]".
-        /// <br/>- For example, ‘Select your nationality or nationalities’.
+        /// <br/>- For example, "Select your nationality or nationalities".
         /// <br/>
         /// <br/>from <see cref="https://design-system.service.gov.uk/components/checkboxes/#error-messages"/>
         /// </summary>
-        public string ErrorMessageIfMissing { get; set; }
+        public string ErrorMessageIfNothingSelected { get; set; }
 
         /// <summary>
         /// The name to use within error messages about the number of selected options
@@ -46,10 +46,10 @@ namespace GovUkDesignSystem.Attributes.ValidationAttributes
         {
             var selectedValues = (IList)value;
 
-            if (!string.IsNullOrEmpty(ErrorMessageIfMissing) &&
+            if (!string.IsNullOrEmpty(ErrorMessageIfNothingSelected) &&
                 selectedValues.Count == 0)
             {
-                return new ValidationResult(ErrorMessageIfMissing);
+                return new ValidationResult(ErrorMessageIfNothingSelected);
             }
 
             if (selectedValues.Count < MinimumSelected)
