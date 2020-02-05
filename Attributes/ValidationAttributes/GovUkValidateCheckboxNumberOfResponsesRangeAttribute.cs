@@ -44,6 +44,11 @@ namespace GovUkDesignSystem.Attributes.ValidationAttributes
 
         protected override ValidationResult IsValid(object value, ValidationContext validationContext)
         {
+            if (string.IsNullOrEmpty(PropertyNameForErrorMessage))
+            {
+                throw new ArgumentNullException("PropertyNameForErrorMessage cannot be null or empty");
+            }
+
             var selectedValues = (IList)value;
 
             if (!string.IsNullOrEmpty(ErrorMessageIfNothingSelected) &&
