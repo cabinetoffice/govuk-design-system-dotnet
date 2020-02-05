@@ -1,8 +1,9 @@
-﻿using System.Collections.Generic;
+﻿using GovUkDesignSystem.GovUkDesignSystemComponents.SubComponents;
+using System.Collections.Generic;
 
 namespace GovUkDesignSystem.GovUkDesignSystemComponents
 {
-    public class CharacterCountViewModel
+    public class CharacterCountViewModel : IHasErrorMessage
     {
 
         /// <summary>

@@ -29,18 +29,13 @@ namespace GovUkDesignSystem.HtmlGenerators
             // Normally we'd want to get our values from the post data first. However with a list of radio buttons we only
             // care about valid submitted values (invalid values mean someone is messing around with PostMan or similar)
             // so we can just use the model values straight away.
-            string selectedValue = null;
-            var modelValue = ExpressionHelpers.GetPropertyValueFromModelAndExpression(htmlHelper.ViewData.Model, propertyExpression);
-            if (modelValue != null)
-            {
-                selectedValue = modelValue.ToString();
-            }
+            TEnum? selectedValue = ExpressionHelpers.GetPropertyValueFromModelAndExpression(htmlHelper.ViewData.Model, propertyExpression);
 
             List<ItemViewModel> radios = Enum.GetValues(typeof(TEnum))
                 .Cast<TEnum>()
                 .Select(enumValue =>
                 {
-                    bool isEnumValueCurrentlySelected = enumValue.ToString() == selectedValue;
+                    bool isEnumValueCurrentlySelected = selectedValue.HasValue && enumValue.Equals(selectedValue.Value);
                     string radioLabelText = GovUkRadioCheckboxLabelTextAttribute.GetLabelText(enumValue);
 
                     return new RadioItemViewModel
@@ -66,10 +61,7 @@ namespace GovUkDesignSystem.HtmlGenerators
                 Hint = hintOptions
             };
 
-            if (modelStateEntry != null && modelStateEntry.Errors.Count > 0)
-            {
-                radiosViewModel.ErrorMessage = new ErrorMessageViewModel { Text = string.Join(", ", modelStateEntry.Errors.Select(e => e.ErrorMessage)) };
-            }
+            HtmlGenerationHelpers.SetErrorMessages(radiosViewModel, modelStateEntry);
 
             return htmlHelper.Partial("/GovUkDesignSystemComponents/Radios.cshtml", radiosViewModel);
         }
