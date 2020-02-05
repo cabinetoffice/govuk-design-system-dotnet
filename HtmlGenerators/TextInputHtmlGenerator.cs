@@ -27,19 +27,7 @@ namespace GovUkDesignSystem.HtmlGenerators
             htmlHelper.ViewData.ModelState.TryGetValue(propertyName, out var modelStateEntry);
 
             // Get the value to put in the input from the post data if possible, otherwise use the value in the model
-            string inputValue = null;
-            if (modelStateEntry != null && modelStateEntry.RawValue != null)
-            {
-                inputValue = modelStateEntry.RawValue as string;
-            }
-            else
-            {
-                var modelValue = ExpressionHelpers.GetPropertyValueFromModelAndExpression(htmlHelper.ViewData.Model, propertyExpression);
-                if (modelValue != null)
-                {
-                    inputValue = modelValue.ToString();
-                }
-            }
+            string inputValue = HtmlGenerationHelpers.GetStringValueFromModelStateOrModel(modelStateEntry, htmlHelper.ViewData.Model, propertyExpression);
 
             if (labelOptions != null)
             {
@@ -58,10 +46,7 @@ namespace GovUkDesignSystem.HtmlGenerators
                 Value = inputValue
             };
 
-            if (modelStateEntry != null && modelStateEntry.Errors.Count > 0)
-            {
-                textInputViewModel.ErrorMessage = new ErrorMessageViewModel { Text = string.Join(", ", modelStateEntry.Errors.Select(e => e.ErrorMessage)) };
-            }
+            HtmlGenerationHelpers.SetErrorMessages(textInputViewModel, modelStateEntry);
 
             return htmlHelper.Partial("/GovUkDesignSystemComponents/TextInput.cshtml", textInputViewModel);
         }

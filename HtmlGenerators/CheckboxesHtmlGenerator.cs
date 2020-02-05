@@ -69,10 +69,7 @@ namespace GovUkDesignSystem.HtmlGenerators
                 Hint = hintOptions
             };
 
-            if (modelStateEntry != null && modelStateEntry.Errors.Count > 0)
-            {
-                checkboxesViewModel.ErrorMessage = new ErrorMessageViewModel { Text = string.Join(", ", modelStateEntry.Errors.Select(e => e.ErrorMessage)) };
-            }
+            HtmlGenerationHelpers.SetErrorMessages(checkboxesViewModel, modelStateEntry);
 
             return htmlHelper.Partial("/GovUkDesignSystemComponents/Checkboxes.cshtml", checkboxesViewModel);
         }
