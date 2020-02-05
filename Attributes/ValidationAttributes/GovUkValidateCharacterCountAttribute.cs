@@ -29,6 +29,15 @@ namespace GovUkDesignSystem.Attributes.ValidationAttributes
 
         protected override ValidationResult IsValid(object value, ValidationContext validationContext)
         {
+            if (string.IsNullOrEmpty(NameAtStartOfSentence))
+            {
+                throw new ArgumentNullException("NameAtStartOfSentence cannot be null or empty");
+            }
+            if (string.IsNullOrEmpty(NameWithinSentence))
+            {
+                throw new ArgumentNullException("NameWithinSentence cannot be null or empty");
+            }
+
             var stringValue = (string)value;
 
             if (IsRequired &&
