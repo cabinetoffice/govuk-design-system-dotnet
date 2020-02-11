@@ -65,6 +65,10 @@ namespace GovUkDesignSystem.ModelBinders
             {
                 bindingContext.ModelState.TryAddModelError(modelName, $"{errorText.NameAtStartOfSentence} does not include {String.Join(" or ", errors.Select(p => p.Key))}");
             }
+            else if (errors.Count == modelNames.Length)
+            {
+                bindingContext.ModelState.TryAddModelError(modelName, errorText.ErrorMessageIfMissing);
+            }
 
             return Task.CompletedTask;
         }
