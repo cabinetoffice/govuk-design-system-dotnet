@@ -34,12 +34,15 @@ namespace GovUkDesignSystem.HtmlGenerators
             var inputDate = new List<string>();
             if (modelStateEntry != null && modelStateEntry.RawValue != null && modelStateEntry.RawValue.ToString().Contains("/"))
             {
-                var dateString = modelStateEntry.RawValue.ToString();
-                var firstSlashIndex = dateString.IndexOf("/");
-                var secondSlashIndex = dateString.IndexOf("/", firstSlashIndex + 2);
-                inputDate.Add(dateString.Substring(0, firstSlashIndex));
-                inputDate.Add(dateString.Substring(firstSlashIndex + 1, secondSlashIndex - firstSlashIndex - 1));
-                inputDate.Add(dateString.Substring(secondSlashIndex + 1, dateString.IndexOf(" ") - secondSlashIndex - 1));
+                inputDate = GetDayMonthYearFromDateTimeString(modelStateEntry.RawValue.ToString());
+            }
+            else
+            {
+                var modelValue = ExpressionHelpers.GetPropertyValueFromModelAndExpression(htmlHelper.ViewData.Model, propertyLambdaExpression);
+                if (modelValue != null)
+                {
+                    inputDate = GetDayMonthYearFromDateTimeString(modelValue.ToString());
+                }
             }
 
             if (labelOptions != null)
@@ -87,6 +90,16 @@ namespace GovUkDesignSystem.HtmlGenerators
             }
 
             return await htmlHelper.PartialAsync("/GovUkDesignSystemComponents/DateInput.cshtml", dateInputViewModel);
+        }
+
+        private static List<string> GetDayMonthYearFromDateTimeString(string dateString)
+        {
+            var firstSlashIndex = dateString.IndexOf("/");
+            var secondSlashIndex = dateString.IndexOf("/", firstSlashIndex + 2);
+            var day = dateString.Substring(0, firstSlashIndex);
+            var month = dateString.Substring(firstSlashIndex + 1, secondSlashIndex - firstSlashIndex - 1);
+            var year = dateString.Substring(secondSlashIndex + 1, dateString.IndexOf(" ") - secondSlashIndex - 1);
+            return new List<string> { day, month, year };
         }
     }
 }
