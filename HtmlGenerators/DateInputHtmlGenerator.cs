@@ -13,7 +13,7 @@ namespace GovUkDesignSystem.HtmlGenerators
 {
     internal static class DateInputHtmlGenerator
     {
-        internal static async Task<IHtmlContent> GenerateHtml<TModel, TProperty>(
+        internal static IHtmlContent GenerateHtml<TModel, TProperty>(
             IHtmlHelper<TModel> htmlHelper,
             Expression<Func<TModel, TProperty>> propertyLambdaExpression,
             string classes,
@@ -89,7 +89,7 @@ namespace GovUkDesignSystem.HtmlGenerators
                 dateInputViewModel.ErrorMessage = new ErrorMessageViewModel { Text = modelStateEntry.Errors[0].ErrorMessage };
             }
 
-            return await htmlHelper.PartialAsync("/GovUkDesignSystemComponents/DateInput.cshtml", dateInputViewModel);
+            return htmlHelper.Partial("/GovUkDesignSystemComponents/DateInput.cshtml", dateInputViewModel);
         }
 
         private static List<string> GetDayMonthYearFromDateTimeString(string dateString)

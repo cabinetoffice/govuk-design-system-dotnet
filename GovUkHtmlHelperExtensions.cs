@@ -1,14 +1,13 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Linq.Expressions;
-using System.Threading.Tasks;
 using GovUkDesignSystem.GovUkDesignSystemComponents;
 using GovUkDesignSystem.GovUkDesignSystemComponents.SubComponents;
 using GovUkDesignSystem.HtmlGenerators;
 using Microsoft.AspNetCore.Html;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using System;
+using System.Collections.Generic;
+using System.Linq.Expressions;
+using System.Threading.Tasks;
 
 namespace GovUkDesignSystem
 {
@@ -106,7 +105,7 @@ namespace GovUkDesignSystem
         /// <summary>
         /// This doesn't work for more than three items and only if they have ids 'day', 'month', and 'year'.
         /// <returns></returns>
-        public static async Task<IHtmlContent> GovUkDateInputFor<TModel>(
+        public static IHtmlContent GovUkDateInputFor<TModel>(
             this IHtmlHelper<TModel> htmlHelper,
             Expression<Func<TModel, DateTime?>> propertyLambdaExpression,
             string classes = null,
@@ -117,9 +116,9 @@ namespace GovUkDesignSystem
             Dictionary<string, string> attributes = null,
             List<DateInputItemViewModel> items = null
             )
-            where TModel : GovUkViewModel
+            where TModel : class
         {
-            return await DateInputHtmlGenerator.GenerateHtml(
+            return DateInputHtmlGenerator.GenerateHtml(
                 htmlHelper,
                 propertyLambdaExpression,
                 classes,
