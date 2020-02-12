@@ -31,6 +31,12 @@ namespace GovUkDesignSystem.ModelBinders
             // Ensure that a value was sent to us in the request
             if (modelValueDictionary.Any(r => r.Value == ValueProviderResult.None)) 
             {
+                return Task.CompletedTask;
+            }
+
+            // Ensure that a non empty value was sent to us in the request
+            if (modelValueDictionary.Any(r =>string.IsNullOrEmpty(r.Value.FirstValue)))
+            {
                 bindingContext.ModelState.TryAddModelError(modelName, errorText.ErrorMessageIfMissing);
                 return Task.CompletedTask;
             }
