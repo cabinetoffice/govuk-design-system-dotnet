@@ -42,7 +42,8 @@ namespace GovUkDesignSystem.ModelBinders
             {
                 if (string.IsNullOrEmpty(p.Value))
                 {
-                    errors.Add(new KeyValuePair<string, DateErrors>(p.Key, DateErrors.ValueMissing));
+                    var unit = p.Key.Substring(p.Key.LastIndexOf("-") + 1, p.Key.Length - p.Key.LastIndexOf("-") - 1);
+                    errors.Add(new KeyValuePair<string, DateErrors>(unit, DateErrors.ValueMissing));
                 }
             });
 
@@ -63,7 +64,7 @@ namespace GovUkDesignSystem.ModelBinders
             }
             else if (errors.Count < modelNames.Length)
             {
-                bindingContext.ModelState.TryAddModelError(modelName, $"{errorText.NameAtStartOfSentence} does not include {String.Join(" or ", errors.Select(p => p.Key))}");
+                bindingContext.ModelState.TryAddModelError(modelName, $"{errorText.NameAtStartOfSentence} does not include a {String.Join(" or a ", errors.Select(p => p.Key))}");
             }
             else if (errors.Count == modelNames.Length)
             {
