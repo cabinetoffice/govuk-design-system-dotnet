@@ -295,5 +295,12 @@ namespace GovUkDesignSystem
                 classes,
                 textInputAppendix);
         }
+
+        public static IHtmlContent GovUkTabs(
+            this IHtmlHelper htmlHelper,
+            TabsViewModel tabsViewModel)
+        {
+            return htmlHelper.Partial("/GovUkDesignSystemComponents/Tabs.cshtml", tabsViewModel);
+        }
     }
 }

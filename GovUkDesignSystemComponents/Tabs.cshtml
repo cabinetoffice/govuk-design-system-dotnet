@@ -1,0 +1,25 @@
+﻿@using GovUkDesignSystem.GovUkDesignSystemComponents
+@model GovUkDesignSystem.GovUkDesignSystemComponents.TabsViewModel
+
+<div class="govuk-tabs" data-module="govuk-tabs">
+    <h2 class="govuk-tabs__title">
+        @Model.Title
+    </h2>
+    <ul class="govuk-tabs__list">
+        @foreach (TabsListItemViewModel tab in Model.TabsList)
+        {
+            <li class="govuk-tabs__list-item govuk-tabs__list-item--selected">
+                <a class="govuk-tabs__tab" href="#@tab.Section.Id">
+                    @tab.Label
+                </a>
+            </li>
+        }
+    </ul>
+    @foreach (TabsListItemViewModel tab in Model.TabsList)
+    {
+        <section class="govuk-tabs__panel" id=@tab.Section.Id>
+            <h2 class="govuk-heading-l">@tab.Label</h2>
+                @{ await Html.RenderPartialAsync("/GovUkDesignSystemComponents/SubComponents/HtmlText.cshtml", tab.Section); }
+        </section>
+    }
+</div>
