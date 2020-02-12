@@ -23,11 +23,6 @@ namespace GovUkDesignSystem.ModelBinders
             // Check whether a value was sent to us in the request at all
             if (valueProviderResult == ValueProviderResult.None)
             {
-                // Raise an error if this property is mandatory
-                if (errorMessageIfMissing != null)
-                {
-                    bindingContext.ModelState.TryAddModelError(modelName, errorMessageIfMissing);
-                }
                 return Task.CompletedTask;
             }
 
