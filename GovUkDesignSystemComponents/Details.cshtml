@@ -1,0 +1,31 @@
+﻿@model GovUkDesignSystem.GovUkDesignSystemComponents.DetailsViewModel
+
+@{
+    string detailsOpen = Model.Open ? "open" : String.Empty;
+    string summaryOpen = Model.Open ? "aria-expanded=true" : String.Empty;
+    string detailsSectionOpen = Model.Open ? "aria-hidden=true" : String.Empty;
+    string id = string.IsNullOrEmpty(Model.Id) ? string.Empty : "id = " + Model.Id;
+    string classNames =
+        $"govuk-details "
+        + $"{Model.Classes}";
+}
+
+<details class="@classNames" data-module="govuk-details" @id @detailsOpen @(Html.Raw(Model.Attributes != null ? string.Join(" ", Model.Attributes.Select(a => a.Key + "=\"" + a.Value + "\"")) : ""))>
+    <summary class="govuk-details__summary" @summaryOpen>
+        <span class="govuk-details__summary-text">
+            @if (Model.SummaryHtml != null)
+            {
+                @(Model.SummaryHtml(new object()))
+            }
+            else
+            {
+                @(Model.SummaryText ?? "")
+            }
+        </span>
+    </summary>
+    <div class="govuk-details__text" @detailsSectionOpen>
+        @{
+            await Html.RenderPartialAsync("/GovUkDesignSystemComponents/SubComponents/HtmlText.cshtml", Model);
+        }
+    </div>
+</details>
