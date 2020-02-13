@@ -1,0 +1,19 @@
+﻿@model GovUkDesignSystem.GovUkDesignSystemComponents.SummaryListViewModel
+
+@{
+    string classNames =
+        $"govuk-summary-list "
+        + $"{(Model == null || String.IsNullOrEmpty(Model.Classes) ? string.Empty : Model.Classes)}";
+}
+
+<dl class="@classNames" @(Html.Raw(Model.Attributes != null ? string.Join(" ", Model.Attributes.Select(a => a.Key + "=\"" + a.Value + "\"")) : ""))>
+    @{
+        if (Model.Rows != null && Model.Rows.Count > 0)
+        {
+            for (var index = 0; index < Model.Rows.Count; index++)
+            {
+                await Html.RenderPartialAsync("/GovUkDesignSystemComponents/SubComponents/SummaryListRow.cshtml", Model.Rows[index]);
+            }
+        }
+    }
+</dl>

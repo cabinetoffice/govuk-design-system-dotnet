@@ -1,0 +1,16 @@
+﻿@model GovUkDesignSystem.GovUkDesignSystemComponents.SummaryListRowValue
+
+@{
+    string classNames =
+        $"govuk-summary-list__value "
+        + $"{(Model == null || String.IsNullOrEmpty(Model.Classes) ? string.Empty : Model.Classes)}";
+}
+
+<dd class="@classNames">
+    @{
+        if (Model != null)
+        {
+            await Html.RenderPartialAsync("/GovUkDesignSystemComponents/SubComponents/HtmlText.cshtml", Model);
+        }
+    }
+</dd>
