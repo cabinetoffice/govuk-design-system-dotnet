@@ -1,25 +1,30 @@
 ﻿@using GovUkDesignSystem.GovUkDesignSystemComponents
 @model GovUkDesignSystem.GovUkDesignSystemComponents.TabsViewModel
 
+@{
+    bool firstLoop = true;
+}
+
 <div class="govuk-tabs" data-module="govuk-tabs">
     <h2 class="govuk-tabs__title">
-        @Model.Title
+        Contents
     </h2>
     <ul class="govuk-tabs__list">
-        @foreach (TabsListItemViewModel tab in Model.TabsList)
+        @foreach (TabsListItemViewModel tab in Model.Items)
         {
-            <li class="govuk-tabs__list-item govuk-tabs__list-item--selected">
-                <a class="govuk-tabs__tab" href="#@tab.Section.Id">
+            <li class="govuk-tabs__list-item @(firstLoop ? "govuk-tabs__list-item--selected" : "")">
+                <a class="govuk-tabs__tab" href="#@tab.Id">
                     @tab.Label
                 </a>
             </li>
+            firstLoop = false;
         }
     </ul>
-    @foreach (TabsListItemViewModel tab in Model.TabsList)
+    @foreach (TabsListItemViewModel tab in Model.Items)
     {
-        <section class="govuk-tabs__panel" id=@tab.Section.Id>
+        <section class="govuk-tabs__panel" id="@tab.Id">
             <h2 class="govuk-heading-l">@tab.Label</h2>
-                @{ await Html.RenderPartialAsync("/GovUkDesignSystemComponents/SubComponents/HtmlText.cshtml", tab.Section); }
+                @{ await Html.RenderPartialAsync("/GovUkDesignSystemComponents/SubComponents/HtmlText.cshtml", tab.Panel); }
         </section>
     }
 </div>
