@@ -25,7 +25,6 @@ namespace GovUkDesignSystem.GovUkDesignSystemComponents
     public class AccordionSectionViewModel
     {
         public bool Expanded { get; set; }
-        public int HeadingLevel { get; set; } = 2;
         public AccordionSectionItemViewModel Heading { get; set; }
         public AccordionSectionItemViewModel Summary { get; set; }
         public AccordionSectionItemViewModel Content { get; set; }
