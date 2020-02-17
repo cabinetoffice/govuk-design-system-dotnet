@@ -1,21 +1,12 @@
 ﻿@model GovUkDesignSystem.GovUkDesignSystemComponents.SummaryListRowActionViewModel
 
-@{
-    string classNames =
-        $"govuk-summary-list__actions "
-        + $"{(Model == null || String.IsNullOrEmpty(Model.Classes) ? string.Empty : Model.Classes)}";
-}
-
-<dd class="@classNames">
+<dd class="govuk-summary-list__actions @Model?.Classes">
     @{
         if (Model != null && Model.Items != null && Model.Items.Count > 0)
         {
             for (var index = 0; index < Model.Items.Count; index++)
             {
-                string actionClassNames =
-                    $"govuk-link "
-                    + $"{Model.Items[index].Classes}";
-                <a class="@actionClassNames" href="@Model.Items[index].Href" @(Html.Raw( Model.Items[index].Attributes != null ? string.Join(" ", Model.Items[index].Attributes.Select(a => a.Key + "=\"" + a.Value + "\"")) : "" ))>
+                <a class="govuk-link @Model.Items[index].Classes" href="@Model.Items[index].Href" @(Html.Raw( Model.Items[index].Attributes != null ? string.Join(" ", Model.Items[index].Attributes.Select(a => a.Key + "=\"" + a.Value + "\"")) : "" ))>
                     @{
                         await Html.RenderPartialAsync("/GovUkDesignSystemComponents/SubComponents/HtmlText.cshtml", Model.Items[index]);
                     }

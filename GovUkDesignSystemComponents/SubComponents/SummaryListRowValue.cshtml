@@ -1,12 +1,6 @@
 ﻿@model GovUkDesignSystem.GovUkDesignSystemComponents.SummaryListRowValue
 
-@{
-    string classNames =
-        $"govuk-summary-list__value "
-        + $"{(Model == null || String.IsNullOrEmpty(Model.Classes) ? string.Empty : Model.Classes)}";
-}
-
-<dd class="@classNames">
+<dd class="govuk-summary-list__value @Model?.Classes">
     @{
         if (Model != null)
         {

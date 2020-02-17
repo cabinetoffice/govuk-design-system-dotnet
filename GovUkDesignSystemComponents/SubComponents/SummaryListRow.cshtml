@@ -1,15 +1,9 @@
 ﻿@model GovUkDesignSystem.GovUkDesignSystemComponents.SummaryListRowViewModel
 
-@{
-    string classNames =
-        $"govuk-summary-list__row "
-        + $"{Model.Classes}";
-}
-
-<div class="@classNames">
+<div class="govuk-summary-list__row @Model?.Classes">
     @{
         await Html.RenderPartialAsync("/GovUkDesignSystemComponents/SubComponents/SummaryListRowKey.cshtml", Model.Key);
         await Html.RenderPartialAsync("/GovUkDesignSystemComponents/SubComponents/SummaryListRowValue.cshtml", Model.Value);
-        await Html.RenderPartialAsync("/GovUkDesignSystemComponents/SubComponents/SummaryListRowAction.cshtml", Model.Action);
+        await Html.RenderPartialAsync("/GovUkDesignSystemComponents/SubComponents/SummaryListRowAction.cshtml", Model.Actions);
     }
 </div>
