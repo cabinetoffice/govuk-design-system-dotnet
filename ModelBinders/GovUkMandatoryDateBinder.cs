@@ -28,16 +28,9 @@ namespace GovUkDesignSystem.ModelBinders
 
             modelNames.ToList().ForEach(m => { modelValueDictionary.Add(new KeyValuePair<string, ValueProviderResult>(m, bindingContext.ValueProvider.GetValue(m))); });
 
-            // Ensure that a value was sent to us in the request
-            if (modelValueDictionary.Any(r => r.Value == ValueProviderResult.None)) 
+            // Ensure that a not empty value was sent to us in the request
+            if (modelValueDictionary.Any(r => r.Value == ValueProviderResult.None || string.IsNullOrEmpty(r.Value.FirstValue))) 
             {
-                return Task.CompletedTask;
-            }
-
-            // Ensure that a non empty value was sent to us in the request
-            if (modelValueDictionary.Any(r =>string.IsNullOrEmpty(r.Value.FirstValue)))
-            {
-                bindingContext.ModelState.TryAddModelError(modelName, errorText.ErrorMessageIfMissing);
                 return Task.CompletedTask;
             }
 
