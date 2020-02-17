@@ -1,49 +1,27 @@
 ﻿@model GovUkDesignSystem.GovUkDesignSystemComponents.TableGovUkViewModel
-@using GovUkDesignSystem.GovUkDesignSystemComponents
-@{
-    string classNames =
-        $"govuk-table "
-        + $"{(Model == null || String.IsNullOrEmpty(Model.Classes) ? string.Empty : Model.Classes)}";
+@using GovUkDesignSystem.GovUkDesignSystemComponents.Enums
 
-    string captionClassNames =
-        $"govuk-table__caption "
-        + $"{(Model == null || String.IsNullOrEmpty(Model.CaptionClasses) ? string.Empty : Model.CaptionClasses)}";
-
-    List<TableCellViewModel> headerRow = new List<TableCellViewModel>();
-
-    if (Model.FirstCellIsHeader)
-    {
-        if (Model != null && Model.Rows != null && Model.Rows.Count > 0)
-        {
-            headerRow = Model.Rows[0].Row;
-        }
-    }
-    else
-    {
-        headerRow = Model.Head;
-    }
-}
 @if (Model != null)
 {
-    <table class="@classNames" @(Html.Raw(Model.Attributes != null ? string.Join(" ", Model.Attributes.Select(a => a.Key + "=\"" + a.Value + "\"")) : ""))>
+    <table class="govuk-table @Model?.Classes" @(Html.Raw(Model.Attributes != null ? string.Join(" ", Model.Attributes.Select(a => a.Key + "=\"" + a.Value + "\"")) : ""))>
 
-        @if (string.IsNullOrEmpty(Model.Caption))
+        @if (!string.IsNullOrEmpty(Model.Caption))
         {
-            <caption class="@Model.CaptionClasses">@Model.Caption</caption>
+            <caption class="govuk-table__caption @Model?.CaptionClasses">@Model.Caption</caption>
         }
 
-        @if (headerRow.Count > 0)
+        @if (Model.Head.Count > 0)
         {
             <thead class="govuk-table__head">
                 <tr class="govuk-table__row">
-                    @for (int cellIndex = 0; cellIndex < headerRow.Count; cellIndex++)
+                    @for (int cellIndex = 0; cellIndex < Model.Head.Count; cellIndex++)
                     {
-                        string colSpan = headerRow[cellIndex].Colspan >= 0 ? "colspan=" + headerRow[cellIndex].Colspan : string.Empty;
-                        string rowSpan = headerRow[cellIndex].Rowspan >= 0 ? "rowspan=" + headerRow[cellIndex].Rowspan : string.Empty;
-                        string tableHeadCellClasses = $"govuk-table__header " + $"{(!String.IsNullOrEmpty(headerRow[cellIndex].Format) && headerRow[cellIndex].Format.ToLower() == "mumeric" ? "govuk-table__header--numeric " : string.Empty)}" + $"{(String.IsNullOrEmpty(headerRow[cellIndex].Classes) ? string.Empty : headerRow[cellIndex].Classes)}";
-                        <th scope="col" class="@tableHeadCellClasses" @colSpan @rowSpan @(Html.Raw(headerRow[cellIndex].Attributes != null ? string.Join(" ", headerRow[cellIndex].Attributes.Select(a => a.Key + "=\"" + a.Value + "\"")) : ""))>
+                        string colSpan = Model.Head[cellIndex].Colspan != null ? "colspan=" + Model.Head[cellIndex].Colspan : string.Empty;
+                        string rowSpan = Model.Head[cellIndex].Rowspan != null ? "rowspan=" + Model.Head[cellIndex].Rowspan : string.Empty;
+                        string tableHeadCellClasses = $"govuk-table__header " + $"{(Model.Head[cellIndex].Format != null && Model.Head[cellIndex].Format == Format.Numeric ? "govuk-table__header--numeric " : string.Empty)}" + $"{(String.IsNullOrEmpty(Model.Head[cellIndex].Classes) ? string.Empty : Model.Head[cellIndex].Classes)}";
+                        <th scope="col" class="@tableHeadCellClasses" @colSpan @rowSpan @(Html.Raw(Model.Head[cellIndex].Attributes != null ? string.Join(" ", Model.Head[cellIndex].Attributes.Select(a => a.Key + "=\"" + a.Value + "\"")) : ""))>
                             @{
-                                await Html.RenderPartialAsync("/GovUkDesignSystemComponents/SubComponents/HtmlText.cshtml", headerRow[cellIndex]);
+                                await Html.RenderPartialAsync("/GovUkDesignSystemComponents/SubComponents/HtmlText.cshtml", Model.Head[cellIndex]);
                             }
                         </th>
                     }
@@ -54,28 +32,28 @@
         @if (Model.Rows.Count > 0)
         {
             <tbody class="govuk-table__body">
-                @for (var rowIndex = Model.FirstCellIsHeader ? 1 : 0; rowIndex < Model.Rows.Count; rowIndex++)
+                @foreach (var row in Model.Rows)
                 {
                     <tr class="govuk-table__row">
-                        @for (var cellIndex = 0; cellIndex < Model.Rows[rowIndex].Row.Count; cellIndex++)
+                        @foreach (var column in row.Row)
                         {
-                            string colSpan = Model.Rows[rowIndex].Row[cellIndex].Colspan >= 0 ? "colspan=" + Model.Rows[rowIndex].Row[cellIndex].Colspan : string.Empty;
-                            string rowSpan = Model.Rows[rowIndex].Row[cellIndex].Rowspan >= 0 ? "rowspan=" + Model.Rows[rowIndex].Row[cellIndex].Rowspan : string.Empty;
-                            string tableBodyCellClasses = $"{(cellIndex == 0 ? "govuk-table__header " : "govuk-table__cell ")} " + $"{(!String.IsNullOrEmpty(Model.Rows[rowIndex].Row[cellIndex].Format) && Model.Rows[rowIndex].Row[cellIndex].Format.ToLower() == "mumeric" ? "govuk-table__cell--numeric " : string.Empty)}" + $"{(String.IsNullOrEmpty(Model.Rows[rowIndex].Row[cellIndex].Classes) ? string.Empty : Model.Rows[rowIndex].Row[cellIndex].Classes)}";
+                            string colSpan = column.Colspan != null ? "colspan=" + column.Colspan : string.Empty;
+                            string rowSpan = column.Rowspan != null ? "rowspan=" + column.Rowspan : string.Empty;
+                            string tableBodyCellClasses = $"{(column == row.Row.First() ? "govuk-table__header " : "govuk-table__cell ")} " + $"{(column.Format!= null && column.Format == Format.Numeric ? "govuk-table__cell--numeric " : string.Empty)}" + $"{(String.IsNullOrEmpty(column.Classes) ? string.Empty : column.Classes)}";
 
-                            if (cellIndex == 0)
+                            if (column == row.Row.First() && Model.FirstCellIsHeader)
                             {
-                                <th scope="row" class="@tableBodyCellClasses" @colSpan @rowSpan @(Html.Raw(Model.Rows[rowIndex].Row[cellIndex].Attributes != null ? string.Join(" ", Model.Rows[rowIndex].Row[cellIndex].Attributes.Select(a => a.Key + "=\"" + a.Value + "\"")) : ""))>
+                                <th scope="row" class="@tableBodyCellClasses" @colSpan @rowSpan @(Html.Raw(column.Attributes != null ? string.Join(" ", column.Attributes.Select(a => a.Key + "=\"" + a.Value + "\"")) : ""))>
                                     @{
-                                        await Html.RenderPartialAsync("/GovUkDesignSystemComponents/SubComponents/HtmlText.cshtml", Model.Rows[rowIndex].Row[cellIndex]);
+                                        await Html.RenderPartialAsync("/GovUkDesignSystemComponents/SubComponents/HtmlText.cshtml", column);
                                     }
                                 </th>
                             }
                             else
                             {
-                                <td class="@tableBodyCellClasses" @colSpan @rowSpan @(Html.Raw(Model.Rows[rowIndex].Row[cellIndex].Attributes != null ? string.Join(" ", Model.Rows[rowIndex].Row[cellIndex].Attributes.Select(a => a.Key + "=\"" + a.Value + "\"")) : ""))>
+                                <td class="@tableBodyCellClasses" @colSpan @rowSpan @(Html.Raw(column.Attributes != null ? string.Join(" ", column.Attributes.Select(a => a.Key + "=\"" + a.Value + "\"")) : ""))>
                                     @{
-                                        await Html.RenderPartialAsync("/GovUkDesignSystemComponents/SubComponents/HtmlText.cshtml", Model.Rows[rowIndex].Row[cellIndex]);
+                                        await Html.RenderPartialAsync("/GovUkDesignSystemComponents/SubComponents/HtmlText.cshtml", column);
                                     }
                                 </td>
                             }
