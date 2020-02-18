@@ -23,8 +23,7 @@
     @foreach (TabsListItemViewModel tab in Model.Items)
     {
         <section class="govuk-tabs__panel" id="@tab.Id">
-            <h2 class="govuk-heading-l">@tab.Label</h2>
-                @{ await Html.RenderPartialAsync("/GovUkDesignSystemComponents/SubComponents/HtmlText.cshtml", tab.Panel); }
+            @{ await Html.RenderPartialAsync("/GovUkDesignSystemComponents/SubComponents/HtmlText.cshtml", tab.Panel); }
         </section>
     }
 </div>
