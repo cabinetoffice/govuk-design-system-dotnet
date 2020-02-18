@@ -4,9 +4,9 @@
     @{
         if (Model.Rows != null && Model.Rows.Count > 0)
         {
-            for (var index = 0; index < Model.Rows.Count; index++)
+            foreach (var row in Model.Rows)
             {
-                await Html.RenderPartialAsync("/GovUkDesignSystemComponents/SubComponents/SummaryListRow.cshtml", Model.Rows[index]);
+                await Html.RenderPartialAsync("/GovUkDesignSystemComponents/SubComponents/SummaryListRow.cshtml", row);
             }
         }
     }
