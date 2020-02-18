@@ -295,5 +295,12 @@ namespace GovUkDesignSystem
                 classes,
                 textInputAppendix);
         }
+
+        public static IHtmlContent GovUkAccordion(
+            this IHtmlHelper htmlHelper,
+            AccordionViewModel accordionViewModel)
+        {
+            return htmlHelper.Partial("/GovUkDesignSystemComponents/Accordion.cshtml", accordionViewModel);
+        }
     }
 }
