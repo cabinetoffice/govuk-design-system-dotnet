@@ -1,6 +1,7 @@
 ﻿using GovUkDesignSystem.GovUkDesignSystemComponents.SubComponents;
 using System;
 using System.Collections.Generic;
+using GovUkDesignSystem.GovUkDesignSystemComponents.Enums;
 
 namespace GovUkDesignSystem.GovUkDesignSystemComponents
 {
@@ -8,7 +9,7 @@ namespace GovUkDesignSystem.GovUkDesignSystemComponents
     {
         public string Id { get; set; }
         
-        public int HeadingLevel { get; set; }
+        public HeadingLevel HeadingLevel { get; set; }
 
         public List<AccordionSectionViewModel> Sections { get; set; }
 

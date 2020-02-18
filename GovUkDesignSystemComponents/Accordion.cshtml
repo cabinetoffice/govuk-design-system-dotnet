@@ -14,11 +14,11 @@
             @if (section.Heading != null)
             {
                 <div class="govuk-accordion__section-header">
-                    <h@(Model.HeadingLevel) class="govuk-accordion__section-heading">
+                    <@(Model.HeadingLevel) class="govuk-accordion__section-heading">
                         <span class="govuk-accordion__section-button" id="@($"{Model.Id}-heading-{SectionIndex}")">
                             @{ await Html.RenderPartialAsync("/GovUkDesignSystemComponents/SubComponents/HtmlText.cshtml", section.Heading); }
                         </span>
-                    </h@(Model.HeadingLevel)>
+                    </@(Model.HeadingLevel)>
                 </div>
                 @if (section.Summary != null)
                 {
