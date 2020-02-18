@@ -295,5 +295,11 @@ namespace GovUkDesignSystem
                 classes,
                 textInputAppendix);
         }
+        public static IHtmlContent GovUkPanel(
+            this IHtmlHelper htmlHelper,
+            PanelViewModel panelViewModel)
+        {
+            return htmlHelper.Partial("/GovUkDesignSystemComponents/Panel.cshtml", panelViewModel);
+        }
     }
 }
