@@ -4,7 +4,7 @@ using System.Text;
 
 namespace GovUkDesignSystem.GovUkDesignSystemComponents.Enums
 {
-    public enum Format
+    public enum TableCellFormat
     { 
         Numeric
     }

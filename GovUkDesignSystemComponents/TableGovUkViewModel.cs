@@ -59,7 +59,7 @@ namespace GovUkDesignSystem.GovUkDesignSystemComponents
         /// <summary>
         ///     Specify format of a cell. Currently we only use "numeric".
         /// </summary>
-        public Format? Format { get; set; }
+        public TableCellFormat? Format { get; set; }
 
         /// <summary>
         ///     Classes to add to the table row cell. 
