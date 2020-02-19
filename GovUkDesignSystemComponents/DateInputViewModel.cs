@@ -15,23 +15,10 @@ namespace GovUkDesignSystem.GovUkDesignSystemComponents
         public string NamePrefix { get; set; }
 
         /// <summary>
-        ///     List of Items to render as date inputs, defaults to Day Month Year. This doesn't work for more than three items and only if they are named 'day', 'month', and 'year' without ids.
+        ///     List of Items to render as date inputs.
+        ///     This will only work with the custom automatic data binding if the three items are called 'day', 'month', and 'year', and if they do not have ids.
         /// </summary>
-        public List<DateInputItemViewModel> Items { get; set; } =
-            new List<DateInputItemViewModel>() {
-                new DateInputItemViewModel(){
-                    Name = "day",
-                    Classes = "govuk-input--width-2"
-                },
-                new DateInputItemViewModel(){
-                    Name = "month",
-                    Classes = "govuk-input--width-2"
-                } ,
-                new DateInputItemViewModel(){
-                    Name = "year",
-                    Classes = "govuk-input--width-4"
-                } 
-            };
+        public List<DateInputItemViewModel> Items { get; set; }
 
         /// <summary>
         ///     Options for the hint component.

@@ -23,59 +23,65 @@ namespace GovUkDesignSystem.ModelBinders
                 throw new Exception("When using the GovUkMandatoryDateBinder you must also provide a GovUkDataBindingDateErrorTextAttribute attribute and ensure that you register GovUkDataBindingErrorTextProvider in your application's Startup.ConfigureServices method.");
             }
             var modelName = bindingContext.ModelName;
-            var modelNames = new[] { modelName + "-day", modelName + "-month", modelName + "-year" };
-            var modelValueDictionary = new List<KeyValuePair<string, ValueProviderResult>>();
+            var modelSuffixes = new[] { "day", "month", "year" };
 
-            modelNames.ToList().ForEach(m => { modelValueDictionary.Add(new KeyValuePair<string, ValueProviderResult>(m, bindingContext.ValueProvider.GetValue(m))); });
+            var modelValueDictionary = modelSuffixes.ToDictionary(m => m, m => bindingContext.ValueProvider.GetValue(modelName + "-" + m));
 
             // Ensure that a not empty value was sent to us in the request
-            if (modelValueDictionary.Any(r => r.Value == ValueProviderResult.None || string.IsNullOrEmpty(r.Value.FirstValue))) 
+            if (modelValueDictionary.All(r => r.Value == ValueProviderResult.None || string.IsNullOrEmpty(r.Value.FirstValue))) 
             {
                 return Task.CompletedTask;
             }
 
-            var valuesDictionary = modelValueDictionary.Select( v => new KeyValuePair<string, string>(v.Key,v.Value.FirstValue)).ToList();
+            var errors = new Dictionary<string, DateError>();
+            var values = new Dictionary<string, int>();
+            foreach (var valuePair in modelValueDictionary)
+            {
+                bindingContext.ModelState.SetModelValue(modelName + "-" + valuePair.Key, valuePair.Value);
+                bindingContext.ModelState.MarkFieldValid(modelName + "-" + valuePair.Key);
+                if (string.IsNullOrEmpty(valuePair.Value.FirstValue))
+                {
+                    errors.Add(valuePair.Key, DateError.ValueMissing);
+                    continue;
+                }
 
-            var errors = new List<KeyValuePair<string, DateErrors>>();
-            valuesDictionary.ForEach(p =>
-            {
-                if (string.IsNullOrEmpty(p.Value))
+                if (!Int32.TryParse(valuePair.Value.FirstValue, out var value))
                 {
-                    var unit = p.Key.Substring(p.Key.LastIndexOf("-") + 1, p.Key.Length - p.Key.LastIndexOf("-") - 1);
-                    errors.Add(new KeyValuePair<string, DateErrors>(unit, DateErrors.ValueMissing));
+                    errors.Add(valuePair.Key, DateError.ValueNotInt);
+                    continue;
                 }
-            });
-
-            if (errors.Count == 0)
-            {
-                var day = Int32.Parse(valuesDictionary[0].Value);
-                var month = Int32.Parse(valuesDictionary[1].Value);
-                var year = Int32.Parse(valuesDictionary[2].Value);
-                try
-                {
-                    bindingContext.ModelState.SetModelValue(modelName, new ValueProviderResult(new DateTime(year, month, day).ToString()));
-                    bindingContext.Result = ModelBindingResult.Success(new DateTime(year, month, day));
-                }
-                catch 
-                {
-                    bindingContext.ModelState.TryAddModelError(modelName, $"Enter a real {errorText.NameNotAtStartOfSentence}");
-                }
-            }
-            else if (errors.Count < modelNames.Length)
-            {
-                bindingContext.ModelState.TryAddModelError(modelName, $"{errorText.NameAtStartOfSentence} does not include a {String.Join(" or a ", errors.Select(p => p.Key))}");
-            }
-            else if (errors.Count == modelNames.Length)
-            {
-                bindingContext.ModelState.TryAddModelError(modelName, errorText.ErrorMessageIfMissing);
+                values.Add(valuePair.Key, value);
             }
 
+            if (errors.Count != 0)
+            {
+                var errorMessage = errors.ContainsValue(DateError.ValueNotInt)
+                    ? $"Enter a real {errorText.NameWithinSentence}"
+                    : $"{errorText.NameAtStartOfSentence} does not include a {string.Join(" or a ", errors.Select(p => p.Key))}";
+
+                bindingContext.ModelState.TryAddModelError(modelName, errorMessage);
+                return Task.CompletedTask;
+            }
+
+            values.TryGetValue("day", out var day);
+            values.TryGetValue("day", out var month);
+            values.TryGetValue("day", out var year);
+            try
+            {
+                bindingContext.ModelState.SetModelValue(modelName, new ValueProviderResult(new DateTime(year, month, day).ToLongDateString()));
+                bindingContext.Result = ModelBindingResult.Success(new DateTime(year, month, day));
+            }
+            catch
+            {
+                bindingContext.ModelState.TryAddModelError(modelName, $"Enter a real {errorText.NameWithinSentence}");
+            }
             return Task.CompletedTask;
         }
 
-        private enum DateErrors
+        private enum DateError
         {
-            ValueMissing = 0
+            ValueMissing = 0,
+            ValueNotInt = 1
         }
     }
 }

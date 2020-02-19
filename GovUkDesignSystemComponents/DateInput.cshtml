@@ -22,23 +22,22 @@
         }
 
         <div class="govuk-date-input @(Model.Classes)">
-            @for (var index = 0; index < Model.Items.Count; index++)
+            @foreach(var dateInputItem in Model.Items)
             {
-                DateInputItemViewModel currentItem = Model.Items[index];
-                if (currentItem.Id == null)
+                if (dateInputItem.Id == null)
                 {
-                    currentItem.Id = Model.Id + "-" + currentItem.Name;
+                    dateInputItem.Id = Model.Id + "-" + dateInputItem.Name;
                 }
-                if (currentItem.Label == null)
+                if (dateInputItem.Label == null)
                 {
-                    var lowerCaseName = currentItem.Name.ToLower();
-                    currentItem.Label = char.ToUpper(lowerCaseName[0]) + lowerCaseName.Substring(1);
+                    var lowerCaseName = dateInputItem.Name.ToLower();
+                    dateInputItem.Label = char.ToUpper(lowerCaseName[0]) + lowerCaseName.Substring(1);
                 }
                 if (Model.NamePrefix != null)
                 {
-                    currentItem.Name = Model.NamePrefix + "-" + currentItem.Name;
+                    dateInputItem.Name = Model.NamePrefix + "-" + dateInputItem.Name;
                 }
-                Html.RenderPartial("/GovUkDesignSystemComponents/DateInputItem.cshtml", currentItem);
+                Html.RenderPartial("/GovUkDesignSystemComponents/DateInputItem.cshtml", dateInputItem);
             }
         </div>
     </text>;
