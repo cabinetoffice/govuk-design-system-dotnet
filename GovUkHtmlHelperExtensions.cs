@@ -309,5 +309,12 @@ namespace GovUkDesignSystem
         {
             return htmlHelper.Partial("/GovUkDesignSystemComponents/Tabs.cshtml", tabsViewModel);
         }
+
+        public static IHtmlContent GovUkPanel(
+            this IHtmlHelper htmlHelper,
+            PanelViewModel panelViewModel)
+        {
+            return htmlHelper.Partial("/GovUkDesignSystemComponents/Panel.cshtml", panelViewModel);
+        }
     }
 }
