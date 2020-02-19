@@ -92,9 +92,6 @@ namespace GovUkDesignSystem
             return htmlHelper.Partial("/GovUkDesignSystemComponents/CheckboxItem.cshtml", checkboxItemViewModel);
         }
 
-        /// <summary>
-        /// This doesn't work for more than three items in the DateInputViewModel and only if they have ids 'day', 'month', and 'year'.
-        /// <returns></returns>
         public static IHtmlContent GovUkDateInput(
             this IHtmlHelper htmlHelper,
             DateInputViewModel dateInputViewModel)
@@ -113,8 +110,7 @@ namespace GovUkDesignSystem
             HintViewModel hintOptions = null,
             FieldsetViewModel fieldsetOptions = null,
             FormGroupViewModel formGroupOptions = null,
-            Dictionary<string, string> attributes = null,
-            List<DateInputItemViewModel> items = null
+            Dictionary<string, string> attributes = null
             )
             where TModel : class
         {
@@ -126,9 +122,7 @@ namespace GovUkDesignSystem
                 hintOptions,
                 fieldsetOptions,
                 formGroupOptions,
-                attributes,
-                items
-                );
+                attributes);
         }
 
         public static IHtmlContent GovUkErrorMessage(

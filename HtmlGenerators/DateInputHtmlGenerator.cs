@@ -1,18 +1,19 @@
-﻿using System;
+﻿using GovUkDesignSystem.GovUkDesignSystemComponents;
+using GovUkDesignSystem.Helpers;
+using Microsoft.AspNetCore.Html;
+using Microsoft.AspNetCore.Mvc.Rendering;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
-using System.Threading.Tasks;
-using GovUkDesignSystem.GovUkDesignSystemComponents;
-using GovUkDesignSystem.Helpers;
-using Microsoft.AspNetCore.Html;
-using Microsoft.AspNetCore.Mvc.ModelBinding;
-using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace GovUkDesignSystem.HtmlGenerators
 {
     internal static class DateInputHtmlGenerator
     {
+        public static readonly string Day = "Day";
+        public static readonly string Month = "Month";
+        public static readonly string Year = "Year";
         internal static IHtmlContent GenerateHtml<TModel>(
             IHtmlHelper<TModel> htmlHelper,
             Expression<Func<TModel, DateTime?>> propertyLambdaExpression,
@@ -21,20 +22,22 @@ namespace GovUkDesignSystem.HtmlGenerators
             HintViewModel hintOptions,
             FieldsetViewModel fieldsetOptions,
             FormGroupViewModel formGroupOptions,
-            Dictionary<string, string> attributes,
-            List<DateInputItemViewModel> items
+            Dictionary<string, string> attributes
         )
             where TModel : class
         {
             string propertyId = htmlHelper.IdFor(propertyLambdaExpression);
             string propertyName = htmlHelper.NameFor(propertyLambdaExpression);
-            var modelSuffixes = new[] { "day", "month", "year" };
+            var modelSuffixes = new[] { Day, Month, Year };
             var areModelValues = true;
             htmlHelper.ViewData.ModelState.TryGetValue(propertyName, out var modelStateEntry);
             var modelStateValues = modelSuffixes.ToDictionary(m => m, m =>
             {
                 if (!htmlHelper.ViewData.ModelState.TryGetValue(propertyName + "-" + m, out var modelStateSubEntry))
+                {
                     areModelValues = false;
+                }
+
                 return modelStateSubEntry;
             });
 
@@ -50,9 +53,9 @@ namespace GovUkDesignSystem.HtmlGenerators
                 var modelValue = ExpressionHelpers.GetPropertyValueFromModelAndExpression(htmlHelper.ViewData.Model, propertyLambdaExpression);
                 if (modelValue != null)
                 {
-                    inputValues.Add("day", modelValue.Value.Day.ToString());
-                    inputValues.Add("month", modelValue.Value.Month.ToString());
-                    inputValues.Add("year", modelValue.Value.Year.ToString());
+                    inputValues.Add(Day, modelValue.Value.Day.ToString());
+                    inputValues.Add(Month, modelValue.Value.Month.ToString());
+                    inputValues.Add(Year, modelValue.Value.Year.ToString());
                 }
             }
 
@@ -61,30 +64,27 @@ namespace GovUkDesignSystem.HtmlGenerators
                 labelOptions.For = propertyId;
             }
 
-            if (items == null)
-            {
-                inputValues.TryGetValue("day", out var day);
-                inputValues.TryGetValue("month", out var month);
-                inputValues.TryGetValue("year", out var year);
+            inputValues.TryGetValue(Day, out var day);
+            inputValues.TryGetValue(Month, out var month);
+            inputValues.TryGetValue(Year, out var year);
 
-                items = new List<DateInputItemViewModel>() {
-                    new DateInputItemViewModel(){
-                        Name = "day",
-                        Classes = "govuk-input--width-2",
-                        Value = day
-                    },
-                    new DateInputItemViewModel(){
-                        Name = "month",
-                        Classes = "govuk-input--width-2",
-                        Value = month
-                    } ,
-                    new DateInputItemViewModel(){
-                        Name = "year",
-                        Classes = "govuk-input--width-4",
-                        Value = year
-                    }
-                };
-            }
+            var items = new List<DateInputItemViewModel>() {
+                new DateInputItemViewModel(){
+                    Name = Day,
+                    Classes = "govuk-input--width-2",
+                    Value = day
+                },
+                new DateInputItemViewModel(){
+                    Name = Month,
+                    Classes = "govuk-input--width-2",
+                    Value = month
+                } ,
+                new DateInputItemViewModel(){
+                    Name = Year,
+                    Classes = "govuk-input--width-4",
+                    Value = year
+                }
+            };
 
             var dateInputViewModel = new DateInputViewModel
             {
@@ -98,11 +98,7 @@ namespace GovUkDesignSystem.HtmlGenerators
                 Items = items
             };
 
-            if (modelStateEntry != null && modelStateEntry.Errors.Count > 0)
-            {
-                // qq:DCC Are we OK with only displaying the first error message here?
-                dateInputViewModel.ErrorMessage = new ErrorMessageViewModel { Text = modelStateEntry.Errors[0].ErrorMessage };
-            }
+            HtmlGenerationHelpers.SetErrorMessages(dateInputViewModel, modelStateEntry);
 
             return htmlHelper.Partial("/GovUkDesignSystemComponents/DateInput.cshtml", dateInputViewModel);
         }

@@ -22,7 +22,7 @@
         }
 
         <div class="govuk-date-input @(Model.Classes)">
-            @foreach(var dateInputItem in Model.Items)
+            @foreach (var dateInputItem in Model.Items)
             {
                 if (dateInputItem.Id == null)
                 {
@@ -41,20 +41,18 @@
             }
         </div>
     </text>;
+}
 
-    if (Model.Fieldset != null)
+<div class="govuk-form-group @(Model.FormGroup?.Classes) @(Html.Raw(Model.ErrorMessage != null ? "govuk-form-group--error" : ""))">
+    @if (Model.Fieldset != null)
     {
         Model.Fieldset.InnerHtml = innerHtml;
-        Model.Fieldset.DescribedBy = Model.Fieldset.DescribedBy + errorId + hintId;
-
-        <div class="govuk-form-group @(Model.FormGroup?.Classes) @(Html.Raw(Model.ErrorMessage != null ? "govuk-form-group--error" : ""))">
-            @{Html.RenderPartial("/GovUkDesignSystemComponents/Fieldset.cshtml", Model.Fieldset);}
-        </div>;
+        Model.Fieldset.DescribedBy = Model.Fieldset.DescribedBy + " " + errorId + " " + hintId;
+        
+        @Html.RenderPartialAsync("/GovUkDesignSystemComponents/Fieldset.cshtml", Model.Fieldset)
     }
     else
     {
-        <div class="govuk-form-group @( Model.FormGroup?.Classes) @( Html.Raw(Model.ErrorMessage != null ? "govuk-form-group--error" : ""))">
-            @innerHtml(new object())
-        </div>;
+        @innerHtml(new object())
     }
-}
+</div>

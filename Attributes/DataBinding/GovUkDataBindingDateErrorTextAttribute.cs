@@ -4,7 +4,7 @@ namespace GovUkDesignSystem.Attributes.DataBinding
 {
     public class GovUkDataBindingDateErrorTextAttribute : GovUkDataBindingErrorTextAttribute
     {
-        public GovUkDataBindingDateErrorTextAttribute(string errorMessageIfMissing, string nameAtStartOfSentence, string nameWithinSentence)
+        public GovUkDataBindingDateErrorTextAttribute(string nameAtStartOfSentence, string nameWithinSentence)
         {
             if (string.IsNullOrEmpty(nameAtStartOfSentence))
             {

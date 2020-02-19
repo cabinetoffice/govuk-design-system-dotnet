@@ -1,10 +1,10 @@
-﻿using Microsoft.AspNetCore.Mvc.ModelBinding;
-using System.Linq;
-using System.Threading.Tasks;
-using GovUkDesignSystem.Attributes.DataBinding;
+﻿using GovUkDesignSystem.Attributes.DataBinding;
+using Microsoft.AspNetCore.Mvc.ModelBinding;
 using System;
 using System.Collections.Generic;
-using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
+using System.Linq;
+using System.Threading.Tasks;
+using GovUkDesignSystem.HtmlGenerators;
 
 namespace GovUkDesignSystem.ModelBinders
 {
@@ -12,6 +12,7 @@ namespace GovUkDesignSystem.ModelBinders
     /// This model binder can be used to replace the default MVC model binder for a required date property. It will add
     /// validation messages to the model state inline with the GovUk Design System guidelines.
     /// This binder must be used alongside a GovUkDataBindingDateErrorTextAttribute attribute.
+    /// This binder will only work for dates supplied as three string inputs with IDs ModelName followed by "-Day", "-Month", and "-Year"
     /// </summary>
     public class GovUkMandatoryDateBinder : IModelBinder
     {
@@ -23,7 +24,7 @@ namespace GovUkDesignSystem.ModelBinders
                 throw new Exception("When using the GovUkMandatoryDateBinder you must also provide a GovUkDataBindingDateErrorTextAttribute attribute and ensure that you register GovUkDataBindingErrorTextProvider in your application's Startup.ConfigureServices method.");
             }
             var modelName = bindingContext.ModelName;
-            var modelSuffixes = new[] { "day", "month", "year" };
+            var modelSuffixes = new[] { DateInputHtmlGenerator.Day, DateInputHtmlGenerator.Month, DateInputHtmlGenerator.Year };
 
             var modelValueDictionary = modelSuffixes.ToDictionary(m => m, m => bindingContext.ValueProvider.GetValue(modelName + "-" + m));
 
@@ -63,12 +64,11 @@ namespace GovUkDesignSystem.ModelBinders
                 return Task.CompletedTask;
             }
 
-            values.TryGetValue("day", out var day);
-            values.TryGetValue("day", out var month);
-            values.TryGetValue("day", out var year);
+            values.TryGetValue(DateInputHtmlGenerator.Day, out var day);
+            values.TryGetValue(DateInputHtmlGenerator.Month, out var month);
+            values.TryGetValue(DateInputHtmlGenerator.Year, out var year);
             try
             {
-                bindingContext.ModelState.SetModelValue(modelName, new ValueProviderResult(new DateTime(year, month, day).ToLongDateString()));
                 bindingContext.Result = ModelBindingResult.Success(new DateTime(year, month, day));
             }
             catch

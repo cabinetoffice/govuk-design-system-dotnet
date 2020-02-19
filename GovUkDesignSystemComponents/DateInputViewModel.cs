@@ -1,8 +1,9 @@
 ﻿using System.Collections.Generic;
+using GovUkDesignSystem.GovUkDesignSystemComponents.SubComponents;
 
 namespace GovUkDesignSystem.GovUkDesignSystemComponents
 {
-    public class DateInputViewModel
+    public class DateInputViewModel : IHasErrorMessage
     {
         /// <summary>
         ///     Required. The id of the input.
@@ -16,7 +17,6 @@ namespace GovUkDesignSystem.GovUkDesignSystemComponents
 
         /// <summary>
         ///     List of Items to render as date inputs.
-        ///     This will only work with the custom automatic data binding if the three items are called 'day', 'month', and 'year', and if they do not have ids.
         /// </summary>
         public List<DateInputItemViewModel> Items { get; set; }
 
