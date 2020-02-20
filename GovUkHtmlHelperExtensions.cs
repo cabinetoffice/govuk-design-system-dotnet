@@ -303,19 +303,16 @@ namespace GovUkDesignSystem
             LabelViewModel labelOptions = null,
             HintViewModel hintOptions = null,
             FormGroupViewModel formGroupOptions = null,
-            string classes = null,
-            TextInputAppendixViewModel textInputAppendix = null)
+            string classes = null)
             where TModel : class
         {
-            return TextInputHtmlGenerator.GenerateHtml(
+            return FileUploadHtmlGenerator.GenerateHtml(
                 htmlHelper,
                 propertyExpression,
                 labelOptions,
                 hintOptions,
                 formGroupOptions,
-                classes,
-                textInputAppendix,
-                "file");
+                classes);
         }
     }
 }

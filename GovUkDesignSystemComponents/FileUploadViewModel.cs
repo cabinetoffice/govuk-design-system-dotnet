@@ -1,9 +1,10 @@
 ﻿using Microsoft.AspNetCore.Http;
 using System.Collections.Generic;
+using GovUkDesignSystem.GovUkDesignSystemComponents.SubComponents;
 
 namespace GovUkDesignSystem.GovUkDesignSystemComponents
 {
-    public class FileUploadViewModel
+    public class FileUploadViewModel : IHasErrorMessage
     {
         /// <summary>
         /// Required. The id of the input

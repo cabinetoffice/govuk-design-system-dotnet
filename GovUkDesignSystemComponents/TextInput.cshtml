@@ -20,7 +20,7 @@
             await Html.RenderPartialAsync("/GovUkDesignSystemComponents/ErrorMessage.cshtml", Model.ErrorMessage);
         }
     }
-    <input class=" @(Model.Classes ?? "govuk-input") @(Model.ErrorMessage != null ? "govuk-input--error" : "")"
+    <input class="govuk-input @(Model.Classes) @(Model.ErrorMessage != null ? "govuk-input--error" : "")"
            id="@(Model.Id)"
            name="@(Model.Name)"
            type="@(Model.Type ?? "text")"
