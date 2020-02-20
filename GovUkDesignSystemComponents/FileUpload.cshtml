@@ -20,7 +20,7 @@
                 await Html.RenderPartialAsync("/GovUkDesignSystemComponents/ErrorMessage.cshtml", Model.ErrorMessage);
             }
         }
-        <input class="govuk-file-upload  @(Model.Classes) @(Model.ErrorMessage != null ? "govuk-input--error" : "")" 
+        <input class="govuk-file-upload  @(Model.Classes) @(Model.ErrorMessage != null ? "govuk-file-upload--error" : "")" 
                id=@(Model.Id) 
                name=@(Model.Name )
                type="file" 

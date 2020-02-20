@@ -297,6 +297,13 @@ namespace GovUkDesignSystem
                 textInputAppendix);
         }
 
+        public static IHtmlContent GovUkFileUpload(
+            this IHtmlHelper htmlHelper,
+            FileUploadViewModel fileUploadViewModel)
+        {
+            return htmlHelper.Partial("/GovUkDesignSystemComponents/FileUpload.cshtml", fileUploadViewModel);
+        }
+
         public static IHtmlContent GovUkFileUploadFor<TModel>(
             this IHtmlHelper<TModel> htmlHelper,
             Expression<Func<TModel, IFormFile>> propertyExpression,
