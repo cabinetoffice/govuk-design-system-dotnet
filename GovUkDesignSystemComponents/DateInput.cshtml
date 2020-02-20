@@ -1,0 +1,58 @@
+﻿@using GovUkDesignSystem.GovUkDesignSystemComponents
+@model GovUkDesignSystem.GovUkDesignSystemComponents.DateInputViewModel
+
+@{
+    var id = Model.Id;
+    var errorId = Model.ErrorMessage != null ? id + "-error" : null;
+    var hintId = Model.Hint != null ? id + "-hint" : null;
+
+    Func<object, object> innerHtml =
+    @<text>
+        @{
+        if (Model.Hint != null)
+        {
+            Model.Hint.Id = hintId;
+            Html.RenderPartial("/GovUkDesignSystemComponents/Hint.cshtml", Model.Hint);
+        }
+        if (Model.ErrorMessage != null)
+        {
+            Model.ErrorMessage.Id = errorId;
+            Html.RenderPartial("/GovUkDesignSystemComponents/ErrorMessage.cshtml", Model.ErrorMessage);
+        }
+        }
+
+        <div class="govuk-date-input @(Model.Classes)">
+            @foreach (var dateInputItem in Model.Items)
+            {
+                if (dateInputItem.Id == null)
+                {
+                    dateInputItem.Id = Model.Id + "-" + dateInputItem.Name;
+                }
+                if (dateInputItem.Label == null)
+                {
+                    var lowerCaseName = dateInputItem.Name.ToLower();
+                    dateInputItem.Label = char.ToUpper(lowerCaseName[0]) + lowerCaseName.Substring(1);
+                }
+                if (Model.NamePrefix != null)
+                {
+                    dateInputItem.Name = Model.NamePrefix + "-" + dateInputItem.Name;
+                }
+                Html.RenderPartial("/GovUkDesignSystemComponents/DateInputItem.cshtml", dateInputItem);
+            }
+        </div>
+    </text>;
+}
+
+<div class="govuk-form-group @(Model.FormGroup?.Classes) @(Html.Raw(Model.ErrorMessage != null ? "govuk-form-group--error" : ""))">
+    @if (Model.Fieldset != null)
+    {
+        Model.Fieldset.InnerHtml = innerHtml;
+        Model.Fieldset.DescribedBy = Model.Fieldset.DescribedBy + " " + errorId + " " + hintId;
+        
+        @Html.RenderPartialAsync("/GovUkDesignSystemComponents/Fieldset.cshtml", Model.Fieldset)
+    }
+    else
+    {
+        @innerHtml(new object())
+    }
+</div>

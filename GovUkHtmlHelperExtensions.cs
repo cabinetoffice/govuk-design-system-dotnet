@@ -1,14 +1,13 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Linq.Expressions;
-using System.Threading.Tasks;
 using GovUkDesignSystem.GovUkDesignSystemComponents;
 using GovUkDesignSystem.GovUkDesignSystemComponents.SubComponents;
 using GovUkDesignSystem.HtmlGenerators;
 using Microsoft.AspNetCore.Html;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using System;
+using System.Collections.Generic;
+using System.Linq.Expressions;
+using System.Threading.Tasks;
 
 namespace GovUkDesignSystem
 {
@@ -91,6 +90,39 @@ namespace GovUkDesignSystem
             CheckboxItemViewModel checkboxItemViewModel)
         {
             return htmlHelper.Partial("/GovUkDesignSystemComponents/CheckboxItem.cshtml", checkboxItemViewModel);
+        }
+
+        public static IHtmlContent GovUkDateInput(
+            this IHtmlHelper htmlHelper,
+            DateInputViewModel dateInputViewModel)
+        {
+            return htmlHelper.Partial("/GovUkDesignSystemComponents/DateInput.cshtml", dateInputViewModel);
+        }
+
+        /// <summary>
+        /// This doesn't work for more than three items and only if they have ids 'day', 'month', and 'year'.
+        /// <returns></returns>
+        public static IHtmlContent GovUkDateInputFor<TModel>(
+            this IHtmlHelper<TModel> htmlHelper,
+            Expression<Func<TModel, DateTime?>> propertyLambdaExpression,
+            string classes = null,
+            LabelViewModel labelOptions = null,
+            HintViewModel hintOptions = null,
+            FieldsetViewModel fieldsetOptions = null,
+            FormGroupViewModel formGroupOptions = null,
+            Dictionary<string, string> attributes = null
+            )
+            where TModel : class
+        {
+            return DateInputHtmlGenerator.GenerateHtml(
+                htmlHelper,
+                propertyLambdaExpression,
+                classes,
+                labelOptions,
+                hintOptions,
+                fieldsetOptions,
+                formGroupOptions,
+                attributes);
         }
 
         public static IHtmlContent GovUkErrorMessage(
