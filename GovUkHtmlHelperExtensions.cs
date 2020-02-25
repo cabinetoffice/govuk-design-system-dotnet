@@ -14,6 +14,13 @@ namespace GovUkDesignSystem
     public static class GovUkHtmlHelperExtensions
     {
 
+        public static IHtmlContent GovUkAccordion(
+            this IHtmlHelper htmlHelper,
+            AccordionViewModel accordionViewModel)
+        {
+            return htmlHelper.Partial("/GovUkDesignSystemComponents/Accordion.cshtml", accordionViewModel);
+        }
+
         public static IHtmlContent GovUkBackLink(
             this IHtmlHelper htmlHelper,
             BackLinkViewModel backLinkViewModel)
@@ -125,6 +132,13 @@ namespace GovUkDesignSystem
                 attributes);
         }
 
+        public static IHtmlContent GovUkDetails(
+            this IHtmlHelper htmlHelper,
+            DetailsViewModel detailsViewModel)
+        {
+            return htmlHelper.Partial("/GovUkDesignSystemComponents/Details.cshtml", detailsViewModel);
+        }
+
         public static IHtmlContent GovUkErrorMessage(
             this IHtmlHelper htmlHelper,
             ErrorMessageViewModel errorMessageViewModel)
@@ -220,6 +234,13 @@ namespace GovUkDesignSystem
             return htmlHelper.Partial("/GovUkDesignSystemComponents/Legend.cshtml", legendViewModel);
         }
 
+        public static IHtmlContent GovUkPanel(
+            this IHtmlHelper htmlHelper,
+            PanelViewModel panelViewModel)
+        {
+            return htmlHelper.Partial("/GovUkDesignSystemComponents/Panel.cshtml", panelViewModel);
+        }
+
         public static IHtmlContent GovUkPhaseBanner(
             this IHtmlHelper htmlHelper,
             PhaseBannerViewModel phaseBannerViewModel)
@@ -247,6 +268,27 @@ namespace GovUkDesignSystem
             RadioItemViewModel radioItemViewModel)
         {
             return htmlHelper.Partial("/GovUkDesignSystemComponents/RadioItem.cshtml", radioItemViewModel);
+        }
+
+        public static IHtmlContent GovUkSummaryList(
+            this IHtmlHelper htmlHelper,
+            SummaryListViewModel summaryListViewModel)
+        {
+            return htmlHelper.Partial("/GovUkDesignSystemComponents/SummaryList.cshtml", summaryListViewModel);
+        }
+
+        public static IHtmlContent GovUkTable(
+            this IHtmlHelper htmlHelper,
+            TableGovUkViewModel tableViewModel)
+        {
+            return htmlHelper.Partial("/GovUkDesignSystemComponents/Table.cshtml", tableViewModel);
+        }
+
+        public static IHtmlContent GovUkTabs(
+            this IHtmlHelper htmlHelper,
+            TabsViewModel tabsViewModel)
+        {
+            return htmlHelper.Partial("/GovUkDesignSystemComponents/Tabs.cshtml", tabsViewModel);
         }
 
         public static IHtmlContent GovUkTag(
@@ -326,41 +368,6 @@ namespace GovUkDesignSystem
                 formGroupOptions,
                 classes,
                 textInputAppendix);
-        }
-
-        public static IHtmlContent GovUkAccordion(
-            this IHtmlHelper htmlHelper,
-            AccordionViewModel accordionViewModel)
-        {
-            return htmlHelper.Partial("/GovUkDesignSystemComponents/Accordion.cshtml", accordionViewModel);
-        }
-
-        public static IHtmlContent GovUkTabs(
-            this IHtmlHelper htmlHelper,
-            TabsViewModel tabsViewModel)
-        {
-            return htmlHelper.Partial("/GovUkDesignSystemComponents/Tabs.cshtml", tabsViewModel);
-        }
-
-        public static IHtmlContent GovUkPanel(
-            this IHtmlHelper htmlHelper,
-            PanelViewModel panelViewModel)
-        {
-            return htmlHelper.Partial("/GovUkDesignSystemComponents/Panel.cshtml", panelViewModel);
-        }
-
-        public static IHtmlContent GovUkDetails(
-            this IHtmlHelper htmlHelper,
-            DetailsViewModel detailsViewModel)
-        {
-            return htmlHelper.Partial("/GovUkDesignSystemComponents/Details.cshtml", detailsViewModel);
-        }
-
-        public static IHtmlContent GovUkTable(
-            this IHtmlHelper htmlHelper,
-            TableGovUkViewModel tableViewModel)
-        {
-            return htmlHelper.Partial("/GovUkDesignSystemComponents/Table.cshtml", tableViewModel);
         }
     }
 }
