@@ -2,6 +2,7 @@ using GovUkDesignSystem.GovUkDesignSystemComponents;
 using GovUkDesignSystem.GovUkDesignSystemComponents.SubComponents;
 using GovUkDesignSystem.HtmlGenerators;
 using Microsoft.AspNetCore.Html;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using System;
@@ -368,6 +369,31 @@ namespace GovUkDesignSystem
                 formGroupOptions,
                 classes,
                 textInputAppendix);
+        }
+
+        public static IHtmlContent GovUkFileUpload(
+            this IHtmlHelper htmlHelper,
+            FileUploadViewModel fileUploadViewModel)
+        {
+            return htmlHelper.Partial("/GovUkDesignSystemComponents/FileUpload.cshtml", fileUploadViewModel);
+        }
+
+        public static IHtmlContent GovUkFileUploadFor<TModel>(
+            this IHtmlHelper<TModel> htmlHelper,
+            Expression<Func<TModel, IFormFile>> propertyExpression,
+            LabelViewModel labelOptions = null,
+            HintViewModel hintOptions = null,
+            FormGroupViewModel formGroupOptions = null,
+            string classes = null)
+            where TModel : class
+        {
+            return FileUploadHtmlGenerator.GenerateHtml(
+                htmlHelper,
+                propertyExpression,
+                labelOptions,
+                hintOptions,
+                formGroupOptions,
+                classes);
         }
     }
 }
