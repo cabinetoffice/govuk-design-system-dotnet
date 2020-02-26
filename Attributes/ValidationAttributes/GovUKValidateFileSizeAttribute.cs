@@ -24,7 +24,7 @@ namespace GovUkDesignSystem.Attributes.ValidationAttributes
                 return ValidationResult.Success;
             }
 
-            if (file.Length <= _maxFileSize)
+            if (file.Length >= _maxFileSize)
             {
                 return new ValidationResult($"The selected file must be smaller than {_maxFileSizeErrorMessage}");
             }
