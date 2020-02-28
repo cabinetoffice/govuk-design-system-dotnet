@@ -373,6 +373,26 @@ namespace GovUkDesignSystem
                 textInputAppendix);
         }
 
+        public static IHtmlContent GovUkTextInputFor<TModel>(
+            this IHtmlHelper<TModel> htmlHelper,
+            Expression<Func<TModel, decimal?>> propertyExpression,
+            LabelViewModel labelOptions = null,
+            HintViewModel hintOptions = null,
+            FormGroupViewModel formGroupOptions = null,
+            string classes = null,
+            TextInputAppendixViewModel textInputAppendix = null)
+            where TModel : class
+        {
+            return TextInputHtmlGenerator.GenerateHtml(
+                htmlHelper,
+                propertyExpression,
+                labelOptions,
+                hintOptions,
+                formGroupOptions,
+                classes,
+                textInputAppendix);
+        }
+
         public static IHtmlContent GovUkFileUpload(
             this IHtmlHelper htmlHelper,
             FileUploadViewModel fileUploadViewModel)
