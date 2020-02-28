@@ -48,8 +48,8 @@
     {
         Model.Fieldset.InnerHtml = innerHtml;
         Model.Fieldset.DescribedBy = Model.Fieldset.DescribedBy + " " + errorId + " " + hintId;
-        
-        @Html.RenderPartialAsync("/GovUkDesignSystemComponents/Fieldset.cshtml", Model.Fieldset)
+
+        await Html.RenderPartialAsync("/GovUkDesignSystemComponents/Fieldset.cshtml", Model.Fieldset);
     }
     else
     {
