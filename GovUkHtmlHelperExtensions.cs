@@ -253,7 +253,8 @@ namespace GovUkDesignSystem
             this IHtmlHelper<TModel> htmlHelper,
             Expression<Func<TModel, TEnum?>> propertyLambdaExpression,
             FieldsetViewModel fieldsetOptions = null,
-            HintViewModel hintOptions = null)
+            HintViewModel hintOptions = null,
+            string classes = null)
             where TModel : class
             where TEnum : struct, Enum
         {
@@ -261,7 +262,8 @@ namespace GovUkDesignSystem
                 htmlHelper,
                 propertyLambdaExpression,
                 fieldsetOptions,
-                hintOptions);
+                hintOptions,
+                classes);
         }
 
         public static IHtmlContent GovUkRadioItem(
