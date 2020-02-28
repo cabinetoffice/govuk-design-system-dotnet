@@ -19,7 +19,7 @@ namespace GovUkDesignSystem.HtmlGenerators
             Expression<Func<TModel, TEnum?>> propertyExpression,
             FieldsetViewModel fieldsetOptions = null,
             HintViewModel hintOptions = null,
-            string classOptions = null)
+            string classes = null)
             where TModel : class
             where TEnum : struct, Enum
         {
@@ -56,7 +56,7 @@ namespace GovUkDesignSystem.HtmlGenerators
             var radiosViewModel = new RadiosViewModel
             {
                 Name = propertyName,
-                Classes = classOptions,
+                Classes = classes,
                 IdPrefix = propertyId,
                 Items = radios,
                 Fieldset = fieldsetOptions,
