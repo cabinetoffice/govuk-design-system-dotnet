@@ -51,16 +51,9 @@ namespace GovUkDesignSystem.ModelBinders
             }
 
             // Ensure that the value is a number
-            if (!double.TryParse(value, out _))
-            {
-                bindingContext.ModelState.TryAddModelError(modelName, $"{errorTextAttribute.NameAtStartOfSentence} must be a number");
-                return Task.CompletedTask;
-            }
-
-            //Ensure that the value is a decimal
             if (!decimal.TryParse(value, out var decimalValue))
             {
-                bindingContext.ModelState.TryAddModelError(modelName, $"{errorTextAttribute.NameAtStartOfSentence} must be a whole number or decimal");
+                bindingContext.ModelState.TryAddModelError(modelName, $"{errorTextAttribute.NameAtStartOfSentence} must be a number");
                 return Task.CompletedTask;
             }
 
