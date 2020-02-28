@@ -29,7 +29,7 @@ namespace GovUkDesignSystem.HtmlGenerators
             
             var errorSummaryItems = propertiesWithErrorsInOrder
                 .SelectMany(mse => mse.Value.Errors.Select(error => new Tuple<string, string>(mse.Key, error.ErrorMessage)))
-                .Select(tuple => new ErrorSummaryItemViewModel { Href = $"#GovUk_{tuple.Item1}-error", Text = tuple.Item2 })
+                .Select(tuple => new ErrorSummaryItemViewModel { Href = $"#{tuple.Item1}-error", Text = tuple.Item2 })
                 .ToList();
 
             var errorSummaryViewModel = new ErrorSummaryViewModel
