@@ -1,0 +1,37 @@
+﻿@using GovUkDesignSystem.GovUkDesignSystemComponents
+@model GovUkDesignSystem.GovUkDesignSystemComponents.AccordionViewModel
+
+@{
+    int SectionIndex = 0;
+}
+
+<div class="govuk-accordion @(Model.Classes)" data-module="govuk-accordion" id="@(Model.Id)"
+     @(Html.Raw(Model.Attributes != null ? string.Join(" ", Model.Attributes.Select(a => a.Key + "=\"" + a.Value + "\"")) : ""))>
+    @foreach (AccordionSectionViewModel section in Model.Sections)
+    {
+        var expandedClass = section.Expanded ? "govuk-accordion__section--expanded" : String.Empty;
+        <div class="govuk-accordion__section @expandedClass">
+            @if (section.Heading != null)
+            {
+                <div class="govuk-accordion__section-header">
+                    <@(Model.HeadingLevel) class="govuk-accordion__section-heading">
+                        <span class="govuk-accordion__section-button" id="@($"{Model.Id}-heading-{SectionIndex}")">
+                            @{ await Html.RenderPartialAsync("/GovUkDesignSystemComponents/SubComponents/HtmlText.cshtml", section.Heading); }
+                        </span>
+                    </@(Model.HeadingLevel)>
+                </div>
+                @if (section.Summary != null)
+                {
+                    <div class="govuk-accordion__section-summary govuk-body" id="@($"{Model.Id}-summary-{SectionIndex}")">
+                        @{ await Html.RenderPartialAsync("/GovUkDesignSystemComponents/SubComponents/HtmlText.cshtml", section.Summary); }
+                    </div>
+                }
+                <div id="@($"{Model.Id}-content-{SectionIndex}")" class="govuk-accordion__section-content" aria-labelledby="@($"{Model.Id}-heading-{SectionIndex}")">
+                    @{ await Html.RenderPartialAsync("/GovUkDesignSystemComponents/SubComponents/HtmlText.cshtml", section.Content); }
+                </div>
+            }
+        </div>
+
+        SectionIndex++;
+    }
+</div>

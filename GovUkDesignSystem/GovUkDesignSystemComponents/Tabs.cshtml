@@ -1,0 +1,29 @@
+﻿@using GovUkDesignSystem.GovUkDesignSystemComponents
+@model GovUkDesignSystem.GovUkDesignSystemComponents.TabsViewModel
+
+@{
+    bool firstLoop = true;
+}
+
+<div class="govuk-tabs" data-module="govuk-tabs">
+    <h2 class="govuk-tabs__title">
+        Contents
+    </h2>
+    <ul class="govuk-tabs__list">
+        @foreach (TabsListItemViewModel tab in Model.Items)
+        {
+            <li class="govuk-tabs__list-item @(firstLoop ? "govuk-tabs__list-item--selected" : "")">
+                <a class="govuk-tabs__tab" href="#@tab.Id">
+                    @tab.Label
+                </a>
+            </li>
+            firstLoop = false;
+        }
+    </ul>
+    @foreach (TabsListItemViewModel tab in Model.Items)
+    {
+        <section class="govuk-tabs__panel" id="@tab.Id">
+            @{ await Html.RenderPartialAsync("/GovUkDesignSystemComponents/SubComponents/HtmlText.cshtml", tab.Panel); }
+        </section>
+    }
+</div>
