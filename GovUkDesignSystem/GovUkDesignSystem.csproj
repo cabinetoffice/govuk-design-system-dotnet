@@ -2,7 +2,14 @@
 
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
+
     <LangVersion>latest</LangVersion>
+
+    <PackageId>RER.GovUkComponents</PackageId>
+    <VersionSuffix>1.0.1</VersionSuffix>
+    <Authors>RER</Authors>
+    <Description>Gov UK Design system components</Description>
+    <IsPackable>true</IsPackable>
   </PropertyGroup>
 
   <ItemGroup>
