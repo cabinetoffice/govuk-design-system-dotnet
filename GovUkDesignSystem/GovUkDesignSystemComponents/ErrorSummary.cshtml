@@ -1,0 +1,41 @@
+﻿@using GovUkDesignSystem.GovUkDesignSystemComponents
+@model GovUkDesignSystem.GovUkDesignSystemComponents.ErrorSummaryViewModel
+
+<div class="govuk-error-summary @(Model.Classes)"
+     aria-labelledby="error-summary-title"
+     role="alert"
+     tabindex="-1"
+     data-module="govuk-error-summary"
+     @(Html.Raw(Model.Attributes != null ? string.Join(" ", Model.Attributes.Select(a => a.Key + "=\"" + a.Value + "\"")) : ""))>
+
+    <h2 class="govuk-error-summary__title" id="error-summary-title">
+        @{ await Html.RenderPartialAsync("/GovUkDesignSystemComponents/SubComponents/HtmlText.cshtml", Model.Title); }
+    </h2>
+    <div class="govuk-error-summary__body">
+        @if (Model.Description != null)
+        {
+            <p>
+                @{ await Html.RenderPartialAsync("/GovUkDesignSystemComponents/SubComponents/HtmlText.cshtml", Model.Description); }
+            </p>
+        }
+
+        <ul class="govuk-list govuk-error-summary__list">
+            @foreach (ErrorSummaryItemViewModel errorSummaryItem in Model.Errors)
+            {
+                <li>
+                    @if (!string.IsNullOrEmpty(errorSummaryItem.Href))
+                    {
+                        <a href="@(errorSummaryItem.Href)"
+                           @(Html.Raw(errorSummaryItem.Attributes != null ? string.Join(" ", errorSummaryItem.Attributes.Select(a => a.Key + "=\"" + a.Value + "\"")) : ""))>
+                            @{ await Html.RenderPartialAsync("/GovUkDesignSystemComponents/SubComponents/HtmlText.cshtml", errorSummaryItem); }
+                        </a>
+                    }
+                    else
+                    {
+                        await Html.RenderPartialAsync("/GovUkDesignSystemComponents/SubComponents/HtmlText.cshtml", errorSummaryItem);
+                    }
+                </li>
+            }
+        </ul>
+    </div>
+</div>

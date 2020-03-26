@@ -1,0 +1,13 @@
+﻿@model GovUkDesignSystem.GovUkDesignSystemComponents.SummaryListViewModel
+
+<dl class="govuk-summary-list @Model?.Classes" @(Html.Raw(Model.Attributes != null ? string.Join(" ", Model.Attributes.Select(a => a.Key + "=\"" + a.Value + "\"")) : ""))>
+    @{
+        if (Model.Rows != null && Model.Rows.Count > 0)
+        {
+            foreach (var row in Model.Rows)
+            {
+                await Html.RenderPartialAsync("/GovUkDesignSystemComponents/SubComponents/SummaryListRow.cshtml", row);
+            }
+        }
+    }
+</dl>

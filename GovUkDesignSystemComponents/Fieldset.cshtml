@@ -1,9 +1,0 @@
-﻿@model GovUkDesignSystem.GovUkDesignSystemComponents.FieldsetViewModel
-
-<fieldset class="govuk-fieldset @(Model.Classes)"
-          role="@(Model.Role)"
-          describedBy="@(Model.DescribedBy)"
-          @(Html.Raw(Model.Attributes != null ? string.Join(" ", Model.Attributes.Select(a => a.Key + "=\"" + a.Value + "\"")) : ""))>
-    @{ await Html.RenderPartialAsync("/GovUkDesignSystemComponents/Legend.cshtml", Model.Legend); }
-    @(Model.InnerHtml(new object()))
-</fieldset>

@@ -1,0 +1,8 @@
+﻿@model GovUkDesignSystem.GovUkDesignSystemComponents.ErrorMessageViewModel
+
+<span class="govuk-error-message @(Model.Classes)"
+      id="@(Model.Id)"
+      @(Html.Raw(Model.Attributes != null ? string.Join(" ", Model.Attributes.Select(a => a.Key + "=\"" + a.Value + "\"")) : ""))>
+    <span class="govuk-visually-hidden">@(Model.VisuallyHiddenText ?? "Error")</span>
+    @{ await Html.RenderPartialAsync("/GovUkDesignSystemComponents/SubComponents/HtmlText.cshtml", Model); }
+</span>

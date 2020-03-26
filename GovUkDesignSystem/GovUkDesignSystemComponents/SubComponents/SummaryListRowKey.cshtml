@@ -1,0 +1,10 @@
+﻿@model GovUkDesignSystem.GovUkDesignSystemComponents.SummaryListRowKey
+
+<dt class="govuk-summary-list__key @Model?.Classes">
+    @{
+        if (Model != null)
+        {
+            await Html.RenderPartialAsync("/GovUkDesignSystemComponents/SubComponents/HtmlText.cshtml", Model);
+        }
+    }
+</dt>
