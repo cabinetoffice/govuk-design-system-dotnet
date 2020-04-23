@@ -36,9 +36,8 @@ namespace GovUkDesignSystem.HtmlGenerators
 
             List<ItemViewModel> radios = radioOptions.Select(kvp =>
                 {
-                    var value = kvp.Key;
-                    var label = kvp.Value;
-                    bool isValueCurrentlySelected = !string.IsNullOrEmpty(selectedValue) && value == selectedValue;
+                    string value = kvp.Key;
+                    LabelViewModel label = kvp.Value ?? new LabelViewModel { Text = value };
 
                     HintViewModel itemHint = null;
 
@@ -48,8 +47,8 @@ namespace GovUkDesignSystem.HtmlGenerators
                     {
                         Value = value,
                         Id = $"{propertyId}_{value}",
-                        Checked = isValueCurrentlySelected,
-                        Label = label ?? new LabelViewModel{Text = value},
+                        Checked = value == selectedValue,
+                        Label = label,
                         Hint = itemHint
                     };
 
