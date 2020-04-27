@@ -281,6 +281,30 @@ namespace GovUkDesignSystem
                 idPrefix);
         }
 
+        public static async Task<IHtmlContent> GovUkRadiosFromStringsFor<TModel>(
+            this IHtmlHelper<TModel> htmlHelper,
+            Expression<Func<TModel, string>> propertyLambdaExpression,
+            Dictionary<string, LabelViewModel> radioOptions,
+            FieldsetViewModel fieldsetOptions = null,
+            HintViewModel hintOptions = null,
+            string classes = null,
+            Dictionary<string, HintViewModel> radioHints = null,
+            Dictionary<string, Conditional> conditionalOptions = null,
+            string idPrefix = null)
+            where TModel : class
+        {
+            return await RadiosFromStringsHtmlGenerator.GenerateHtml(
+                htmlHelper,
+                propertyLambdaExpression,
+                radioOptions,
+                fieldsetOptions,
+                hintOptions,
+                classes,
+                radioHints,
+                conditionalOptions,
+                idPrefix);
+        }
+
         public static async Task<IHtmlContent> GovUkRadioItem(
             this IHtmlHelper htmlHelper,
             RadioItemViewModel radioItemViewModel)
