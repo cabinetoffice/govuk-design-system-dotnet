@@ -43,6 +43,8 @@ namespace GovUkDesignSystem.GovUkDesignSystemComponents
         ///     Add row action. 
         /// </summary>
         public SummaryListRowActionViewModel Actions { get; set; }
+
+        public bool AnyRowHasActions { get; set; }
     }
 
     public class SummaryListRowKey : IHtmlText
