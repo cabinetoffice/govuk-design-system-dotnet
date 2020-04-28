@@ -44,7 +44,7 @@ namespace GovUkDesignSystem.GovUkDesignSystemComponents
         /// </summary>
         public SummaryListRowActionViewModel Actions { get; set; }
 
-        public bool AnyRowHasActions { get; set; }
+        public bool ShowActions { get; set; }
     }
 
     public class SummaryListRowKey : IHtmlText

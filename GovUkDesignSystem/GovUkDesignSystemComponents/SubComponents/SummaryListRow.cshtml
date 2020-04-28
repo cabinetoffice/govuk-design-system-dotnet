@@ -4,7 +4,7 @@
     @{
         await Html.RenderPartialAsync("/GovUkDesignSystemComponents/SubComponents/SummaryListRowKey.cshtml", Model.Key);
         await Html.RenderPartialAsync("/GovUkDesignSystemComponents/SubComponents/SummaryListRowValue.cshtml", Model.Value);
-        if (Model.AnyRowHasActions)
+        if (Model.ShowActions)
         {
             await Html.RenderPartialAsync("/GovUkDesignSystemComponents/SubComponents/SummaryListRowAction.cshtml", Model.Actions);
         }
