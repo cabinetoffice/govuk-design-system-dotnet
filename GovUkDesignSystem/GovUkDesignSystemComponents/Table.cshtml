@@ -37,7 +37,7 @@
                     {
                         string colSpan = column.Colspan != null ? "colspan=" + column.Colspan : string.Empty;
                         string rowSpan = column.Rowspan != null ? "rowspan=" + column.Rowspan : string.Empty;
-                        string tableBodyCellClasses = $"{(column == row.Row.First() ? "govuk-table__header " : "govuk-table__cell ")} " + $"{(column.Format == TableCellFormat.Numeric ? "govuk-table__cell--numeric " : string.Empty)}" + $"{(column.Classes)}";
+                        string tableBodyCellClasses = $"{(column == row.Row.First() && Model.FirstCellIsHeader ? "govuk-table__header " : "govuk-table__cell ")} " + $"{(column.Format == TableCellFormat.Numeric ? "govuk-table__cell--numeric " : string.Empty)}" + $"{(column.Classes)}";
 
                         if (column == row.Row.First() && Model.FirstCellIsHeader)
                         {
