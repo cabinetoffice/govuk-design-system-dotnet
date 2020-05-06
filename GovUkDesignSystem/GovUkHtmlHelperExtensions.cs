@@ -82,6 +82,7 @@ namespace GovUkDesignSystem
             Expression<Func<TModel, List<TEnum>>> propertyLambdaExpression,
             FieldsetViewModel fieldsetOptions = null,
             HintViewModel hintOptions = null,
+            Dictionary<TEnum, string> classOptions = null,
             Dictionary<TEnum, Conditional> conditionalOptions = null,
             string idPrefix = null,
             Dictionary<TEnum, LabelViewModel> labelOptions = null
@@ -94,9 +95,33 @@ namespace GovUkDesignSystem
                 propertyLambdaExpression,
                 fieldsetOptions,
                 hintOptions,
+                classOptions,
                 conditionalOptions,
                 idPrefix,
                 labelOptions);
+        }
+
+        public static async Task<IHtmlContent> GovUkCheckboxesFromStringsFor<TModel>(
+            this IHtmlHelper<TModel> htmlHelper,
+            Expression<Func<TModel, List<string>>> propertyLambdaExpression,
+            Dictionary<string, LabelViewModel> checkboxOptions,
+            FieldsetViewModel fieldsetOptions = null,
+            HintViewModel hintOptions = null,
+            Dictionary<string, string> classOptions = null,
+            Dictionary<string, Conditional> conditionalOptions = null,
+            string idPrefix = null
+        )
+            where TModel : class
+        {
+            return await CheckboxesFromStringsHtmlGenerator.GenerateHtml(
+                htmlHelper,
+                propertyLambdaExpression,
+                checkboxOptions,
+                fieldsetOptions,
+                hintOptions,
+                classOptions,
+                conditionalOptions,
+                idPrefix);
         }
 
         public static async Task<IHtmlContent> GovUkCheckboxItem(
@@ -177,6 +202,33 @@ namespace GovUkDesignSystem
             FieldsetViewModel fieldsetViewModel)
         {
             return await htmlHelper.PartialAsync("/GovUkDesignSystemComponents/Fieldset.cshtml", fieldsetViewModel);
+        }
+
+        public static async Task<IHtmlContent> GovUkFileUpload(
+            this IHtmlHelper htmlHelper,
+            FileUploadViewModel fileUploadViewModel)
+        {
+            return await htmlHelper.PartialAsync("/GovUkDesignSystemComponents/FileUpload.cshtml", fileUploadViewModel);
+        }
+
+        public static async Task<IHtmlContent> GovUkFileUploadFor<TModel>(
+            this IHtmlHelper<TModel> htmlHelper,
+            Expression<Func<TModel, IFormFile>> propertyExpression,
+            LabelViewModel labelOptions = null,
+            HintViewModel hintOptions = null,
+            FormGroupViewModel formGroupOptions = null,
+            string classes = null,
+            string idPrefix = null)
+            where TModel : class
+        {
+            return await FileUploadHtmlGenerator.GenerateHtml(
+                htmlHelper,
+                propertyExpression,
+                labelOptions,
+                hintOptions,
+                formGroupOptions,
+                classes,
+                idPrefix);
         }
 
         public static async Task<IHtmlContent> GovUkFooter(
@@ -437,33 +489,6 @@ namespace GovUkDesignSystem
                 formGroupOptions,
                 classes,
                 textInputAppendix,
-                idPrefix);
-        }
-
-        public static async Task<IHtmlContent> GovUkFileUpload(
-            this IHtmlHelper htmlHelper,
-            FileUploadViewModel fileUploadViewModel)
-        {
-            return await htmlHelper.PartialAsync("/GovUkDesignSystemComponents/FileUpload.cshtml", fileUploadViewModel);
-        }
-
-        public static async Task<IHtmlContent> GovUkFileUploadFor<TModel>(
-            this IHtmlHelper<TModel> htmlHelper,
-            Expression<Func<TModel, IFormFile>> propertyExpression,
-            LabelViewModel labelOptions = null,
-            HintViewModel hintOptions = null,
-            FormGroupViewModel formGroupOptions = null,
-            string classes = null,
-            string idPrefix = null)
-            where TModel : class
-        {
-            return await FileUploadHtmlGenerator.GenerateHtml(
-                htmlHelper,
-                propertyExpression,
-                labelOptions,
-                hintOptions,
-                formGroupOptions,
-                classes,
                 idPrefix);
         }
     }

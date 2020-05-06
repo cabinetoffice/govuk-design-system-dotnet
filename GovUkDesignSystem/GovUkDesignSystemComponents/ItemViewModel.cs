@@ -24,6 +24,11 @@ namespace GovUkDesignSystem.GovUkDesignSystemComponents
         public string Value { set; get; }
 
         /// <summary>
+        ///     Extra classes for item.
+        /// </summary>
+        public string Classes { get; set; }
+
+        /// <summary>
         ///     Provide attributes and classes to each item label.
         /// </summary>
         public LabelViewModel Label { set; get; }
