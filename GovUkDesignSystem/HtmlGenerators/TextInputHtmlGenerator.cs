@@ -18,6 +18,7 @@ namespace GovUkDesignSystem.HtmlGenerators
             FormGroupViewModel formGroupOptions = null,
             string classes = null,
             TextInputAppendixViewModel textInputAppendix = null,
+            string pattern = null,
             string idPrefix = null
         )
             where TModel : class
@@ -43,7 +44,8 @@ namespace GovUkDesignSystem.HtmlGenerators
                 FormGroup = formGroupOptions,
                 Classes = classes,
                 TextInputAppendix = textInputAppendix,
-                Value = inputValue
+                Value = inputValue,
+                Pattern = pattern
             };
 
             HtmlGenerationHelpers.SetErrorMessages(textInputViewModel, modelStateEntry);

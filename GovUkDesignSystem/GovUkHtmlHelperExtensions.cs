@@ -434,6 +434,7 @@ namespace GovUkDesignSystem
             FormGroupViewModel formGroupOptions = null,
             string classes = null,
             TextInputAppendixViewModel textInputAppendix = null,
+            string pattern = null,
             string idPrefix = null)
             where TModel : class
         {
@@ -445,6 +446,7 @@ namespace GovUkDesignSystem
                 formGroupOptions,
                 classes,
                 textInputAppendix,
+                pattern,
                 idPrefix);
         }
 
@@ -456,6 +458,7 @@ namespace GovUkDesignSystem
             FormGroupViewModel formGroupOptions = null,
             string classes = null,
             TextInputAppendixViewModel textInputAppendix = null,
+            string pattern = null,
             string idPrefix = null)
             where TModel : class
         {
@@ -467,6 +470,7 @@ namespace GovUkDesignSystem
                 formGroupOptions,
                 classes,
                 textInputAppendix,
+                pattern,
                 idPrefix);
         }
 
@@ -478,6 +482,7 @@ namespace GovUkDesignSystem
             FormGroupViewModel formGroupOptions = null,
             string classes = null,
             TextInputAppendixViewModel textInputAppendix = null,
+            string pattern = null,
             string idPrefix = null)
             where TModel : class
         {
@@ -489,6 +494,7 @@ namespace GovUkDesignSystem
                 formGroupOptions,
                 classes,
                 textInputAppendix,
+                pattern,
                 idPrefix);
         }
     }
