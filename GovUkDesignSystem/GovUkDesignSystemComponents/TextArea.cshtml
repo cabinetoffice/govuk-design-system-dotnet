@@ -11,13 +11,13 @@
         if (Model.Hint != null)
         {
             Model.Hint.Id = $"{Model.Id}-hint";
-            describedBy += Model.Hint.Id;
+            describedBy += $" {Model.Hint.Id}";
             await Html.RenderPartialAsync("/GovUkDesignSystemComponents/Hint.cshtml", Model.Hint);
         }
         if (Model.ErrorMessage != null)
         {
             Model.ErrorMessage.Id = $"{Model.Id}-error";
-            describedBy += Model.ErrorMessage.Id;
+            describedBy += $" {Model.ErrorMessage.Id}";
             await Html.RenderPartialAsync("/GovUkDesignSystemComponents/ErrorMessage.cshtml", Model.ErrorMessage);
         }
     }
@@ -25,7 +25,7 @@
               id="@(Model.Id)"
               name="@(Model.Name)"
               rows="@(Model.Rows ?? 5)"
-              aria-describedby="@(describedBy)"
+              aria-describedby="@(describedBy.Trim())"
               autocomplete="@(Model.Autocomplete)"
               @(Html.Raw(Model.Attributes.ToTagAttributes()))>@(Model.Value)</textarea>
 </div>
