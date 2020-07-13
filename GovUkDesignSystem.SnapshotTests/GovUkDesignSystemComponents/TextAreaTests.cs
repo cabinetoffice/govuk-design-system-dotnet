@@ -33,5 +33,49 @@ namespace GovUkDesignSystem.SnapshotTests.GovUkDesignSystemComponents
             // Act & Assert
             await VerifyPartial("TextArea", DefaultTextAreaViewModel());
         }
+
+        [Fact]
+        public async Task Render_NoLabel()
+        {
+            // Arrange
+            var viewModel = DefaultTextAreaViewModel();
+            viewModel.Label = null;
+
+            // Act & Assert
+            await VerifyPartial("TextArea", viewModel);
+        }
+
+        [Fact]
+        public async Task Render_NoHint()
+        {
+            // Arrange
+            var viewModel = DefaultTextAreaViewModel();
+            viewModel.Hint = null;
+
+            // Act & Assert
+            await VerifyPartial("TextArea", viewModel);
+        }
+
+        [Fact]
+        public async Task Render_NoError()
+        {
+            // Arrange
+            var viewModel = DefaultTextAreaViewModel();
+            viewModel.ErrorMessage = null;
+
+            // Act & Assert
+            await VerifyPartial("TextArea", viewModel);
+        }
+
+        [Fact]
+        public async Task Render_NoFormGroup()
+        {
+            // Arrange
+            var viewModel = DefaultTextAreaViewModel();
+            viewModel.FormGroup = null;
+
+            // Act & Assert
+            await VerifyPartial("TextArea", viewModel);
+        }
     }
 }
