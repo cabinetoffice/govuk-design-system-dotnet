@@ -5,13 +5,15 @@ VisualStudioVersion = 16.0.29306.81
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GovUkDesignSystem", "GovUkDesignSystem\GovUkDesignSystem.csproj", "{3205CA01-5C78-46F5-AACA-CD40B7F9B965}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GovUkDesignSystem.SnapshotTests", "GovUkDesignSystem.SnapshotTests\GovUkDesignSystem.SnapshotTests.csproj", "{2A5C3A93-F059-454D-A160-519612676FFA}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GovUkDesignSystem.SnapshotTests", "GovUkDesignSystem.SnapshotTests\GovUkDesignSystem.SnapshotTests.csproj", "{2A5C3A93-F059-454D-A160-519612676FFA}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{E9F97337-59CC-4832-8A68-30213DB17870}"
 	ProjectSection(SolutionItems) = preProject
 		CONTRIBUTING.md = CONTRIBUTING.md
 		README.md = README.md
 	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GovUkDesignSystem.UnitTests", "GovUkDesignSystem.UnitTests\GovUkDesignSystem.UnitTests.csproj", "{5F394E1F-7642-47BF-AD94-BC0D70D7717F}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -27,6 +29,10 @@ Global
 		{2A5C3A93-F059-454D-A160-519612676FFA}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2A5C3A93-F059-454D-A160-519612676FFA}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2A5C3A93-F059-454D-A160-519612676FFA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5F394E1F-7642-47BF-AD94-BC0D70D7717F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5F394E1F-7642-47BF-AD94-BC0D70D7717F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5F394E1F-7642-47BF-AD94-BC0D70D7717F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5F394E1F-7642-47BF-AD94-BC0D70D7717F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
