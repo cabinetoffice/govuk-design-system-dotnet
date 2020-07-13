@@ -1,7 +1,7 @@
 ﻿@using GovUkDesignSystem.Helpers
 @model GovUkDesignSystem.GovUkDesignSystemComponents.TextAreaViewModel
 
-<div class="govuk-form-group @(Model.FormGroup?.Classes) @(Html.Raw(Model.ErrorMessage != null ? "govuk-form-group--error" : ""))">
+<div class="govuk-form-group @(Model.FormGroup?.Classes) @(Model.ErrorMessage != null ? "govuk-form-group--error" : "")">
     @{
         string describedBy = Model.DescribedBy;
         if (Model.Label != null)
@@ -21,7 +21,7 @@
             await Html.RenderPartialAsync("/GovUkDesignSystemComponents/ErrorMessage.cshtml", Model.ErrorMessage);
         }
     }
-    <textarea class="govuk-textarea @(Model.Classes) @(Html.Raw(Model.ErrorMessage != null ? "govuk-textarea--error" : ""))"
+    <textarea class="govuk-textarea @(Model.Classes) @(Model.ErrorMessage != null ? "govuk-textarea--error" : "")"
               id="@(Model.Id)"
               name="@(Model.Name)"
               rows="@(Model.Rows ?? 5)"
