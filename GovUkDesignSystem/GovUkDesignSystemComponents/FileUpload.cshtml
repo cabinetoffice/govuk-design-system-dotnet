@@ -1,30 +1,30 @@
 ﻿@model GovUkDesignSystem.GovUkDesignSystemComponents.FileUploadViewModel
 
-    <div class="govuk-form-group @(Model.FormGroup?.Classes) @(Model.ErrorMessage != null ? "govuk-form-group--error" : "")">
-        @{
-            string describedBy = Model.DescribedBy;
-            if (Model.Label != null)
-            {
-                await Html.RenderPartialAsync("/GovUkDesignSystemComponents/Label.cshtml", Model.Label);
-            }
-            if (Model.Hint != null)
-            {
-                Model.Hint.Id = $"{Model.Id}-hint";
-                describedBy += Model.Hint.Id;
-                await Html.RenderPartialAsync("/GovUkDesignSystemComponents/Hint.cshtml", Model.Hint);
-            }
-            if (Model.ErrorMessage != null)
-            {
-                Model.ErrorMessage.Id = $"{Model.Id}-error";
-                describedBy += Model.ErrorMessage.Id;
-                await Html.RenderPartialAsync("/GovUkDesignSystemComponents/ErrorMessage.cshtml", Model.ErrorMessage);
-            }
+<div class="govuk-form-group @(Model.FormGroup?.Classes) @(Model.ErrorMessage != null ? "govuk-form-group--error" : "")">
+    @{
+        string describedBy = Model.DescribedBy;
+        if (Model.Label != null)
+        {
+            await Html.RenderPartialAsync("/GovUkDesignSystemComponents/Label.cshtml", Model.Label);
         }
-        <input class="govuk-file-upload  @(Model.Classes) @(Model.ErrorMessage != null ? "govuk-file-upload--error" : "")" 
-               id=@(Model.Id) 
-               name=@(Model.Name )
-               type="file" 
-               value=@(Model.Value)
-               aria-describedby="@(describedBy)"
-               @(Html.Raw(Model.Attributes != null ? string.Join(" ", Model.Attributes.Select(a => a.Key + "=\"" + a.Value + "\"")) : ""))>
-    </div>
+        if (Model.Hint != null)
+        {
+            Model.Hint.Id = $"{Model.Id}-hint";
+            describedBy = describedBy + " " + Model.Hint.Id;
+            await Html.RenderPartialAsync("/GovUkDesignSystemComponents/Hint.cshtml", Model.Hint);
+        }
+        if (Model.ErrorMessage != null)
+        {
+            Model.ErrorMessage.Id = $"{Model.Id}-error";
+            describedBy = describedBy + " " + Model.ErrorMessage.Id;
+            await Html.RenderPartialAsync("/GovUkDesignSystemComponents/ErrorMessage.cshtml", Model.ErrorMessage);
+        }
+    }
+    <input class="govuk-file-upload  @(Model.Classes) @(Model.ErrorMessage != null ? "govuk-file-upload--error" : "")"
+           id=@(Model.Id)
+           name=@(Model.Name)
+           type="file"
+           value=@(Model.Value)
+           aria-describedby="@(describedBy.Trim())"
+           @(Html.Raw(Model.Attributes != null ? string.Join(" ", Model.Attributes.Select(a => a.Key + "=\"" + a.Value + "\"")) : ""))>
+</div>
