@@ -33,5 +33,31 @@ namespace GovUkDesignSystem.UnitTests
             // Assert
             result.Should().Be("attributeName=\"attributeValue\"");
         }
+
+        [Fact]
+        public void ToTagAttributes_WithMultipleAttribute_ReturnsCorrectString()
+        {
+            // Arrange
+            var underTest = new Dictionary<string, string> { { "attributeName1", "attributeValue1" }, { "attributeName2", "attributeValue2" } };
+
+            // Act
+            var result = underTest.ToTagAttributes();
+
+            // Assert
+            result.Should().Be("attributeName1=\"attributeValue1\" attributeName2=\"attributeValue2\"");
+        }
+
+        [Fact]
+        public void ToTagAttributes_NameOnlyAttribute_ReturnsCorrectString()
+        {
+            // Arrange
+            var underTest = new Dictionary<string, string> { { "attributeName", null } };
+
+            // Act
+            var result = underTest.ToTagAttributes();
+
+            // Assert
+            result.Should().Be("attributeName");
+        }
     }
 }

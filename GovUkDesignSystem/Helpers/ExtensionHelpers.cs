@@ -22,7 +22,7 @@ namespace GovUkDesignSystem.Helpers
                 return "";
             }
 
-            var attributeStrings = attributesDictionary.Select(kv => $"{kv.Key}=\"{kv.Value}\"");
+            var attributeStrings = attributesDictionary.Select(kv => kv.Value == null ? kv.Key : $"{kv.Key}=\"{kv.Value}\"");
             return string.Join(" ", attributeStrings);
         }
     }
