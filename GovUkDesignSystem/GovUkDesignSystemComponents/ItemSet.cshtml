@@ -1,4 +1,5 @@
 ﻿@using GovUkDesignSystem.GovUkDesignSystemComponents
+@using GovUkDesignSystem.Helpers
 @model GovUkDesignSystem.GovUkDesignSystemComponents.ItemSetViewModel
 
 @{
@@ -25,7 +26,7 @@
 
                 <div class="@( Model.StyleNamePrefix) @( Model.Classes) @( Html.Raw(isConditional ? $"{Model.StyleNamePrefix}--conditional" : ""))"
                      @( Html.Raw(isConditional ? $"data-module={Model.StyleNamePrefix}" : ""))
-                     @( Html.Raw(Model.Attributes != null ? string.Join(" ", Model.Attributes.Select(a => a.Key + "=\"" + a.Value + "\"")) : ""))>
+                     @( Html.Raw(Model.Attributes.ToTagAttributes()))>
                     @for (var index = 0; index < Model.Items.Count; index++)
                     {
                         ItemViewModel currentItem = Model.Items[index];

@@ -1,7 +1,8 @@
 ﻿@model GovUkDesignSystem.GovUkDesignSystemComponents.TableGovUkViewModel
 @using GovUkDesignSystem.GovUkDesignSystemComponents.Enums
+@using GovUkDesignSystem.Helpers
 
-<table class="govuk-table @Model?.Classes" @(Html.Raw(Model.Attributes != null ? string.Join(" ", Model.Attributes.Select(a => a.Key + "=\"" + a.Value + "\"")) : ""))>
+<table class="govuk-table @Model?.Classes" @(Html.Raw(Model.Attributes.ToTagAttributes()))>
 
     @if (!string.IsNullOrEmpty(Model.Caption))
     {
@@ -17,7 +18,7 @@
                     string colSpan = cell.Colspan != null ? "colspan=" + cell.Colspan : string.Empty;
                     string rowSpan = cell.Rowspan != null ? "rowspan=" + cell.Rowspan : string.Empty;
                     string tableHeadCellClasses = $"govuk-table__header " + $"{(cell.Format == TableCellFormat.Numeric ? "govuk-table__header--numeric " : string.Empty)}" + $"{(cell.Classes)}";
-                    <th scope="col" class="@tableHeadCellClasses" @colSpan @rowSpan @(Html.Raw(cell.Attributes != null ? string.Join(" ", cell.Attributes.Select(a => a.Key + "=\"" + a.Value + "\"")) : ""))>
+                    <th scope="col" class="@tableHeadCellClasses" @colSpan @rowSpan @(Html.Raw(cell.Attributes.ToTagAttributes()))>
                         @{
                             await Html.RenderPartialAsync("/GovUkDesignSystemComponents/SubComponents/HtmlText.cshtml", cell);
                         }
@@ -41,7 +42,7 @@
 
                         if (column == row.Row.First() && Model.FirstCellIsHeader)
                         {
-                            <th scope="row" class="@tableBodyCellClasses" @colSpan @rowSpan @(Html.Raw(column.Attributes != null ? string.Join(" ", column.Attributes.Select(a => a.Key + "=\"" + a.Value + "\"")) : ""))>
+                            <th scope="row" class="@tableBodyCellClasses" @colSpan @rowSpan @(Html.Raw(column.Attributes.ToTagAttributes()))>
                                 @{
                                     await Html.RenderPartialAsync("/GovUkDesignSystemComponents/SubComponents/HtmlText.cshtml", column);
                                 }
@@ -49,7 +50,7 @@
                         }
                         else
                         {
-                            <td class="@tableBodyCellClasses" @colSpan @rowSpan @(Html.Raw(column.Attributes != null ? string.Join(" ", column.Attributes.Select(a => a.Key + "=\"" + a.Value + "\"")) : ""))>
+                            <td class="@tableBodyCellClasses" @colSpan @rowSpan @(Html.Raw(column.Attributes.ToTagAttributes()))>
                                 @{
                                     await Html.RenderPartialAsync("/GovUkDesignSystemComponents/SubComponents/HtmlText.cshtml", column);
                                 }

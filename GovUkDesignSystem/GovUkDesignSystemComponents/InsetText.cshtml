@@ -1,7 +1,8 @@
-﻿@model GovUkDesignSystem.GovUkDesignSystemComponents.InsetTextViewModel
+﻿@using GovUkDesignSystem.Helpers
+@model GovUkDesignSystem.GovUkDesignSystemComponents.InsetTextViewModel
 
 <div class="govuk-inset-text @(Model.Classes)"
      id="@(Model.Id)"
-     @(Html.Raw(Model.Attributes != null ? string.Join(" ", Model.Attributes.Select(a => a.Key + "=\"" + a.Value + "\"")) : ""))>
+     @(Html.Raw(Model.Attributes.ToTagAttributes()))>
     @{ await Html.RenderPartialAsync("/GovUkDesignSystemComponents/SubComponents/HtmlText.cshtml", Model); }
 </div>
