@@ -1,6 +1,9 @@
 ﻿using System;
+using System.Collections;
+using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
+using System.Security.Policy;
 
 namespace GovUkDesignSystem.Helpers
 {
@@ -10,6 +13,17 @@ namespace GovUkDesignSystem.Helpers
             where TAttributeType : Attribute
         {
             return property.GetCustomAttributes(typeof(TAttributeType)).SingleOrDefault() as TAttributeType;
+        }
+
+        public static string ToTagAttributes(this IDictionary<string, string> attributesDictionary)
+        {
+            if (attributesDictionary == null)
+            {
+                return "";
+            }
+
+            var attributeStrings = attributesDictionary.Select(kv => kv.Value == null ? kv.Key : $"{kv.Key}=\"{kv.Value}\"");
+            return string.Join(" ", attributeStrings);
         }
     }
 }
