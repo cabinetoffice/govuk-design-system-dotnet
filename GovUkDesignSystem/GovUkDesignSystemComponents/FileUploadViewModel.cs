@@ -4,6 +4,9 @@ using GovUkDesignSystem.GovUkDesignSystemComponents.SubComponents;
 
 namespace GovUkDesignSystem.GovUkDesignSystemComponents
 {
+    /// <summary>
+    /// Note that there is no Value field on this model as we can't set a file value for the user.
+    /// </summary>
     public class FileUploadViewModel : IHasErrorMessage
     {
         /// <summary>
@@ -15,11 +18,6 @@ namespace GovUkDesignSystem.GovUkDesignSystemComponents
         /// Required. The name of the input, which is submitted with the form data.
         /// </summary>
         public string Name { get; set; }
-
-        /// <summary>
-        /// Optional initial value of the input
-        /// </summary>
-        public IFormFile Value { get; set; }
 
         /// <summary>
         /// One or more element IDs to add to the aria-describedby attribute, used to provide additional descriptive information for screenreader users.

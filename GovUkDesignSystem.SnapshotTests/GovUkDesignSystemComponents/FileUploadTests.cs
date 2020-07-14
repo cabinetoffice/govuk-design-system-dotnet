@@ -18,7 +18,6 @@ namespace GovUkDesignSystem.SnapshotTests.GovUkDesignSystemComponents
                 Name = "test-name",
                 Attributes = new Dictionary<string, string> { { "attr-name", "attr-value" } },
                 Classes = "cssClass",
-                Value = new FormFile(new MemoryStream(new byte[0], 0, 0), 0, 0, "test formfile", "test file"),
                 DescribedBy = "test-described-by",
                 Label = new LabelViewModel { Text = "test-label" },
                 Hint = new HintViewModel { Text = "test-hint" },
