@@ -20,8 +20,8 @@
            name="@(Model.Name)"
            type="@(Model.InputType)"
            value="@(Model.Value)"
-           @(Html.Raw(Model.Checked ? "checked" : ""))
-           @(Html.Raw(Model.Disabled ? "disabled" : ""))
+           @(Model.Checked ? "checked" : "")
+           @(Model.Disabled ? "disabled" : "")
            data-aria-controls="@conditionalId"
            aria-describedby="@hintId"
            @(Html.Raw(Model.Attributes.ToTagAttributes()))>
@@ -52,11 +52,10 @@
         }
     }
 </div>
-
 @{
     if (Model.Conditional != null)
     {
-        <div class="@($"{Model.StyleNamePrefix}__conditional") @(Html.Raw(Model.Checked ? "" : $"{Model.StyleNamePrefix}__conditional--hidden"))"
+        <div class="@($"{Model.StyleNamePrefix}__conditional") @(Model.Checked ? "" : $"{Model.StyleNamePrefix}__conditional--hidden")"
              id="@conditionalId">
             @{ await Html.RenderPartialAsync("/GovUkDesignSystemComponents/SubComponents/HtmlText.cshtml", Model.Conditional); }
         </div>
