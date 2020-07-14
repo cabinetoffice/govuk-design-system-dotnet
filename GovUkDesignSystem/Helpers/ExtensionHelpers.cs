@@ -17,7 +17,7 @@ namespace GovUkDesignSystem.Helpers
 
         public static string ToTagAttributes(this IDictionary<string, string> attributesDictionary)
         {
-            if(attributesDictionary == null)
+            if (attributesDictionary == null)
             {
                 return "";
             }

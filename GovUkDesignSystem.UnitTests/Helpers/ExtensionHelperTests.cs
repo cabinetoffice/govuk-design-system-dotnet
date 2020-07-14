@@ -59,5 +59,18 @@ namespace GovUkDesignSystem.UnitTests
             // Assert
             result.Should().Be("attributeName");
         }
+
+        [Fact]
+        public void ToTagAttributes_WithNormalAndNameOnlyAttribute_ReturnsCorrectString()
+        {
+            // Arrange
+            var underTest = new Dictionary<string, string> { { "attributeName1", null }, { "attributeName2", "attributeValue2" } };
+
+            // Act
+            var result = underTest.ToTagAttributes();
+
+            // Assert
+            result.Should().Be("attributeName1 attributeName2=\"attributeValue2\"");
+        }
     }
 }
