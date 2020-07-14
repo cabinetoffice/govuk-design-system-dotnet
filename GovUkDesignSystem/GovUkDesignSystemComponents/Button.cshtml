@@ -17,7 +17,7 @@
                value="@(Model.Text)"
                type="@(Model.Type ?? "submit")"
                name="@(Model.Name)"
-               @(Html.Raw(Model.Disabled ? "disabled" : ""))
+               @(Model.Disabled ? "disabled" : "")
                aria-disabled="@(Model.Disabled ? "true" : "false")"
                data-prevent-double-click="@(Model.PreventDoubleClick ? "true" : "false")"
                @(Html.Raw(Model.Attributes.ToTagAttributes()))/>
@@ -41,7 +41,7 @@
                 value="@(Model.Value)"
                 type="@(Model.Type)"
                 name="@(Model.Name)"
-                @(Html.Raw(Model.Disabled ? "disabled" : ""))
+                @(Model.Disabled ? "disabled" : "")
                 aria-disabled="@(Model.Disabled ? "true" : "false")"
                 data-prevent-double-click="@(Model.PreventDoubleClick ? "true" : "false")"
                 @(Html.Raw(Model.Attributes.ToTagAttributes()))>
