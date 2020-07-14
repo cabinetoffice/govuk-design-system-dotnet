@@ -44,7 +44,7 @@
     if (Model.Fieldset != null)
     {
         Model.Fieldset.InnerHtml = innerHtml;
-        Model.Fieldset.DescribedBy = Model.Fieldset.DescribedBy + errorId + hintId;
+        Model.Fieldset.DescribedBy = $"{Model.Fieldset.DescribedBy} {errorId} {hintId}".Trim();
         await Html.RenderPartialAsync("/GovUkDesignSystemComponents/Fieldset.cshtml", Model.Fieldset);
     }
     else
