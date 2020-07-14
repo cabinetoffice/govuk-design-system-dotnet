@@ -43,7 +43,7 @@
     </text>;
 }
 
-<div class="govuk-form-group @(Model.FormGroup?.Classes) @(Html.Raw(Model.ErrorMessage != null ? "govuk-form-group--error" : ""))">
+<div class="govuk-form-group @(Model.FormGroup?.Classes) @(Model.ErrorMessage != null ? "govuk-form-group--error" : "")">
     @if (Model.Fieldset != null)
     {
         Model.Fieldset.InnerHtml = innerHtml;

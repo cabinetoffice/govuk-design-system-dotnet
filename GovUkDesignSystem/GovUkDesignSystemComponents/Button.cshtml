@@ -1,4 +1,5 @@
-﻿@model GovUkDesignSystem.GovUkDesignSystemComponents.ButtonViewModel
+﻿@using GovUkDesignSystem.Helpers
+@model GovUkDesignSystem.GovUkDesignSystemComponents.ButtonViewModel
 
 @{
     string classNames =
@@ -16,10 +17,10 @@
                value="@(Model.Text)"
                type="@(Model.Type ?? "submit")"
                name="@(Model.Name)"
-               @(Html.Raw(Model.Disabled ? "disabled" : ""))
+               @(Model.Disabled ? "disabled" : "")
                aria-disabled="@(Model.Disabled ? "true" : "false")"
                data-prevent-double-click="@(Model.PreventDoubleClick ? "true" : "false")"
-               @(Html.Raw(Model.Attributes != null ? string.Join(" ", Model.Attributes.Select(a => a.Key + "=\"" + a.Value + "\"")) : ""))/>
+               @(Html.Raw(Model.Attributes.ToTagAttributes()))/>
     }
     else if (Model.Href != null)
     {
@@ -29,7 +30,7 @@
            role="button"
            draggable="false">
             @*This doesn't work yet - The GenderPayGap.WebUI.Classes.TagHelpers.AnchorTagHelper doesn't currently allow arbitrary attributes*@
-            @*@(Html.Raw( Model.Attributes != null ? string.Join(" ", Model.Attributes.Select(a => a.Key + "=\"" + a.Value + "\"")) : "" ))*@
+            @*@(Html.Raw( Model.Attributes.ToTagAttributes() ))*@
             @{ await Html.RenderPartialAsync("/GovUkDesignSystemComponents/SubComponents/HtmlText.cshtml", Model); }
         </a>
     }
@@ -40,10 +41,10 @@
                 value="@(Model.Value)"
                 type="@(Model.Type)"
                 name="@(Model.Name)"
-                @(Html.Raw(Model.Disabled ? "disabled" : ""))
+                @(Model.Disabled ? "disabled" : "")
                 aria-disabled="@(Model.Disabled ? "true" : "false")"
                 data-prevent-double-click="@(Model.PreventDoubleClick ? "true" : "false")"
-                @(Html.Raw(Model.Attributes != null ? string.Join(" ", Model.Attributes.Select(a => a.Key + "=\"" + a.Value + "\"")) : ""))>
+                @(Html.Raw(Model.Attributes.ToTagAttributes()))>
             @{ await Html.RenderPartialAsync("/GovUkDesignSystemComponents/SubComponents/HtmlText.cshtml", Model); }
             @{
                 if (Model.IsStartButton)

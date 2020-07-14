@@ -1,11 +1,12 @@
 ﻿@using GovUkDesignSystem.GovUkDesignSystemComponents.SubComponents
+@using GovUkDesignSystem.Helpers
 @model GovUkDesignSystem.GovUkDesignSystemComponents.LabelViewModel
 
 @{
     Func<object, object> componentAsHtml =
         @<text>
             <label class="govuk-label @( Model.Classes)"
-                   @( Html.Raw(Model.Attributes != null ? string.Join(" ", Model.Attributes.Select(a => a.Key + "=\"" + a.Value + "\"")) : ""))
+                   @( Html.Raw(Model.Attributes.ToTagAttributes()))
                    for="@(Model.For)">
                 @{ await Html.RenderPartialAsync("/GovUkDesignSystemComponents/SubComponents/HtmlText.cshtml", Model); }
             </label>

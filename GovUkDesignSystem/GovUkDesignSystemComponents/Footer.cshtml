@@ -1,8 +1,9 @@
 ﻿@using GovUkDesignSystem.GovUkDesignSystemComponents
+@using GovUkDesignSystem.Helpers
 @model GovUkDesignSystem.GovUkDesignSystemComponents.FooterViewModel
 
 <footer class="govuk-footer @(Model.Classes)" role="contentinfo"
-        @(Html.Raw(Model.Attributes != null ? string.Join(" ", Model.Attributes.Select(a => a.Key + "=\"" + a.Value + "\"")) : ""))>
+        @(Html.Raw(Model.Attributes.ToTagAttributes()))>
 
     <div class="govuk-width-container @(Model.ContainerClasses)">
         @if (Model.NavigationSections != null)
@@ -22,7 +23,7 @@
                                     {
                                         <li class="govuk-footer__list-item">
                                             <a class="govuk-footer__link" href="@(link.Href)">
-                                                @*@(Html.Raw( Model.Attributes != null ? string.Join(" ", Model.Attributes.Select(a => a.Key + "=\"" + a.Value + "\"")) : "" ))*@
+                                                @*@(Html.Raw( Model.Attributes.ToTagAttributes() ))*@
                                                 @(link.Text)
                                             </a>
                                         </li>
@@ -48,7 +49,7 @@
                             {
                                 <li class="govuk-footer__inline-list-item">
                                     <a class="govuk-footer__link" href="@(link.Href)">
-                                        @*@(Html.Raw( Model.Attributes != null ? string.Join(" ", Model.Attributes.Select(a => a.Key + "=\"" + a.Value + "\"")) : "" ))*@
+                                        @*@(Html.Raw( Model.Attributes.ToTagAttributes() ))*@
                                         @(link.Text)
                                     </a>
                                 </li>
