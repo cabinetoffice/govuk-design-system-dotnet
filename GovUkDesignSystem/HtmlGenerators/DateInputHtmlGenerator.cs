@@ -25,6 +25,7 @@ namespace GovUkDesignSystem.HtmlGenerators
             FieldsetViewModel fieldsetOptions,
             FormGroupViewModel formGroupOptions,
             Dictionary<string, string> attributes,
+            bool disabled,
             string idPrefix = null
         )
             where TModel : class
@@ -67,6 +68,8 @@ namespace GovUkDesignSystem.HtmlGenerators
                 labelOptions.For = propertyId;
             }
 
+            var disabledAttributes = disabled ? new Dictionary<string, string> {{"disabled", "true"}} : null;
+
             inputValues.TryGetValue(Day, out var day);
             inputValues.TryGetValue(Month, out var month);
             inputValues.TryGetValue(Year, out var year);
@@ -75,17 +78,20 @@ namespace GovUkDesignSystem.HtmlGenerators
                 new DateInputItemViewModel(){
                     Name = Day,
                     Classes = "govuk-input--width-2",
-                    Value = day
+                    Value = day,
+                    Attributes = disabledAttributes
                 },
                 new DateInputItemViewModel(){
                     Name = Month,
                     Classes = "govuk-input--width-2",
-                    Value = month
+                    Value = month,
+                    Attributes = disabledAttributes
                 } ,
                 new DateInputItemViewModel(){
                     Name = Year,
                     Classes = "govuk-input--width-4",
-                    Value = year
+                    Value = year,
+                    Attributes = disabledAttributes
                 }
             };
 
