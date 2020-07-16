@@ -68,7 +68,7 @@ namespace GovUkDesignSystem.HtmlGenerators
                 labelOptions.For = propertyId;
             }
 
-            var disabledAttributes = disabled ? new Dictionary<string, string> {{"disabled", "true"}} : null;
+            var disabledAttributes = disabled ? new Dictionary<string, string> {{"disabled", null}} : null;
 
             inputValues.TryGetValue(Day, out var day);
             inputValues.TryGetValue(Month, out var month);

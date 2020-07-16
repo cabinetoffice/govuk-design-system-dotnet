@@ -48,11 +48,11 @@ namespace GovUkDesignSystem.HtmlGenerators
                             Text = GovUkRadioCheckboxLabelTextAttribute.GetLabelText(enumValue)
                         };
                     }
+
                     HintViewModel itemHint = null;
-
                     radioHints?.TryGetValue(enumValue, out itemHint);
-                    Dictionary<string, string> attributes = null;
 
+                    Dictionary<string, string> attributes = null;
                     attributeOptions?.TryGetValue(enumValue, out attributes);
 
                     var radioItemViewModel = new RadioItemViewModel
