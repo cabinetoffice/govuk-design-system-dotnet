@@ -150,7 +150,8 @@ namespace GovUkDesignSystem
             FieldsetViewModel fieldsetOptions = null,
             FormGroupViewModel formGroupOptions = null,
             Dictionary<string, string> attributes = null,
-            string idPrefix = null)
+            string idPrefix = null,
+            bool disabled = false)
             where TModel : class
         {
             return await DateInputHtmlGenerator.GenerateHtml(
@@ -162,6 +163,7 @@ namespace GovUkDesignSystem
                 fieldsetOptions,
                 formGroupOptions,
                 attributes,
+                disabled,
                 idPrefix);
         }
 
@@ -317,6 +319,7 @@ namespace GovUkDesignSystem
             Dictionary<TEnum, HintViewModel> radioHints = null,
             Dictionary<TEnum, Conditional> conditionalOptions = null,
             Dictionary<TEnum, LabelViewModel> labelOptions = null,
+            Dictionary<TEnum, Dictionary<string,string>> attributeOptions = null,
             string idPrefix = null)
             where TModel : class
             where TEnum : struct, Enum
@@ -330,6 +333,7 @@ namespace GovUkDesignSystem
                 radioHints,
                 conditionalOptions,
                 labelOptions,
+                attributeOptions,
                 idPrefix);
         }
 
