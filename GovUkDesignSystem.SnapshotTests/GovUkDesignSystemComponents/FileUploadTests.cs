@@ -65,5 +65,18 @@ namespace GovUkDesignSystem.SnapshotTests.GovUkDesignSystemComponents
             // Act & Assert
             await VerifyPartial("FileUpload", viewModel);
         }
+
+        [Fact]
+        public async Task Render_NoDescribedBy()
+        {
+            // Arrange
+            var viewModel = DefaultFileUploadViewModel();
+            viewModel.DescribedBy = null;
+            viewModel.ErrorMessage = null;
+            viewModel.Hint = null;
+
+            // Act & Assert
+            await VerifyPartial("FileUpload", viewModel);
+        }
     }
 }

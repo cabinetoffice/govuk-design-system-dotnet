@@ -6,16 +6,17 @@ using Xunit;
 
 namespace GovUkDesignSystem.SnapshotTests.GovUkDesignSystemComponents
 {
-    public class TextAreaTests : SnapshotTestBase
+    public class TextInputTests : SnapshotTestBase
     {
-        private TextAreaViewModel DefaultTextAreaViewModel()
+        private TextInputViewModel DefaultTextInputViewModel()
         {
-            return new TextAreaViewModel
+            return new TextInputViewModel
             {
                 Id = "test-id",
                 Name = "test-name",
-                Rows = 3,
                 Value = "test value",
+                Type = "text",
+                InputMode = "test-input-mode",
                 DescribedBy = "test-described-by",
                 Label = new LabelViewModel { Text = "test-label" },
                 Hint = new HintViewModel { Text = "test-hint" },
@@ -23,7 +24,9 @@ namespace GovUkDesignSystem.SnapshotTests.GovUkDesignSystemComponents
                 FormGroup = new FormGroupViewModel { Classes = "form-group-classes" },
                 Autocomplete = "test autocomplete",
                 Classes = "test-css-class",
-                Attributes = new Dictionary<string, string> { { "attr-name", "attr-value" } }
+                Pattern = "test-pattern",
+                Attributes = new Dictionary<string, string> { { "attr-name", "attr-value" } },
+                TextInputAppendix = new TextInputAppendixViewModel { Text = "text-appendix" }
             };
         }
 
@@ -31,64 +34,75 @@ namespace GovUkDesignSystem.SnapshotTests.GovUkDesignSystemComponents
         public async Task Render_AllValues()
         {
             // Act & Assert
-            await VerifyPartial("TextArea", DefaultTextAreaViewModel());
+            await VerifyPartial("TextInput", DefaultTextInputViewModel());
         }
 
         [Fact]
         public async Task Render_NoLabel()
         {
             // Arrange
-            var viewModel = DefaultTextAreaViewModel();
+            var viewModel = DefaultTextInputViewModel();
             viewModel.Label = null;
 
             // Act & Assert
-            await VerifyPartial("TextArea", viewModel);
+            await VerifyPartial("TextInput", viewModel);
         }
 
         [Fact]
         public async Task Render_NoHint()
         {
             // Arrange
-            var viewModel = DefaultTextAreaViewModel();
+            var viewModel = DefaultTextInputViewModel();
             viewModel.Hint = null;
 
             // Act & Assert
-            await VerifyPartial("TextArea", viewModel);
+            await VerifyPartial("TextInput", viewModel);
         }
 
         [Fact]
         public async Task Render_NoError()
         {
             // Arrange
-            var viewModel = DefaultTextAreaViewModel();
+            var viewModel = DefaultTextInputViewModel();
             viewModel.ErrorMessage = null;
 
             // Act & Assert
-            await VerifyPartial("TextArea", viewModel);
+            await VerifyPartial("TextInput", viewModel);
         }
 
         [Fact]
         public async Task Render_NoFormGroup()
         {
             // Arrange
-            var viewModel = DefaultTextAreaViewModel();
+            var viewModel = DefaultTextInputViewModel();
             viewModel.FormGroup = null;
 
             // Act & Assert
-            await VerifyPartial("TextArea", viewModel);
+            await VerifyPartial("TextInput", viewModel);
+        }
+
+        [Fact]
+        public async Task Render_NoAppendix()
+        {
+            // Arrange
+            var viewModel = DefaultTextInputViewModel();
+            viewModel.TextInputAppendix = null;
+
+            // Act & Assert
+            await VerifyPartial("TextInput", viewModel);
         }
 
         [Fact]
         public async Task Render_NoDescribedBy()
         {
             // Arrange
-            var viewModel = DefaultTextAreaViewModel();
+            var viewModel = DefaultTextInputViewModel();
             viewModel.DescribedBy = null;
             viewModel.Hint = null;
             viewModel.ErrorMessage = null;
 
             // Act & Assert
-            await VerifyPartial("TextArea", viewModel);
+            await VerifyPartial("TextInput", viewModel);
         }
     }
 }

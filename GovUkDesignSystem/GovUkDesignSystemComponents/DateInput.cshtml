@@ -2,9 +2,20 @@
 @model GovUkDesignSystem.GovUkDesignSystemComponents.DateInputViewModel
 
 @{
-    var id = Model.Id;
-    var errorId = Model.ErrorMessage != null ? id + "-error" : null;
-    var hintId = Model.Hint != null ? id + "-hint" : null;
+    string describedBy = Model.Fieldset?.DescribedBy;
+    string errorId = null;
+    string hintId = null;
+
+    if (Model.ErrorMessage != null)
+    {
+        errorId = Model.Id + "-error";
+        describedBy += $" {errorId}";
+    }
+    if (Model.Hint != null)
+    {
+        hintId = Model.Id + "-hint";
+        describedBy += $" {hintId}";
+    }
 
     Func<object, object> innerHtml =
     @<text>
@@ -47,7 +58,7 @@
     @if (Model.Fieldset != null)
     {
         Model.Fieldset.InnerHtml = innerHtml;
-        Model.Fieldset.DescribedBy = Model.Fieldset.DescribedBy + " " + errorId + " " + hintId;
+        Model.Fieldset.DescribedBy = describedBy?.Trim();
 
         await Html.RenderPartialAsync("/GovUkDesignSystemComponents/Fieldset.cshtml", Model.Fieldset);
     }
