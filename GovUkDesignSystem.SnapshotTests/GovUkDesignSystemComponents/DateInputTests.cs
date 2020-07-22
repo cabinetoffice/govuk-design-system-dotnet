@@ -97,5 +97,18 @@ namespace GovUkDesignSystem.SnapshotTests.GovUkDesignSystemComponents
             // Act & Assert
             await VerifyPartial("DateInput", viewModel);
         }
+
+        [Fact]
+        public async Task Render_NoDescribedBy()
+        {
+            // Arrange
+            var viewModel = DefaultItemSetViewModel();
+            viewModel.Fieldset.DescribedBy = null;
+            viewModel.ErrorMessage = null;
+            viewModel.Hint = null;
+
+            // Act & Assert
+            await VerifyPartial("DateInput", viewModel);
+        }
     }
 }
