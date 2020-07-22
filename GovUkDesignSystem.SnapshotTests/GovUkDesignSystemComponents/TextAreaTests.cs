@@ -77,5 +77,18 @@ namespace GovUkDesignSystem.SnapshotTests.GovUkDesignSystemComponents
             // Act & Assert
             await VerifyPartial("TextArea", viewModel);
         }
+
+        [Fact]
+        public async Task Render_NoDescribedBy()
+        {
+            // Arrange
+            var viewModel = DefaultTextAreaViewModel();
+            viewModel.DescribedBy = null;
+            viewModel.Hint = null;
+            viewModel.ErrorMessage = null;
+
+            // Act & Assert
+            await VerifyPartial("TextArea", viewModel);
+        }
     }
 }
