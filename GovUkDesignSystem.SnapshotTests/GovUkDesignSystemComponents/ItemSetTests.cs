@@ -88,5 +88,18 @@ namespace GovUkDesignSystem.SnapshotTests.GovUkDesignSystemComponents
             // Act & Assert
             await VerifyPartial("ItemSet", viewModel);
         }
+
+        [Fact]
+        public async Task Render_NoDescribedBy()
+        {
+            // Arrange
+            var viewModel = DefaultItemSetViewModel();
+            viewModel.Fieldset.DescribedBy = null;
+            viewModel.Hint = null;
+            viewModel.ErrorMessage = null;
+
+            // Act & Assert
+            await VerifyPartial("ItemSet", viewModel);
+        }
     }
 }
