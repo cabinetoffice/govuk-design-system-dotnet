@@ -88,7 +88,7 @@ namespace GovUkDesignSystem
             Dictionary<TEnum, LabelViewModel> labelOptions = null
             )
             where TModel : class
-            where TEnum : Enum
+            where TEnum : struct, Enum
         {
             return await CheckboxesHtmlGenerator.GenerateHtml(
                 htmlHelper,
