@@ -1,7 +1,7 @@
 ﻿@using GovUkDesignSystem.Helpers
 @model GovUkDesignSystem.GovUkDesignSystemComponents.SelectViewModel
 
-<div class="govuk-form-group @(Model.FormGroup.Classes) @(Model.ErrorMessage != null ? "govuk-form-group--error" : "")">
+<div class="govuk-form-group @(Model.FormGroup?.Classes) @(Model.ErrorMessage != null ? "govuk-form-group--error" : "")">
     @{
         string describedBy = Model.DescribedBy;
         if (Model.Label != null)
