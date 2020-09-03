@@ -1,13 +1,15 @@
-﻿using System.Collections.Generic;
-using System.Threading.Tasks;
-using GovUkDesignSystem.GovUkDesignSystemComponents;
+﻿using GovUkDesignSystem.GovUkDesignSystemComponents;
 using GovUkDesignSystem.SnapshotTests.Helpers;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 using Xunit;
 
 namespace GovUkDesignSystem.SnapshotTests.GovUkDesignSystemComponents
 {
     public class SelectTests : SnapshotTestBase
     {
+        private const string ViewName = "Select";
+
         private static SelectViewModel DefaultSelectViewModel()
         {
             return new SelectViewModel
@@ -39,7 +41,7 @@ namespace GovUkDesignSystem.SnapshotTests.GovUkDesignSystemComponents
         public async Task Render_AllValues()
         {
             // Act & Assert
-            await VerifyPartial("Select", DefaultSelectViewModel());
+            await VerifyPartial(ViewName, DefaultSelectViewModel());
         }
 
         [Fact]
@@ -50,7 +52,7 @@ namespace GovUkDesignSystem.SnapshotTests.GovUkDesignSystemComponents
             viewModel.Label = null;
 
             // Act & Assert
-            await VerifyPartial("Select", viewModel);
+            await VerifyPartial(ViewName, viewModel);
         }
 
         [Fact]
@@ -61,7 +63,7 @@ namespace GovUkDesignSystem.SnapshotTests.GovUkDesignSystemComponents
             viewModel.Hint = null;
 
             // Act & Assert
-            await VerifyPartial("Select", viewModel);
+            await VerifyPartial(ViewName, viewModel);
         }
 
         [Fact]
@@ -72,7 +74,7 @@ namespace GovUkDesignSystem.SnapshotTests.GovUkDesignSystemComponents
             viewModel.ErrorMessage = null;
 
             // Act & Assert
-            await VerifyPartial("Select", viewModel);
+            await VerifyPartial(ViewName, viewModel);
         }
 
         [Fact]
@@ -83,7 +85,7 @@ namespace GovUkDesignSystem.SnapshotTests.GovUkDesignSystemComponents
             viewModel.FormGroup = null;
 
             // Act & Assert
-            await VerifyPartial("Select", viewModel);
+            await VerifyPartial(ViewName, viewModel);
         }
 
         [Fact]
@@ -95,7 +97,7 @@ namespace GovUkDesignSystem.SnapshotTests.GovUkDesignSystemComponents
             viewModel.Items[0].Attributes = null;
 
             // Act & Assert
-            await VerifyPartial("Select", viewModel);
+            await VerifyPartial(ViewName, viewModel);
         }
 
         [Fact]
@@ -108,7 +110,30 @@ namespace GovUkDesignSystem.SnapshotTests.GovUkDesignSystemComponents
             viewModel.ErrorMessage = null;
 
             // Act & Assert
-            await VerifyPartial("Select", viewModel);
+            await VerifyPartial(ViewName, viewModel);
+        }
+
+        [Fact]
+        public async Task Render_UnselectedItem()
+        {
+            // Arrange
+            var viewModel = DefaultSelectViewModel();
+            viewModel.Items[0].Selected = false;
+
+            // Act & Assert
+            await VerifyPartial(ViewName, viewModel);
+        }
+
+        [Fact]
+        public async Task Render_DisabledItem()
+        {
+            // Arrange
+            var viewModel = DefaultSelectViewModel();
+            viewModel.Items[0].Selected = false;
+            viewModel.Items[0].Disabled = true;
+
+            // Act & Assert
+            await VerifyPartial(ViewName, viewModel);
         }
     }
 }

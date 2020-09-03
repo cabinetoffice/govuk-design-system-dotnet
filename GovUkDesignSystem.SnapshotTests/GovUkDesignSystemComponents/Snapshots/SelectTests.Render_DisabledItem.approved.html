@@ -11,6 +11,11 @@
 
 test-label            </label>
          
+<span class="govuk-hint"
+      id="test-id-hint"
+      >
+
+test-hint</span>
 <span class="govuk-error-message"
       id="test-id-error"
       >
@@ -19,11 +24,11 @@ test-label            </label>
 test-error</span>    <select class="govuk-select test-css-class govuk-select--error"
             id="test-id"
             name="test-name"
-            aria-describedby="test-described-by test-id-error"
+            aria-describedby="test-described-by test-id-hint test-id-error"
             attr-name="attr-value">
             <option value="test-item-value"
-                    selected
                     
+                    disabled
                     item-attr-name="item-attr-value">
                 Test Item Text
             </option>

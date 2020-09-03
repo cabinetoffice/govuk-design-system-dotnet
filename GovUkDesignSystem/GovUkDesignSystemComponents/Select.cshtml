@@ -1,4 +1,4 @@
-﻿@using GovUkDesignSystem.Helpers
+@using GovUkDesignSystem.Helpers
 @model GovUkDesignSystem.GovUkDesignSystemComponents.SelectViewModel
 
 <div class="govuk-form-group @(Model.FormGroup?.Classes) @(Model.ErrorMessage != null ? "govuk-form-group--error" : "")">
@@ -6,6 +6,7 @@
         string describedBy = Model.DescribedBy;
         if (Model.Label != null)
         {
+            Model.Label.For = Model.Id;
             await Html.RenderPartialAsync("/GovUkDesignSystemComponents/Label.cshtml", Model.Label);
         }
         if (Model.Hint != null)
@@ -24,8 +25,8 @@
     <select class="govuk-select @(Model.Classes) @(Model.ErrorMessage != null ? "govuk-select--error" : "")"
             id="@(Model.Id)"
             name="@(Model.Name)"
-            aria-describedby="@(describedBy?.Trim())
-            @(Html.Raw(Model.Attributes.ToTagAttributes()))">
+            aria-describedby="@(describedBy?.Trim())"
+            @(Html.Raw(Model.Attributes.ToTagAttributes()))>
         @foreach (var item in Model.Items)
         {
             <option value="@(item.Value)"
