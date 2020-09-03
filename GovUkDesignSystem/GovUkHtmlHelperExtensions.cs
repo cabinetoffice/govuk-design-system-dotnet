@@ -368,6 +368,74 @@ namespace GovUkDesignSystem
             return await htmlHelper.PartialAsync("/GovUkDesignSystemComponents/RadioItem.cshtml", radioItemViewModel);
         }
 
+        public static async Task<IHtmlContent> GovUkSelect(
+            this IHtmlHelper htmlHelper,
+            SelectViewModel selectViewModel)
+        {
+            return await htmlHelper.PartialAsync("/GovUkDesignSystemComponents/Select.cshtml", selectViewModel);
+        }
+
+        public static async Task<IHtmlContent> GovUkSelectFor<TModel, TEnum>(
+            this IHtmlHelper<TModel> htmlHelper,
+            Expression<Func<TModel, TEnum?>> propertyLambdaExpression,
+            LabelViewModel labelOptions = null,
+            HintViewModel hintOptions = null,
+            ErrorMessageViewModel errorMessageOptions = null,
+            FormGroupViewModel formGroupOptions = null,
+            string classes = null,
+            Dictionary<string, string> attributeOptions = null,
+            Dictionary<TEnum, Dictionary<string, string>> itemAttributeOptions = null,
+            Dictionary<TEnum, string> textOptions = null,
+            Dictionary<TEnum, bool> disabledOptions = null,
+            string idPrefix = null)
+            where TModel : class
+            where TEnum : struct, Enum
+        {
+            return await SelectHtmlGenerator.GenerateHtml(
+                htmlHelper,
+                propertyLambdaExpression,
+                labelOptions,
+                hintOptions,
+                errorMessageOptions,
+                formGroupOptions,
+                classes,
+                attributeOptions,
+                itemAttributeOptions,
+                textOptions,
+                disabledOptions,
+                idPrefix);
+        }
+
+        public static async Task<IHtmlContent> GovUkSelectFromStringsFor<TModel>(
+            this IHtmlHelper<TModel> htmlHelper,
+            Expression<Func<TModel, string>> propertyLambdaExpression,
+            Dictionary<string, string> selectOptions,
+            LabelViewModel labelOptions = null,
+            HintViewModel hintOptions = null,
+            ErrorMessageViewModel errorMessageOptions = null,
+            FormGroupViewModel formGroupOptions = null,
+            string classes = null,
+            Dictionary<string, string> attributeOptions = null,
+            Dictionary<string, Dictionary<string, string>> itemAttributeOptions = null,
+            Dictionary<string, bool> disabledOptions = null,
+            string idPrefix = null)
+            where TModel : class
+        {
+            return await SelectFromStringsHtmlGenerator.GenerateHtml(
+                htmlHelper,
+                propertyLambdaExpression,
+                selectOptions,
+                labelOptions,
+                hintOptions,
+                errorMessageOptions,
+                formGroupOptions,
+                classes,
+                attributeOptions,
+                itemAttributeOptions,
+                disabledOptions,
+                idPrefix);
+        }
+
         public static async Task<IHtmlContent> GovUkSummaryList(
             this IHtmlHelper htmlHelper,
             SummaryListViewModel summaryListViewModel)
