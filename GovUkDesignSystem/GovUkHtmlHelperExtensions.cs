@@ -77,6 +77,13 @@ namespace GovUkDesignSystem
             return await htmlHelper.PartialAsync("/GovUkDesignSystemComponents/Checkboxes.cshtml", checkboxesViewModel);
         }
 
+        public static async Task<IHtmlContent> GovUkCheckbox(
+            this IHtmlHelper htmlHelper,
+            CheckboxViewModel checkboxViewModel)
+        {
+            return await htmlHelper.PartialAsync("/GovUkDesignSystemComponents/Checkbox.cshtml", checkboxViewModel);
+        }
+
         public static async Task<IHtmlContent> GovUkCheckboxesFor<TModel, TEnum>(
             this IHtmlHelper<TModel> htmlHelper,
             Expression<Func<TModel, List<TEnum>>> propertyLambdaExpression,
@@ -123,6 +130,31 @@ namespace GovUkDesignSystem
                 conditionalOptions,
                 idPrefix);
         }
+
+        public static async Task<IHtmlContent> GovUkCheckboxesFromBoolsFor<TModel>(
+            this IHtmlHelper<TModel> htmlHelper,
+            Expression<Func<TModel, bool>> propertyLambdaExpression,
+            Dictionary<string, LabelViewModel> checkboxOptions,
+            FieldsetViewModel fieldsetOptions = null,
+            HintViewModel hintOptions = null,
+            Dictionary<string, string> classOptions = null,
+            Dictionary<string, Conditional> conditionalOptions = null,
+            string idPrefix = null
+        )
+            where TModel : class
+        {
+            return await CheckboxesFromBoolsHtmlGenerator.GenerateHtml(
+                htmlHelper,
+                propertyLambdaExpression,
+                checkboxOptions,
+                fieldsetOptions,
+                hintOptions,
+                classOptions,
+                conditionalOptions,
+                idPrefix);
+        }
+
+
 
         public static async Task<IHtmlContent> GovUkCheckboxItem(
             this IHtmlHelper htmlHelper,

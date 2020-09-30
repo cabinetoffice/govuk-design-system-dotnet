@@ -118,5 +118,29 @@ namespace GovUkDesignSystem.Helpers
 
             return ExpressionHelpers.GetPropertyValueFromModelAndExpression(model, propertyLambdaExpression);
         }
+
+        /// <summary>
+        /// Get the value to put in the input from the post data if possible, otherwise use the value in the model
+        /// </summary>
+        public static bool GetListOfBoolValuesFromModelStateOrModel<TModel>(
+            TModel model,
+            Expression<Func<TModel, bool>> propertyLambdaExpression,
+            ModelStateEntry modelStateEntry)
+            where TModel : class
+        {
+            if (modelStateEntry != null && modelStateEntry.RawValue != null)
+            {
+                if (modelStateEntry.RawValue is bool)
+                {
+                    return (bool)modelStateEntry.RawValue;
+                }
+                if (modelStateEntry.RawValue is string)
+                {
+                    return bool.Parse(modelStateEntry.RawValue.ToString());
+                }
+            }
+
+            return ExpressionHelpers.GetPropertyValueFromModelAndExpression(model, propertyLambdaExpression);
+        }
     }
 }
