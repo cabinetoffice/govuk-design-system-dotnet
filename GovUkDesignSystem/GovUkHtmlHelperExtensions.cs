@@ -124,6 +124,29 @@ namespace GovUkDesignSystem
                 idPrefix);
         }
 
+        public static async Task<IHtmlContent> GovUkCheckboxFromBoolFor<TModel>(
+            this IHtmlHelper<TModel> htmlHelper,
+            Expression<Func<TModel, bool>> propertyLambdaExpression,
+            LabelViewModel label = null,
+            FieldsetViewModel fieldsetOptions = null,
+            HintViewModel hintOptions = null,
+            string classOption = null,
+            Conditional conditionalOption = null,
+            string idPrefix = null
+        )
+            where TModel : class
+        {
+            return await CheckboxFromBoolHtmlGenerator.GenerateHtml(
+                htmlHelper,
+                propertyLambdaExpression,
+                label,
+                fieldsetOptions,
+                hintOptions,
+                classOption,
+                conditionalOption,
+                idPrefix);
+        }
+        
         public static async Task<IHtmlContent> GovUkCheckboxItem(
             this IHtmlHelper htmlHelper,
             CheckboxItemViewModel checkboxItemViewModel)

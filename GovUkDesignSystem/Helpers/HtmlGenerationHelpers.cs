@@ -118,5 +118,31 @@ namespace GovUkDesignSystem.Helpers
 
             return ExpressionHelpers.GetPropertyValueFromModelAndExpression(model, propertyLambdaExpression);
         }
+
+        /// <summary>
+        /// Get the value to put in the input from the post data if possible, otherwise use the value in the model
+        /// </summary>
+        public static bool GetBoolValueFromModelStateOrModel<TModel>(
+            TModel model,
+            Expression<Func<TModel, bool>> propertyLambdaExpression,
+            ModelStateEntry modelStateEntry)
+            where TModel : class
+        {
+            if (modelStateEntry != null && modelStateEntry.RawValue != null)
+            {
+                if (modelStateEntry.RawValue is string)
+                {
+                    return bool.Parse(modelStateEntry.RawValue.ToString());
+                }
+                if (modelStateEntry.RawValue is string[])
+                {
+                    // We have a hidden field which will always return a false value. If the checkbox is checked
+                    // we will also get a true value.
+                    return ((string[])modelStateEntry.RawValue).Any(r => r == "true");
+                }
+            }
+
+            return ExpressionHelpers.GetPropertyValueFromModelAndExpression(model, propertyLambdaExpression);
+        }
     }
 }
