@@ -14,7 +14,7 @@ namespace GovUkDesignSystem.HtmlGenerators
         internal static async Task<IHtmlContent> GenerateHtml<TModel>(
             IHtmlHelper<TModel> htmlHelper,
             Expression<Func<TModel, bool>> propertyExpression,
-            LabelViewModel label,
+            LabelViewModel label = null,
             FieldsetViewModel fieldsetOptions = null,
             HintViewModel hintOptions = null,
             string classOption = null,
@@ -31,14 +31,13 @@ namespace GovUkDesignSystem.HtmlGenerators
                 HtmlGenerationHelpers.GetBoolValueFromModelStateOrModel(htmlHelper.ViewData.Model,
                     propertyExpression, modelStateEntry);
 
-            string classes = classOption;
             var checkboxItemViewModel = new CheckboxItemViewModel
             {
                 Value = "true",
                 Id = $"{propertyId}",
                 Checked = boolValue,
                 Label = label,
-                Classes = classes
+                Classes = classOption
             };
 
             if (conditionalOption != null)

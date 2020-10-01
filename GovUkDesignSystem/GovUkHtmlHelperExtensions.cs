@@ -127,7 +127,7 @@ namespace GovUkDesignSystem
         public static async Task<IHtmlContent> GovUkCheckboxFromBoolFor<TModel>(
             this IHtmlHelper<TModel> htmlHelper,
             Expression<Func<TModel, bool>> propertyLambdaExpression,
-            LabelViewModel label,
+            LabelViewModel label = null,
             FieldsetViewModel fieldsetOptions = null,
             HintViewModel hintOptions = null,
             string classOption = null,
