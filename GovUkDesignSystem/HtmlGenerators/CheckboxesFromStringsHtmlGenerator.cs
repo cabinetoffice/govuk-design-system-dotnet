@@ -27,9 +27,8 @@ namespace GovUkDesignSystem.HtmlGenerators
             string propertyName = idPrefix + htmlHelper.NameFor(propertyExpression);
             htmlHelper.ViewData.ModelState.TryGetValue(propertyName, out var modelStateEntry);
 
-
             // Get the value to put in the input from the post data if possible, otherwise use the value in the model 
-            var selectedValues = HtmlGenerationHelpers.GetListOfStringValuesFromModelStateOrModel(htmlHelper.ViewData.Model, propertyExpression, modelStateEntry);
+            var selectedValues = HtmlGenerationHelpers.GetListOfStringValuesFromModelStateOrModel(htmlHelper.ViewData.Model, propertyExpression, modelStateEntry, CheckboxesViewModel.HIDDEN_CHECKBOX_DUMMY_VALUE);
 
             List<ItemViewModel> checkboxes = checkboxOptions.Select(kvp =>
                 {

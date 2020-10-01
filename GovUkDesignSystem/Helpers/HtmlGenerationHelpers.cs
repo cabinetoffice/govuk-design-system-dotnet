@@ -76,20 +76,27 @@ namespace GovUkDesignSystem.Helpers
         public static List<TEnum> GetListOfEnumValuesFromModelStateOrModel<TModel, TEnum>(
             TModel model,
             Expression<Func<TModel, List<TEnum>>> propertyLambdaExpression,
-            ModelStateEntry modelStateEntry)
+            ModelStateEntry modelStateEntry,
+            string ignoreValue = null)
             where TModel : class
             where TEnum : struct, Enum
         {
             if (modelStateEntry != null && modelStateEntry.RawValue != null)
             {
+                var stringValues = new List<string>();
                 if (modelStateEntry.RawValue is string[])
                 {
-                    return ((string[])modelStateEntry.RawValue).Select(e => (TEnum)Enum.Parse(typeof(TEnum), e.ToString())).ToList();
+                    stringValues.AddRange((string[])modelStateEntry.RawValue);
                 }
                 else if (modelStateEntry.RawValue is string)
                 {
-                    return new List<TEnum> { (TEnum)Enum.Parse(typeof(TEnum), modelStateEntry.RawValue.ToString()) };
+                    stringValues.Add((string)modelStateEntry.RawValue);
                 }
+
+                return stringValues
+                    .Except(new[] { ignoreValue })
+                    .Select(e => (TEnum)Enum.Parse(typeof(TEnum), e.ToString()))
+                    .ToList();
             }
 
             return ExpressionHelpers.GetPropertyValueFromModelAndExpression(model, propertyLambdaExpression);
@@ -101,19 +108,22 @@ namespace GovUkDesignSystem.Helpers
         public static List<string> GetListOfStringValuesFromModelStateOrModel<TModel>(
             TModel model,
             Expression<Func<TModel, List<string>>> propertyLambdaExpression,
-            ModelStateEntry modelStateEntry)
+            ModelStateEntry modelStateEntry,
+            string ignoreValue = null)
             where TModel : class
         {
             if (modelStateEntry != null && modelStateEntry.RawValue != null)
             {
+                var values = new List<string>();
                 if (modelStateEntry.RawValue is string[])
                 {
-                    return ((string[])modelStateEntry.RawValue).ToList();
+                    values.AddRange((string[])modelStateEntry.RawValue);
                 }
                 else if (modelStateEntry.RawValue is string)
                 {
-                    return new List<string> { modelStateEntry.RawValue.ToString() };
+                    values.Add((string)modelStateEntry.RawValue);
                 }
+                return values.Except(new[] { ignoreValue }).ToList();
             }
 
             return ExpressionHelpers.GetPropertyValueFromModelAndExpression(model, propertyLambdaExpression);
@@ -122,24 +132,29 @@ namespace GovUkDesignSystem.Helpers
         /// <summary>
         /// Get the value to put in the input from the post data if possible, otherwise use the value in the model
         /// </summary>
-        public static bool GetBoolValueFromModelStateOrModel<TModel>(
+        public static bool GetCheckboxBoolValueFromModelStateOrModel<TModel>(
             TModel model,
             Expression<Func<TModel, bool>> propertyLambdaExpression,
-            ModelStateEntry modelStateEntry)
+            ModelStateEntry modelStateEntry,
+            string ignoreValue)
             where TModel : class
         {
             if (modelStateEntry != null && modelStateEntry.RawValue != null)
             {
-                if (modelStateEntry.RawValue is string)
-                {
-                    return bool.Parse(modelStateEntry.RawValue.ToString());
-                }
+                // In theory we should either get a single entry containing the ignore value, or two
+                // entries - the ignore value and a value of true.
+                var values = new List<string>();
                 if (modelStateEntry.RawValue is string[])
                 {
-                    // We have a hidden field which will always return a false value. If the checkbox is checked
-                    // we will also get a true value.
-                    return ((string[])modelStateEntry.RawValue).Any(r => r == "true");
+                    values.AddRange((string[])modelStateEntry.RawValue);
                 }
+                else if (modelStateEntry.RawValue is string)
+                {
+                    values.Add((string)modelStateEntry.RawValue);
+                }
+                return bool.Parse(values
+                    .Except(new[] { ignoreValue })
+                    .Single());
             }
 
             return ExpressionHelpers.GetPropertyValueFromModelAndExpression(model, propertyLambdaExpression);
