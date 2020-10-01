@@ -77,12 +77,12 @@ namespace GovUkDesignSystem
             return await htmlHelper.PartialAsync("/GovUkDesignSystemComponents/Checkboxes.cshtml", checkboxesViewModel);
         }
 
-        public static async Task<IHtmlContent> GovUkCheckbox(
-            this IHtmlHelper htmlHelper,
-            CheckboxViewModel checkboxViewModel)
-        {
-            return await htmlHelper.PartialAsync("/GovUkDesignSystemComponents/Checkbox.cshtml", checkboxViewModel);
-        }
+        //public static async Task<IHtmlContent> GovUkCheckbox(
+        //    this IHtmlHelper htmlHelper,
+        //    CheckboxViewModel checkboxViewModel)
+        //{
+        //    return await htmlHelper.PartialAsync("/GovUkDesignSystemComponents/Checkbox.cshtml", checkboxViewModel);
+        //}
 
         public static async Task<IHtmlContent> GovUkCheckboxesFor<TModel, TEnum>(
             this IHtmlHelper<TModel> htmlHelper,
@@ -131,31 +131,29 @@ namespace GovUkDesignSystem
                 idPrefix);
         }
 
-        public static async Task<IHtmlContent> GovUkCheckboxesFromBoolsFor<TModel>(
+        public static async Task<IHtmlContent> GovUkCheckboxFromBoolFor<TModel>(
             this IHtmlHelper<TModel> htmlHelper,
             Expression<Func<TModel, bool>> propertyLambdaExpression,
-            Dictionary<string, LabelViewModel> checkboxOptions,
+            LabelViewModel label,
             FieldsetViewModel fieldsetOptions = null,
             HintViewModel hintOptions = null,
-            Dictionary<string, string> classOptions = null,
-            Dictionary<string, Conditional> conditionalOptions = null,
+            string classOption = null,
+            Conditional conditionalOption = null,
             string idPrefix = null
         )
             where TModel : class
         {
-            return await CheckboxesFromBoolsHtmlGenerator.GenerateHtml(
+            return await CheckboxFromBoolHtmlGenerator.GenerateHtml(
                 htmlHelper,
                 propertyLambdaExpression,
-                checkboxOptions,
+                label,
                 fieldsetOptions,
                 hintOptions,
-                classOptions,
-                conditionalOptions,
+                classOption,
+                conditionalOption,
                 idPrefix);
         }
-
-
-
+        
         public static async Task<IHtmlContent> GovUkCheckboxItem(
             this IHtmlHelper htmlHelper,
             CheckboxItemViewModel checkboxItemViewModel)
