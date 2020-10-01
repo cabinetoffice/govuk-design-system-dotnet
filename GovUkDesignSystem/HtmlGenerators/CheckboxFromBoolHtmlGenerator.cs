@@ -28,8 +28,7 @@ namespace GovUkDesignSystem.HtmlGenerators
 
             // Get the value to put in the input from the post data if possible, otherwise use the value in the model 
             var boolValue =
-                HtmlGenerationHelpers.GetBoolValueFromModelStateOrModel(htmlHelper.ViewData.Model,
-                    propertyExpression, modelStateEntry);
+                HtmlGenerationHelpers.GetCheckboxBoolValueFromModelStateOrModel(htmlHelper.ViewData.Model, propertyExpression, modelStateEntry, CheckboxesViewModel.HIDDEN_CHECKBOX_DUMMY_VALUE);
 
             var checkboxItemViewModel = new CheckboxItemViewModel
             {

@@ -31,7 +31,7 @@ namespace GovUkDesignSystem.HtmlGenerators
             htmlHelper.ViewData.ModelState.TryGetValue(propertyName, out var modelStateEntry);
 
             // Get the value to put in the input from the post data if possible, otherwise use the value in the model 
-            var selectedValues = HtmlGenerationHelpers.GetListOfEnumValuesFromModelStateOrModel(htmlHelper.ViewData.Model, propertyExpression, modelStateEntry);
+            var selectedValues = HtmlGenerationHelpers.GetListOfEnumValuesFromModelStateOrModel(htmlHelper.ViewData.Model, propertyExpression, modelStateEntry, CheckboxesViewModel.HIDDEN_CHECKBOX_DUMMY_VALUE);
 
             List<ItemViewModel> checkboxes = Enum.GetValues(typeof(TEnum))
                 .Cast<TEnum>()
