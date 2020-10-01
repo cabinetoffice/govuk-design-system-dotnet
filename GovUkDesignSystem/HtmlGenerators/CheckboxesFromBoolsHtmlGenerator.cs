@@ -33,10 +33,10 @@ namespace GovUkDesignSystem.HtmlGenerators
             var boolValue =
                 HtmlGenerationHelpers.GetListOfBoolValuesFromModelStateOrModel(htmlHelper.ViewData.Model,
                     propertyExpression, modelStateEntry);
-
+            
+#region ForOneItem
             //string classes = classOptions;
-            //// classOptions?.TryGetValue(value, out classes);
-
+            // classOptions?.TryGetValue(value, out classes);
             //var checkboxItemViewModel = new CheckboxItemViewModel
             //{
             //    Value = boolValue.ToString(),
@@ -50,11 +50,8 @@ namespace GovUkDesignSystem.HtmlGenerators
             //{
             //    checkboxItemViewModel.Conditional = conditionalOption;
             //}
-
             //ItemViewModel checkBox = checkboxItemViewModel;
-
-
-
+#endregion
             List<ItemViewModel> checkboxes = checkboxOptions.Select(kvp =>
                 {
                     string value = kvp.Key;
@@ -65,9 +62,9 @@ namespace GovUkDesignSystem.HtmlGenerators
 
                     var checkboxItemViewModel = new CheckboxItemViewModel
                     {
-                        Value = value,
+                        Value = "true",
                         Id = $"{propertyName}_{value}",
-                        Checked = boolValue == bool.Parse(value),
+                        Checked = bool.Parse(value),
                         Label = label,
                         Classes = classes
                     };
