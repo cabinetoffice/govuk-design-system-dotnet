@@ -77,13 +77,6 @@ namespace GovUkDesignSystem
             return await htmlHelper.PartialAsync("/GovUkDesignSystemComponents/Checkboxes.cshtml", checkboxesViewModel);
         }
 
-        //public static async Task<IHtmlContent> GovUkCheckbox(
-        //    this IHtmlHelper htmlHelper,
-        //    CheckboxViewModel checkboxViewModel)
-        //{
-        //    return await htmlHelper.PartialAsync("/GovUkDesignSystemComponents/Checkbox.cshtml", checkboxViewModel);
-        //}
-
         public static async Task<IHtmlContent> GovUkCheckboxesFor<TModel, TEnum>(
             this IHtmlHelper<TModel> htmlHelper,
             Expression<Func<TModel, List<TEnum>>> propertyLambdaExpression,
