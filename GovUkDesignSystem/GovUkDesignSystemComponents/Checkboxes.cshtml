@@ -1,5 +1,7 @@
 ﻿@model GovUkDesignSystem.GovUkDesignSystemComponents.CheckboxesViewModel
 
 @{ await Html.RenderPartialAsync("/GovUkDesignSystemComponents/ItemSet.cshtml", Model); }
-@* With checkboxes, if none of them are checked the model state will not contain an entry for them. Hence we need this hidden input so that there is always a model state entry*@
+@* With checkboxes, if none of them are checked the model state will not contain an entry for them.
+   Hence we need this hidden input so that there is always a model state entry.
+   Because of this hidden value, users of checkboxes will need to use the checkbox model binders (GovUkCheckboxXXXXBinder)*@
 <input name="@(Model.Name)" type="hidden" value="@GovUkDesignSystem.GovUkDesignSystemComponents.CheckboxesViewModel.HIDDEN_CHECKBOX_DUMMY_VALUE"/>
