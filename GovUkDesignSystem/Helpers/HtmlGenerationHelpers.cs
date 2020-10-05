@@ -152,9 +152,10 @@ namespace GovUkDesignSystem.Helpers
                 {
                     values.Add((string)modelStateEntry.RawValue);
                 }
-                return bool.Parse(values
-                    .Except(new[] { ignoreValue })
-                    .Single());
+                var boolValues = values.Except(new[] { ignoreValue }).Select(v => bool.Parse(v));
+
+                // If there are multiple values accept any "true" value
+                return boolValues.Any(bv => bv);
             }
 
             return ExpressionHelpers.GetPropertyValueFromModelAndExpression(model, propertyLambdaExpression);

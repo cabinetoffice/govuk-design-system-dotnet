@@ -36,9 +36,10 @@ namespace GovUkDesignSystem.ModelBinders
                 return Task.CompletedTask;
             }
 
-            // If this is the dummy value then skip it
+            // If this is the dummy value then add an entry to the model state to show that we saw the dummy value, but don't try to bind a value to the model.
             if (valueProviderResult.FirstValue == CheckboxesViewModel.HIDDEN_CHECKBOX_DUMMY_VALUE)
             {
+                bindingContext.ModelState.SetModelValue(bindingContext.ModelName, valueProviderResult);
                 return Task.CompletedTask;
             }
 
