@@ -3,10 +3,10 @@
 
 @{
     string classNames =
-        $"govuk-button "
-        + $"{Model.Classes}"
-        + (Model.Disabled ? "govuk-button--disabled" : "")
-        + (Model.IsStartButton ? "govuk-button--start" : "");
+        $"govuk-button"
+        + $" {Model.Classes}"
+        + (Model.Disabled ? " govuk-button--disabled" : "")
+        + (Model.IsStartButton ? " govuk-button--start" : "");
 }
 
 @{
@@ -26,7 +26,12 @@
     {
         <a class="@(classNames)"
            data-module="govuk-button"
-           href="@(Model.Href ?? "#")"
+           @if (!Model.Disabled)
+           {
+               <text>
+                   href="@(Model.Href ?? "#")"
+               </text>
+           }
            role="button"
            draggable="false">
             @*This doesn't work yet - The GenderPayGap.WebUI.Classes.TagHelpers.AnchorTagHelper doesn't currently allow arbitrary attributes*@

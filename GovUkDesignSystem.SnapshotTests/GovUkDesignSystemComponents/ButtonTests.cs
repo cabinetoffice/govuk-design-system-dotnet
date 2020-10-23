@@ -65,6 +65,18 @@ namespace GovUkDesignSystem.SnapshotTests.GovUkDesignSystemComponents
         }
 
         [Fact]
+        public async Task Render_AsDisabledLink()
+        {
+            // Arrange
+            var viewModel = DefaultLabelViewModel();
+            viewModel.Href = "test-href";
+            viewModel.Disabled = true;
+
+            // Act & Assert
+            await VerifyPartial("Button", viewModel);
+        }
+
+        [Fact]
         public async Task Render_AsInput()
         {
             // Arrange
