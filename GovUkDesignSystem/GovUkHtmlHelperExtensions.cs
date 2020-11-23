@@ -343,7 +343,7 @@ namespace GovUkDesignSystem
             Dictionary<TEnum, Conditional> conditionalOptions = null,
             Dictionary<TEnum, LabelViewModel> labelOptions = null,
             Dictionary<TEnum, Dictionary<string,string>> attributeOptions = null,
-            ICollection<TEnum> radioOptions = null,
+            IEnumerable<TEnum> overrideRadioValues = null,
             string idPrefix = null)
             where TModel : class
             where TEnum : struct, Enum
@@ -358,7 +358,7 @@ namespace GovUkDesignSystem
                 conditionalOptions,
                 labelOptions,
                 attributeOptions,
-                radioOptions,
+                overrideRadioValues,
                 idPrefix);
         }
 

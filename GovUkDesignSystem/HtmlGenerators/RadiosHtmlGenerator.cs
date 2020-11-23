@@ -23,7 +23,7 @@ namespace GovUkDesignSystem.HtmlGenerators
             Dictionary<TEnum, Conditional> conditionalOptions = null,
             Dictionary<TEnum, LabelViewModel> labelOptions = null,
             Dictionary<TEnum, Dictionary<string,string>> attributeOptions = null,
-            ICollection<TEnum> radioOptions = null,
+            IEnumerable<TEnum> overrideRadioValues = null,
             string idPrefix = null)
             where TModel : class
             where TEnum : struct, Enum
@@ -37,14 +37,14 @@ namespace GovUkDesignSystem.HtmlGenerators
 
             IEnumerable<TEnum> enumRadioOptions;
 
-            if (radioOptions == null)
+            if (overrideRadioValues == null)
             {
                 enumRadioOptions = Enum.GetValues(typeof(TEnum))
                     .Cast<TEnum>();
             }
             else
             {
-                enumRadioOptions = radioOptions;
+                enumRadioOptions = overrideRadioValues;
             }
 
             List<ItemViewModel> radios = enumRadioOptions
