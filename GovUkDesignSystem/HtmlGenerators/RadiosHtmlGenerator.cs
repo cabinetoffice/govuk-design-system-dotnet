@@ -23,6 +23,7 @@ namespace GovUkDesignSystem.HtmlGenerators
             Dictionary<TEnum, Conditional> conditionalOptions = null,
             Dictionary<TEnum, LabelViewModel> labelOptions = null,
             Dictionary<TEnum, Dictionary<string,string>> attributeOptions = null,
+            ICollection<TEnum> radioOptions = null,
             string idPrefix = null)
             where TModel : class
             where TEnum : struct, Enum
@@ -34,8 +35,19 @@ namespace GovUkDesignSystem.HtmlGenerators
             // Get the value to put in the input from the post data if possible, otherwise use the value in the model 
             TEnum? selectedValue = HtmlGenerationHelpers.GetNullableEnumValueFromModelStateOrModel(htmlHelper.ViewData.Model, propertyExpression, modelStateEntry);
 
-            List<ItemViewModel> radios = Enum.GetValues(typeof(TEnum))
-                .Cast<TEnum>()
+            IEnumerable<TEnum> enumRadioOptions;
+
+            if (radioOptions == null)
+            {
+                enumRadioOptions = Enum.GetValues(typeof(TEnum))
+                    .Cast<TEnum>();
+            }
+            else
+            {
+                enumRadioOptions = radioOptions;
+            }
+
+            List<ItemViewModel> radios = enumRadioOptions
                 .Select(enumValue =>
                 {
                     bool isEnumValueCurrentlySelected = selectedValue.HasValue && enumValue.Equals(selectedValue.Value);
