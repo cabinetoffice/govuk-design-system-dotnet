@@ -42,10 +42,14 @@ namespace GovUkDesignSystem.ModelBinders
             // Return if the value is empty
             if (string.IsNullOrEmpty(value))
             {
-                // Raise an error if this property is mandatory
-                if (errorMessageIfMissing != null)
+                // Raise an error if this property is mandatory or if property type is non-nullable
+                if (errorMessageIfMissing != null || !bindingContext.ModelMetadata.IsReferenceOrNullableType)
                 {
-                    bindingContext.ModelState.TryAddModelError(modelName, errorMessageIfMissing);
+                    bindingContext.ModelState.TryAddModelError(modelName, errorMessageIfMissing ?? $"{nameAtStartOfSentence} cannot be null or empty");
+                }
+                else
+                {
+                    bindingContext.Result = ModelBindingResult.Success(null);
                 }
                 return Task.CompletedTask;
             }

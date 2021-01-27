@@ -1,5 +1,4 @@
-﻿using GovUkDesignSystem.Attributes.DataBinding;
-using Microsoft.AspNetCore.Mvc.ModelBinding;
+﻿using Microsoft.AspNetCore.Mvc.ModelBinding;
 using System;
 using System.Linq;
 using System.Threading.Tasks;
@@ -7,20 +6,15 @@ using System.Threading.Tasks;
 namespace GovUkDesignSystem.ModelBinders
 {
     /// <summary>
-    /// This model binder can be used to replace the default MVC model binder for a decimal property. It will add
-    /// validation messages to the model state inline with the GovUk Design System guidelines.
-    /// This binder must be used alongside a GovUkDataBindingDecimalErrorTextAttribute attribute.
+    /// Base functionality for decimal model binders
     /// </summary>
-    public class GovUkDecimalBinder : IModelBinder
+    public abstract class GovUkDecimalBinderBase
     {
-        public Task BindModelAsync(ModelBindingContext bindingContext)
+        /// <summary>
+        /// Try to bind the provided value to the model state. If errorMessageIfMissing is null then treat the property as optional
+        /// </summary>
+        public Task BindModelBase(ModelBindingContext bindingContext, string errorMessageIfMissing, string nameAtStartOfSentence)
         {
-            var errorTextAttribute = bindingContext.ModelMetadata.ValidatorMetadata.OfType<GovUkDataBindingDecimalErrorTextAttribute>().SingleOrDefault();
-            if (errorTextAttribute == null)
-            {
-                throw new Exception("When using the GovUkDecimalBinder you must also provide a GovUkDataBindingDecimalErrorTextAttribute attribute and ensure that you register GovUkDataBindingErrorTextProvider in your application's Startup.ConfigureServices method.");
-            }
-
             var modelName = bindingContext.ModelName;
 
             var valueProviderResult = bindingContext.ValueProvider.GetValue(modelName);
@@ -47,13 +41,22 @@ namespace GovUkDesignSystem.ModelBinders
             // Return if the value is empty
             if (string.IsNullOrEmpty(value))
             {
+                // Raise an error if this property is mandatory or if property type is non-nullable
+                if (errorMessageIfMissing != null || !bindingContext.ModelMetadata.IsReferenceOrNullableType)
+                {
+                    bindingContext.ModelState.TryAddModelError(modelName, errorMessageIfMissing ?? $"{nameAtStartOfSentence} cannot be null or empty");
+                }
+                else
+                {
+                    bindingContext.Result = ModelBindingResult.Success(null);
+                }
                 return Task.CompletedTask;
             }
 
             // Ensure that the value is a number
             if (!decimal.TryParse(value, out var decimalValue))
             {
-                bindingContext.ModelState.TryAddModelError(modelName, $"{errorTextAttribute.NameAtStartOfSentence} must be a number");
+                bindingContext.ModelState.TryAddModelError(modelName, $"{nameAtStartOfSentence} must be a number");
                 return Task.CompletedTask;
             }
 
