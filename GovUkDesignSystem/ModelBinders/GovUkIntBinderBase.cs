@@ -1,8 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc.ModelBinding;
+using System;
 using System.Linq;
 using System.Threading.Tasks;
-using GovUkDesignSystem.Attributes.DataBinding;
-using System;
 
 namespace GovUkDesignSystem.ModelBinders
 {
@@ -35,6 +34,12 @@ namespace GovUkDesignSystem.ModelBinders
                 );
             }
 
+            if (errorMessageIfMissing == null && !bindingContext.ModelMetadata.IsReferenceOrNullableType)
+            {
+                throw new ArgumentException($"This property should be nullable when {nameof(errorMessageIfMissing)} is not defined, " +
+                    $"but property [{modelName}] on type [{bindingContext.ModelMetadata.ContainerType.FullName}] is not");
+            }
+
             bindingContext.ModelState.SetModelValue(modelName, valueProviderResult);
 
             var value = valueProviderResult.FirstValue;
@@ -42,10 +47,10 @@ namespace GovUkDesignSystem.ModelBinders
             // Return if the value is empty
             if (string.IsNullOrEmpty(value))
             {
-                // Raise an error if this property is mandatory or if property type is non-nullable
-                if (errorMessageIfMissing != null || !bindingContext.ModelMetadata.IsReferenceOrNullableType)
+                // Raise an error if this property is mandatory
+                if (errorMessageIfMissing != null)
                 {
-                    bindingContext.ModelState.TryAddModelError(modelName, errorMessageIfMissing ?? $"{nameAtStartOfSentence} cannot be null or empty");
+                    bindingContext.ModelState.TryAddModelError(modelName, errorMessageIfMissing);
                 }
                 else
                 {
