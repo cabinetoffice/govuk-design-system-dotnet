@@ -2,9 +2,9 @@
 
 namespace GovUkDesignSystem.Attributes.DataBinding
 {
-    public class GovUkDataBindingDecimalErrorTextAttribute : GovUkDataBindingErrorTextAttribute
+    public class GovUkDataBindingOptionalDecimalErrorTextAttribute : GovUkDataBindingErrorTextAttribute
     {
-        public GovUkDataBindingDecimalErrorTextAttribute(string nameAtStartOfSentence)
+        public GovUkDataBindingOptionalDecimalErrorTextAttribute(string nameAtStartOfSentence)
         {
             if (string.IsNullOrEmpty(nameAtStartOfSentence))
             {

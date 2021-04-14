@@ -13,7 +13,6 @@ namespace GovUkDesignSystem.ModelBinders
     /// </summary>
     public class GovUkOptionalIntBinder : GovUkIntBinderBase, IModelBinder
     {
-
         public Task BindModelAsync(ModelBindingContext bindingContext)
         {
             var errorTextAttribute = bindingContext.ModelMetadata.ValidatorMetadata.OfType<GovUkDataBindingOptionalIntErrorTextAttribute>().SingleOrDefault();
