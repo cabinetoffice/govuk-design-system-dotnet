@@ -163,6 +163,7 @@ namespace GovUkDesignSystem
 
         /// <summary>
         /// This doesn't work for more than three items and only if they have ids 'day', 'month', and 'year'.
+        /// </summary>
         /// <returns></returns>
         public static async Task<IHtmlContent> GovUkDateInputFor<TModel>(
             this IHtmlHelper<TModel> htmlHelper,
@@ -523,57 +524,9 @@ namespace GovUkDesignSystem
             return await htmlHelper.PartialAsync("/GovUkDesignSystemComponents/TextInput.cshtml", textInputViewModel);
         }
 
-        public static async Task<IHtmlContent> GovUkTextInputFor<TModel>(
+        public static async Task<IHtmlContent> GovUkTextInputFor<TModel, TProperty>(
             this IHtmlHelper<TModel> htmlHelper,
-            Expression<Func<TModel, string>> propertyExpression,
-            LabelViewModel labelOptions = null,
-            HintViewModel hintOptions = null,
-            FormGroupViewModel formGroupOptions = null,
-            string classes = null,
-            TextInputAppendixViewModel textInputAppendix = null,
-            string pattern = null,
-            string idPrefix = null)
-            where TModel : class
-        {
-            return await TextInputHtmlGenerator.GenerateHtml(
-                htmlHelper,
-                propertyExpression,
-                labelOptions,
-                hintOptions,
-                formGroupOptions,
-                classes,
-                textInputAppendix,
-                pattern,
-                idPrefix);
-        }
-
-        public static async Task<IHtmlContent> GovUkTextInputFor<TModel>(
-            this IHtmlHelper<TModel> htmlHelper,
-            Expression<Func<TModel, int?>> propertyExpression,
-            LabelViewModel labelOptions = null,
-            HintViewModel hintOptions = null,
-            FormGroupViewModel formGroupOptions = null,
-            string classes = null,
-            TextInputAppendixViewModel textInputAppendix = null,
-            string pattern = null,
-            string idPrefix = null)
-            where TModel : class
-        {
-            return await TextInputHtmlGenerator.GenerateHtml(
-                htmlHelper,
-                propertyExpression,
-                labelOptions,
-                hintOptions,
-                formGroupOptions,
-                classes,
-                textInputAppendix,
-                pattern,
-                idPrefix);
-        }
-
-        public static async Task<IHtmlContent> GovUkTextInputFor<TModel>(
-            this IHtmlHelper<TModel> htmlHelper,
-            Expression<Func<TModel, decimal?>> propertyExpression,
+            Expression<Func<TModel, TProperty>> propertyExpression,
             LabelViewModel labelOptions = null,
             HintViewModel hintOptions = null,
             FormGroupViewModel formGroupOptions = null,
