@@ -1,0 +1,16 @@
+﻿@using GovUkDesignSystem.Helpers
+@model GovUkDesignSystem.GovUkDesignSystemComponents.SummaryListViewModel
+
+<dl class="govuk-summary-list @Model?.Classes" @(Html.Raw(Model.Attributes.ToTagAttributes()))>
+    @{
+        var anyRowHasActions = Model.Rows.Any(r => r.Actions?.Items != null && r.Actions.Items.Count != 0);
+        if (Model.Rows != null && Model.Rows.Count > 0)
+        {
+            foreach (var row in Model.Rows)
+            {
+                row.ShowActions = anyRowHasActions;
+                await Html.RenderPartialAsync("/GovUkDesignSystemComponents/SubComponents/SummaryListRow.cshtml", row);
+            }
+        }
+    }
+</dl>

@@ -1,0 +1,20 @@
+﻿@using GovUkDesignSystem.GovUkDesignSystemComponents
+@using GovUkDesignSystem.Helpers
+@model GovUkDesignSystem.GovUkDesignSystemComponents.PhaseBannerViewModel
+
+<div class="govuk-phase-banner @(Model.Classes)"
+     @(Html.Raw(Model.Attributes.ToTagAttributes()))>
+
+    <p class="govuk-phase-banner__content">
+
+        @{ await Html.RenderPartialAsync("/GovUkDesignSystemComponents/Tag.cshtml", new TagViewModel
+           {
+               Text = Model.Phase,
+               Classes = "govuk-phase-banner__content__tag"
+           }); }
+
+        <span class="govuk-phase-banner__text">
+            @{ await Html.RenderPartialAsync("/GovUkDesignSystemComponents/SubComponents/HtmlText.cshtml", Model); }
+        </span>
+    </p>
+</div>

@@ -1,0 +1,8 @@
+﻿@using GovUkDesignSystem.Helpers
+@model GovUkDesignSystem.GovUkDesignSystemComponents.TagViewModel
+
+<strong class="govuk-tag @(Model.Classes)"
+        @(Html.Raw(Model.Attributes.ToTagAttributes()))>
+
+    @{ await Html.RenderPartialAsync("/GovUkDesignSystemComponents/SubComponents/HtmlText.cshtml", Model); }
+</strong>

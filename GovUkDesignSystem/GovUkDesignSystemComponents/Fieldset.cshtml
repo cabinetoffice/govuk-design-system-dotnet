@@ -1,0 +1,10 @@
+﻿@using GovUkDesignSystem.Helpers
+@model GovUkDesignSystem.GovUkDesignSystemComponents.FieldsetViewModel
+
+<fieldset class="govuk-fieldset @(Model.Classes)"
+          role="@(Model.Role)"
+          aria-describedby="@(Model.DescribedBy)"
+          @(Html.Raw(Model.Attributes.ToTagAttributes()))>
+    @{ await Html.RenderPartialAsync("/GovUkDesignSystemComponents/Legend.cshtml", Model.Legend); }
+    @(Model.InnerHtml(new object()))
+</fieldset>

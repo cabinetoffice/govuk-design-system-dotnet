@@ -1,0 +1,21 @@
+﻿@using GovUkDesignSystem.GovUkDesignSystemComponents.SubComponents
+@model GovUkDesignSystem.GovUkDesignSystemComponents.LegendViewModel
+
+@{
+    Func<object, object> componentAsHtml =
+        @<text>
+            <legend class="govuk-fieldset__legend @( Model.Classes)">
+                @{ await Html.RenderPartialAsync("/GovUkDesignSystemComponents/SubComponents/HtmlText.cshtml", Model); }
+            </legend>
+         </text>;
+}
+
+@{ await Html.RenderPartialAsync(
+       "/GovUkDesignSystemComponents/SubComponents/PageHeadingHtml.cshtml",
+       new PageHeadingHtml
+       {
+           ComponentAsHtml = componentAsHtml,
+           IsPageHeading = Model.IsPageHeading
+       }
+    );
+}

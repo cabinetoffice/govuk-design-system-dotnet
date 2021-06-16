@@ -1,0 +1,16 @@
+﻿@model GovUkDesignSystem.GovUkDesignSystemComponents.PanelViewModel
+@using GovUkDesignSystem.GovUkDesignSystemComponents.SubComponents
+@using GovUkDesignSystem.Helpers
+
+<div class="govuk-panel govuk-panel--confirmation @Model?.Classes" @(Html.Raw(Model.Attributes.ToTagAttributes()))>
+    <@(Model.HeadingLevel) class="govuk-panel__title">
+        @{
+            await Html.RenderPartialAsync("/GovUkDesignSystemComponents/SubComponents/HtmlText.cshtml", new HtmlText(Model.TitleHtml, Model.TitleText));
+        }
+    </@(Model.HeadingLevel)>
+    <div class="govuk-panel__body">
+        @{
+            await Html.RenderPartialAsync("/GovUkDesignSystemComponents/SubComponents/HtmlText.cshtml", Model);
+        }
+    </div>
+</div>

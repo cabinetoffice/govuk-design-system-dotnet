@@ -1,0 +1,38 @@
+﻿@using GovUkDesignSystem.GovUkDesignSystemComponents
+@model GovUkDesignSystem.GovUkDesignSystemComponents.CharacterCountViewModel
+
+<div class="govuk-character-count"
+     data-module="govuk-character-count"
+     data-maxlength="@(Model.MaxLength)"
+     data-threshold="@(Model.Threshold)"
+     data-maxwords="@(Model.MaxWords)">
+    @{
+        await Html.RenderPartialAsync("/GovUkDesignSystemComponents/TextArea.cshtml",
+            new TextAreaViewModel
+            {
+                Id = Model.Id,
+                Name = Model.Name,
+                DescribedBy = $"{Model.Id}-info",
+                Rows = Model.Rows,
+                Value = Model.Value,
+                FormGroup = Model.FormGroup,
+                Classes = $"govuk-js-character-count {Model.Classes}" + (Model.ErrorMessage != null ? "govuk-textarea--error" : ""),
+                Label = new LabelViewModel
+                {
+                    Text = Model.Label.Text,
+                    Classes = Model.Label.Classes,
+                    IsPageHeading = Model.Label.IsPageHeading,
+                    Attributes = Model.Label.Attributes,
+                    For = Model.Id
+                },
+                Hint = Model.Hint,
+                ErrorMessage = Model.ErrorMessage,
+                Attributes = Model.Attributes
+            });
+    }
+    <span id="@($"{Model.Id}-info")"
+          class="govuk-hint govuk-character-count__message"
+          aria-live="polite">
+        You can enter up to @(Model.MaxLength ?? Model.MaxWords) @(Model.MaxLength != null ? "characters" : "words")
+    </span>
+</div>

@@ -1,0 +1,11 @@
+﻿@model GovUkDesignSystem.GovUkDesignSystemComponents.SubComponents.PageHeadingHtml
+
+
+@if (Model.IsPageHeading)
+{
+    <h1 class="govuk-label-wrapper" indent="2">@Model.ComponentAsHtml(new object())</h1>
+}
+else
+{
+    @Model.ComponentAsHtml(new object())
+}
