@@ -3,7 +3,7 @@
 @model GovUkDesignSystem.GovUkDesignSystemComponents.AccordionViewModel
 
 @{
-    int SectionIndex = 0;
+    int SectionIndex = 1; // This needs to match the numbering in Accordion.prototype.initHeaderAttributes in govuk-frontend.js
 }
 
 <div class="govuk-accordion @(Model.Classes)" data-module="govuk-accordion" id="@(Model.Id)"
