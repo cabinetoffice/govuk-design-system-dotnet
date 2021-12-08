@@ -6,6 +6,7 @@
         string describedBy = Model.DescribedBy;
         if (Model.Label != null)
         {
+            Model.Label.For = Model.Id;
             await Html.RenderPartialAsync("/GovUkDesignSystemComponents/Label.cshtml", Model.Label);
         }
         if (Model.Hint != null)
@@ -31,7 +32,7 @@
            pattern="@(Model.Pattern)"
            inputmode="@(Model.InputMode)"
            @(Html.Raw(Model.Attributes.ToTagAttributes()))/>
-    
+
     @if (Model.TextInputAppendix != null)
     {
         await Html.RenderPartialAsync("/GovUkDesignSystemComponents/SubComponents/HtmlText.cshtml", Model.TextInputAppendix);
