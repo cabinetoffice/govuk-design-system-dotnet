@@ -33,9 +33,8 @@
                </text>
            }
            role="button"
-           draggable="false">
-            @*This doesn't work yet - The GenderPayGap.WebUI.Classes.TagHelpers.AnchorTagHelper doesn't currently allow arbitrary attributes*@
-            @*@(Html.Raw( Model.Attributes.ToTagAttributes() ))*@
+           draggable="false"
+           @(Html.Raw(Model.Attributes.ToTagAttributes()))>
             @{ await Html.RenderPartialAsync("/GovUkDesignSystemComponents/SubComponents/HtmlText.cshtml", Model); }
         </a>
     }
