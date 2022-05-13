@@ -1,0 +1,66 @@
+﻿@using GovUkDesignSystem.GovUkDesignSystemComponents
+@using GovUkDesignSystem.Helpers
+@model GovUkDesignSystem.GovUkDesignSystemComponents.ItemSetViewModel
+
+@{
+    string idPrefix = Model.IdPrefix ?? Model.Name;
+    string describedBy = Model.Fieldset?.DescribedBy;
+    string errorId = null;
+    string hintId = null;
+
+    if (Model.ErrorMessage != null)
+    {
+        errorId = idPrefix + "-error";
+        describedBy += $" {errorId}";
+    }
+    if (Model.Hint != null)
+    {
+        hintId = idPrefix + "-hint";
+        describedBy += $" {hintId}";
+    }
+
+    bool isConditional = Model.Items.Exists(item => item.Conditional != null);
+
+    Func<object, object> innerHtml =
+        @<text>
+            <div class="govuk-form-group @( Model.FormGroup?.Classes) @(Model.ErrorMessage != null ? "govuk-form-group--error" : "")">
+                @{
+                    if (Model.Hint != null)
+                    {
+                        Model.Hint.Id = hintId;
+                        await Html.RenderPartialAsync("/GovUkDesignSystemComponents/Hint.cshtml", Model.Hint);
+                    }
+                    if (Model.ErrorMessage != null)
+                    {
+                        Model.ErrorMessage.Id = errorId;
+                        await Html.RenderPartialAsync("/GovUkDesignSystemComponents/ErrorMessage.cshtml", Model.ErrorMessage);
+                    }
+                }
+                <div class="@( Model.StyleNamePrefix) @( Model.Classes) @(isConditional ? $"{Model.StyleNamePrefix}--conditional" : "")" 
+                     @(isConditional ? $"data-module={Model.StyleNamePrefix}" : "")
+                     @(Html.Raw(Model.Attributes.ToTagAttributes()))>
+                    @for (var index = 0; index < Model.Items.Count; index++)
+                    {
+                        ItemViewModel currentItem = Model.Items[index];
+                        if (currentItem.Id == null)
+                        {
+                            currentItem.Id = idPrefix + "-" + index;
+                        }
+                        currentItem.Name = Model.Name;
+                        await Html.RenderPartialAsync(Model.ItemDesignFileName, currentItem);
+                    }
+                </div>
+            </div>
+         </text>;
+
+    if (Model.Fieldset != null)
+    {
+        Model.Fieldset.InnerHtml = innerHtml;
+        Model.Fieldset.DescribedBy = describedBy?.Trim();
+        await Html.RenderPartialAsync("/GovUkDesignSystemComponents/Fieldset.cshtml", Model.Fieldset);
+    }
+    else
+    {
+        <div>@innerHtml(new object())</div>
+    }
+}

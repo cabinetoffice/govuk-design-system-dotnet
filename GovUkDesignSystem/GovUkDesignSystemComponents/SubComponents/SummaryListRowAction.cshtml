@@ -1,0 +1,37 @@
+﻿@using GovUkDesignSystem.Helpers
+@model GovUkDesignSystem.GovUkDesignSystemComponents.SummaryListRowActionViewModel
+
+<dd class="govuk-summary-list__actions @Model?.Classes">
+    @if (Model?.Items != null && Model.Items.Count > 0)
+    {
+        if (Model.Items.Count == 1)
+        {
+            <a class="govuk-link @Model.Items[0].Classes" href="@Model.Items[0].Href" @(Html.Raw(Model.Items[0].Attributes.ToTagAttributes()))>
+                @{
+                    await Html.RenderPartialAsync("/GovUkDesignSystemComponents/SubComponents/HtmlText.cshtml", Model.Items[0]);
+                }
+                <span class="govuk-visually-hidden"> @Model.Items[0].VisuallyHiddenText</span>
+            </a>
+        }
+        else
+        {
+            <ul class="govuk-summary-list__actions-list">
+                @foreach (var action in Model.Items)
+                {
+                    <li class="govuk-summary-list__actions-list-item">
+                        <a class="govuk-link @action.Classes" href="@action.Href" @(Html.Raw(action.Attributes.ToTagAttributes()))>
+                            @{
+                                await Html.RenderPartialAsync("/GovUkDesignSystemComponents/SubComponents/HtmlText.cshtml", action);
+                            }
+                            <span class="govuk-visually-hidden"> @action.VisuallyHiddenText</span>
+                        </a>
+                    </li>
+                }
+            </ul>
+        }
+    }
+    else
+    {
+        <span class="govuk-summary-list__actions"></span>
+    }
+</dd>

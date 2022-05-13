@@ -13,8 +13,15 @@ Only a subset of the components have been built and there is the possibility of 
 Please feel free to use this in your own project.  You can see our [contributing guide here](CONTRIBUTING.md).
 
 If you do, please let us know, so we can avoid making changes that will cause problems for you.  
-Email: James Griffiths [james.griffiths@softwire.com](mailto:james.griffiths@softwire.com)
+Email: Dan Corder [dan.corder@softwire.com](mailto:dan.corder@softwire.com)
 
+##### Breaking change - 13/05/22
+As of the 13/05/22 the validation used by this library has changed so that it is more in line with the standard ASP.Net validation. The main impacts are:
+- View models do not need to inherit from `GovUkViewModel`
+- In controllers, instead of `viewModel.HasAnyErrors` you can use the more standard `ModelState.IsValid`
+- You should be able to use any of the built in ASP.Net validation attributes and have their error messages appear in the `GovUkErrorSummary`
+
+If you need to use/fix the old version of the library it is now on the `pre-2022-05-13` branch 
 
 ## How to use
 
@@ -70,23 +77,34 @@ the C# code would be:
 
 ### View components + validation / error message generation
 
-Here's an example of how to get automatic error message generation for an integer field.
+This library includes a number of validation attributes that can be used alongside the built in MVC validation attributes.
+The `GovUkErrorSummary` will display any errors in the model state.
+
+For property types where a badly formed value may make it impossible to bind the submitted value to the model, this library
+provides custom model binders that will generate binding failure messages that match the GovUK design system suggested error
+messages.
+
+Here's an example of how to get automatic error message generation for a mandatory integer field.
+
+In your application's Startup class add the following to the ConfigureServices method:
+
+```csharp
+    services.AddControllersWithViews(options =>
+        options.ModelMetadataDetailsProviders.Add(new GovUkDataBindingErrorTextProvider()));
+```
 
 On your view-model:
-* Inherit from `GovUkViewModel`
 * Use a nullable integer (`int?`) property
-* Add the `GovUkValidateRequired` attribute if you want to validate that the field is required (and to specify the error message if it's missing)
-* Add the `GovUkDisplayNameForErrors` attribute for all other error messages of the form `Enter a [Field Name]` and `[Field Name] must be a whole number`
+* Add the `ModelBinder` attribute with `typeof(GovUkMandatoryIntBinder)`
+* Add the `GovUkDataBindingIntErrorText` attribute to specify the text to use within the error messages.
 
 ```csharp
 public class MyViewModel : GovUkViewModel
 {
-    [GovUkDisplayNameForErrors(
-        NameAtStartOfSentence = "Number of children",
-        NameWithinSentence = "number of children"
-    )]
-    [GovUkValidateRequired(
-        ErrorMessageIfMissing = "Enter the number of children you have"
+    [ModelBinder(typeof(GovUkMandatoryIntBinder))]
+    [GovUkDataBindingIntErrorText(
+        ErrorMessageIfMissing = "Enter the number of children you have",
+        NameAtStartOfSentence = "Number of children"
     )]
     public int? NumberOfChildren
 }
@@ -99,7 +117,7 @@ On the view:
 
 @model MyViewModel
 
-@(Html.GovUkErrorSummary())
+@(Html.GovUkErrorSummary(ViewData.ModelState))
 
 @(Html.GovUkTextInputFor(
     m => m.NumberOfChildren,
@@ -112,39 +130,16 @@ On the view:
 ```
 
 On the controller:
-* Take the view-model as a parameter (optional)
-* Call `ParseAndValidateParameters`
-* Call `HasAnyErrors`
-* Add your own errors with `AddErrorFor`
+* Check `ModelState.IsValid` as normal
 
 ```csharp
 [HttpPost("url-to-action")]
 public IActionResult ActionName(MyViewModel viewModel)
 {
-    // Call ParseAndValidateParameters on each field you need
-    viewModel.ParseAndValidateParameters(Request, m => m.NumberOfChildren);
-
-    // Use HasAnyErrors to check if anything failed validation
-    if (viewModel.HasAnyErrors())
-    {
-        return View("ViewName", viewModel);
-    }
-
-    // You can do your own custom validation...
-    if (viewModel.NumberOfChildren > 100)
-    {
-        //...and add your own error messages like this
-        viewModel.AddErrorFor<MyViewModel, int?>(
-            m => m.NumberOfChildren,
-            "The number of children you say you have is implausible");
-    }
-
-    // Then return the user back to the page if there's an error
-    if (viewModel.HasAnyErrors())
+    // Return the user back to the page if there's an error
+    if (!ModelState.IsValid)
     {
         return View("ViewName", viewModel);
     }
 }
 ```
-
-C

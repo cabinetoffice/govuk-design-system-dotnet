@@ -1,0 +1,10 @@
+﻿@model GovUkDesignSystem.GovUkDesignSystemComponents.SubComponents.IHtmlText
+
+@if (Model.Html != null)
+{
+    @(Model.Html(new object()))
+}
+else
+{
+    @(Model.Text ?? "")
+}

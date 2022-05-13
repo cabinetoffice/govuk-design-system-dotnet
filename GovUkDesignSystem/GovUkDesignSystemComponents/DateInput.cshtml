@@ -1,0 +1,69 @@
+﻿@using GovUkDesignSystem.GovUkDesignSystemComponents
+@model GovUkDesignSystem.GovUkDesignSystemComponents.DateInputViewModel
+
+@{
+    string describedBy = Model.Fieldset?.DescribedBy;
+    string errorId = null;
+    string hintId = null;
+
+    if (Model.ErrorMessage != null)
+    {
+        errorId = Model.Id + "-error";
+        describedBy += $" {errorId}";
+    }
+    if (Model.Hint != null)
+    {
+        hintId = Model.Id + "-hint";
+        describedBy += $" {hintId}";
+    }
+
+    Func<object, object> innerHtml =
+    @<text>
+        @{
+        if (Model.Hint != null)
+        {
+            Model.Hint.Id = hintId;
+            await Html.RenderPartialAsync("/GovUkDesignSystemComponents/Hint.cshtml", Model.Hint);
+        }
+        if (Model.ErrorMessage != null)
+        {
+            Model.ErrorMessage.Id = errorId;
+            await Html.RenderPartialAsync("/GovUkDesignSystemComponents/ErrorMessage.cshtml", Model.ErrorMessage);
+        }
+        }
+
+        <div class="govuk-date-input @(Model.Classes)">
+            @foreach (var dateInputItem in Model.Items)
+            {
+                if (dateInputItem.Id == null)
+                {
+                    dateInputItem.Id = Model.Id + "-" + dateInputItem.Name;
+                }
+                if (dateInputItem.Label == null)
+                {
+                    var lowerCaseName = dateInputItem.Name.ToLower();
+                    dateInputItem.Label = char.ToUpper(lowerCaseName[0]) + lowerCaseName.Substring(1);
+                }
+                if (Model.NamePrefix != null)
+                {
+                    dateInputItem.Name = Model.NamePrefix + "-" + dateInputItem.Name;
+                }
+                await Html.RenderPartialAsync("/GovUkDesignSystemComponents/DateInputItem.cshtml", dateInputItem);
+            }
+        </div>
+    </text>;
+}
+
+<div class="govuk-form-group @(Model.FormGroup?.Classes) @(Model.ErrorMessage != null ? "govuk-form-group--error" : "")">
+    @if (Model.Fieldset != null)
+    {
+        Model.Fieldset.InnerHtml = innerHtml;
+        Model.Fieldset.DescribedBy = describedBy?.Trim();
+
+        await Html.RenderPartialAsync("/GovUkDesignSystemComponents/Fieldset.cshtml", Model.Fieldset);
+    }
+    else
+    {
+        @innerHtml(new object())
+    }
+</div>

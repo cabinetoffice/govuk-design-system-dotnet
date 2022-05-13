@@ -1,0 +1,18 @@
+﻿@model GovUkDesignSystem.GovUkDesignSystemComponents.DetailsViewModel
+@using GovUkDesignSystem.GovUkDesignSystemComponents.SubComponents
+@using GovUkDesignSystem.Helpers
+
+<details class="govuk-details @Model?.Classes" data-module="govuk-details" id="@Model?.Id" @(Model.Open ? "open" : "") @(Html.Raw(Model.Attributes.ToTagAttributes()))>
+    <summary class="govuk-details__summary">
+        <span class="govuk-details__summary-text">
+            @{
+                await Html.RenderPartialAsync("/GovUkDesignSystemComponents/SubComponents/HtmlText.cshtml", new HtmlText(Model.SummaryHtml, Model.SummaryText));
+            }
+        </span>
+    </summary>
+    <div class="govuk-details__text">
+        @{
+            await Html.RenderPartialAsync("/GovUkDesignSystemComponents/SubComponents/HtmlText.cshtml", Model);
+        }
+    </div>
+</details>

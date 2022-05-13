@@ -1,0 +1,64 @@
+﻿@model GovUkDesignSystem.GovUkDesignSystemComponents.TableGovUkViewModel
+@using GovUkDesignSystem.GovUkDesignSystemComponents.Enums
+@using GovUkDesignSystem.Helpers
+
+<table class="govuk-table @Model?.Classes" @(Html.Raw(Model.Attributes.ToTagAttributes()))>
+
+    @if (!string.IsNullOrEmpty(Model.Caption))
+    {
+        <caption class="govuk-table__caption @Model?.CaptionClasses">@Model.Caption</caption>
+    }
+
+    @if (Model.Head.Count > 0)
+    {
+        <thead class="govuk-table__head">
+            <tr class="govuk-table__row">
+                @foreach (var cell in Model.Head)
+                {
+                    string colSpan = cell.Colspan != null ? "colspan=" + cell.Colspan : string.Empty;
+                    string rowSpan = cell.Rowspan != null ? "rowspan=" + cell.Rowspan : string.Empty;
+                    string tableHeadCellClasses = $"govuk-table__header " + $"{(cell.Format == TableCellFormat.Numeric ? "govuk-table__header--numeric " : string.Empty)}" + $"{(cell.Classes)}";
+                    <th scope="col" class="@tableHeadCellClasses" @colSpan @rowSpan @(Html.Raw(cell.Attributes.ToTagAttributes()))>
+                        @{
+                            await Html.RenderPartialAsync("/GovUkDesignSystemComponents/SubComponents/HtmlText.cshtml", cell);
+                        }
+                    </th>
+                }
+            </tr>
+        </thead>
+    }
+
+    @if (Model.Rows.Count > 0)
+    {
+        <tbody class="govuk-table__body">
+            @foreach (var row in Model.Rows)
+            {
+                <tr class="govuk-table__row">
+                    @foreach (var column in row.Row)
+                    {
+                        string colSpan = column.Colspan != null ? "colspan=" + column.Colspan : string.Empty;
+                        string rowSpan = column.Rowspan != null ? "rowspan=" + column.Rowspan : string.Empty;
+                        string tableBodyCellClasses = $"{(column == row.Row.First() && Model.FirstCellIsHeader ? "govuk-table__header " : "govuk-table__cell ")} " + $"{(column.Format == TableCellFormat.Numeric ? "govuk-table__cell--numeric " : string.Empty)}" + $"{(column.Classes)}";
+
+                        if (column == row.Row.First() && Model.FirstCellIsHeader)
+                        {
+                            <th scope="row" class="@tableBodyCellClasses" @colSpan @rowSpan @(Html.Raw(column.Attributes.ToTagAttributes()))>
+                                @{
+                                    await Html.RenderPartialAsync("/GovUkDesignSystemComponents/SubComponents/HtmlText.cshtml", column);
+                                }
+                            </th>
+                        }
+                        else
+                        {
+                            <td class="@tableBodyCellClasses" @colSpan @rowSpan @(Html.Raw(column.Attributes.ToTagAttributes()))>
+                                @{
+                                    await Html.RenderPartialAsync("/GovUkDesignSystemComponents/SubComponents/HtmlText.cshtml", column);
+                                }
+                            </td>
+                        }
+                    }
+                </tr>
+            }
+        </tbody>
+    }
+</table>

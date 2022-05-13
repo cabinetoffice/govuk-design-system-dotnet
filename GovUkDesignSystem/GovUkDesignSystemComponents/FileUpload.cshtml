@@ -1,0 +1,31 @@
+﻿@using GovUkDesignSystem.Helpers
+@model GovUkDesignSystem.GovUkDesignSystemComponents.FileUploadViewModel
+
+<div class="govuk-form-group @(Model.FormGroup?.Classes) @(Model.ErrorMessage != null ? "govuk-form-group--error" : "")">
+    @{
+        string describedBy = Model.DescribedBy;
+        if (Model.Label != null)
+        {
+            Model.Label.For = Model.Id;
+            await Html.RenderPartialAsync("/GovUkDesignSystemComponents/Label.cshtml", Model.Label);
+        }
+        if (Model.Hint != null)
+        {
+            Model.Hint.Id = $"{Model.Id}-hint";
+            describedBy = describedBy + " " + Model.Hint.Id;
+            await Html.RenderPartialAsync("/GovUkDesignSystemComponents/Hint.cshtml", Model.Hint);
+        }
+        if (Model.ErrorMessage != null)
+        {
+            Model.ErrorMessage.Id = $"{Model.Id}-error";
+            describedBy = describedBy + " " + Model.ErrorMessage.Id;
+            await Html.RenderPartialAsync("/GovUkDesignSystemComponents/ErrorMessage.cshtml", Model.ErrorMessage);
+        }
+    }
+    <input class="govuk-file-upload  @(Model.Classes) @(Model.ErrorMessage != null ? "govuk-file-upload--error" : "")"
+           id=@(Model.Id)
+           name=@(Model.Name)
+           type="file"
+           aria-describedby="@(describedBy?.Trim())"
+           @(Html.Raw(Model.Attributes.ToTagAttributes()))>
+</div>

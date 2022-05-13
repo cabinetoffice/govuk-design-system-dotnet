@@ -1,0 +1,17 @@
+﻿@using GovUkDesignSystem.Helpers
+@model GovUkDesignSystem.GovUkDesignSystemComponents.DateInputItemViewModel
+
+<div class="govuk-date-input__item">
+    <div class="govuk-form-group">
+        <label class="govuk-label govuk-date-input__label" for="@(Model.Id)">
+            @(Model.Label)
+        </label>
+        <input class="govuk-input govuk-date-input__input @(Model.Classes)"
+               id="@(Model.Id)"
+               name="@(Model.Name)"
+               type="number"
+               value="@(Model.Value)"
+               pattern="@(Model.Pattern)"
+               @(Html.Raw(Model.Attributes.ToTagAttributes()))>
+    </div>
+</div>
