@@ -13,8 +13,15 @@ Only a subset of the components have been built and there is the possibility of 
 Please feel free to use this in your own project.  You can see our [contributing guide here](CONTRIBUTING.md).
 
 If you do, please let us know, so we can avoid making changes that will cause problems for you.  
-Email: James Griffiths [james.griffiths@softwire.com](mailto:james.griffiths@softwire.com)
+Email: Dan Corder [dan.corder@softwire.com](mailto:dan.corder@softwire.com)
 
+##### Breaking change - 13/05/22
+As of the 13/05/22 the validation used by this library has changed so that it is more in line with the standard ASP.Net validation. The main impacts are:
+- View models do not need to inherit from `GovUkViewModel`
+- In controllers, instead of `viewModel.HasAnyErrors` you can use the more standard `ModelState.IsValid`
+- You should be able to use any of the built in ASP.Net validation attributes and have their error messages appear in the `GovUkErrorSummary`
+
+If you need to use/fix the old version of the library it is now on the `pre-2022-05-13` branch 
 
 ## How to use
 
@@ -136,5 +143,3 @@ public IActionResult ActionName(MyViewModel viewModel)
     }
 }
 ```
-
-C
