@@ -4,6 +4,10 @@
     <TargetFramework>netcoreapp3.1</TargetFramework>
     <AddRazorSupportForMvc>true</AddRazorSupportForMvc>
     <LangVersion>latest</LangVersion>
+    <PackageId>CabinetOffice.GovUkDesignSystem</PackageId>
+    <Descripition>Implementation of GOVUK design system components in C#</Descripition>
+    <Version>1.0.0</Version>
+    <PackageVersion>$(PackageVersion)</PackageVersion>
   </PropertyGroup>
 
   <ItemGroup>

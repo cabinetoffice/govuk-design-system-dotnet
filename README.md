@@ -143,3 +143,12 @@ public IActionResult ActionName(MyViewModel viewModel)
     }
 }
 ```
+
+## Packaging
+
+Currently this project is not published on Nuget.
+
+To manually create a Nuget package from the code:
+- Ensure you have the `dotnet` cli tool installed (if `dotnet --version` works then you should be fine, otherwise in stall the .NET Core SDK from https://www.microsoft.com/net/download/)
+- Change directory to GovUkDesignSystem
+- Run `dotnet pack -p:PackageVersion=<your version here> -c Release -o .`
