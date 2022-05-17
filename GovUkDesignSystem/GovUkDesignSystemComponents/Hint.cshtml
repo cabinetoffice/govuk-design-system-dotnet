@@ -1,8 +1,8 @@
 ﻿@using GovUkDesignSystem.Helpers
 @model GovUkDesignSystem.GovUkDesignSystemComponents.HintViewModel
 
-<span class="govuk-hint @(Model.Classes)"
+<div class="govuk-hint @(Model.Classes)"
       id="@(Model.Id)"
       @(Html.Raw(Model.Attributes.ToTagAttributes()))>
     @{ await Html.RenderPartialAsync("/GovUkDesignSystemComponents/SubComponents/HtmlText.cshtml", Model); }
-</span>
+</div>
