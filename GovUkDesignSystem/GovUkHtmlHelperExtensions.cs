@@ -333,6 +333,13 @@ namespace GovUkDesignSystem
         {
             return await htmlHelper.PartialAsync("/GovUkDesignSystemComponents/PhaseBanner.cshtml", phaseBannerViewModel);
         }
+        
+        public static async Task<IHtmlContent> GovUkRadios(
+            this IHtmlHelper htmlHelper,
+            RadiosViewModel radiosViewModel)
+        {
+            return await htmlHelper.PartialAsync("/GovUkDesignSystemComponents/Radios.cshtml", radiosViewModel);
+        }
 
         public static async Task<IHtmlContent> GovUkRadiosFor<TModel, TEnum>(
             this IHtmlHelper<TModel> htmlHelper,
