@@ -17,7 +17,10 @@
 @if (Model.BannerState is not BannerState.Hide)
 {
     <form method="POST" action="@Model.ButtonClickAction">
-        @Html.AntiForgeryToken()
+        @if (Model.AntiForgeryToken)
+        {
+            @Html.AntiForgeryToken()
+        }
         @Html.HiddenFor(m => m.ReturnUrl)
         <div class="govuk-cookie-banner " data-nosnippet role="region" aria-label="Cookies on our service">
             <div class="govuk-cookie-banner__message govuk-width-container">
@@ -60,7 +63,7 @@
                             </div>
                         </div>
                     </div>
-                    
+
                     @await Html.GovUkButton(new ButtonViewModel
                     {
                         Text = "Hide this message",
