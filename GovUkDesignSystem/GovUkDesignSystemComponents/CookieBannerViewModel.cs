@@ -4,7 +4,7 @@ public class CookieBannerViewModel
 {
     public BannerState BannerState { get; set; } 
     public CookieType CookieType { get; set; }
-    public bool AntiForgeryToken = true;
+    public bool UseAntiForgeryToken { get; set; } = true;
     public string ButtonClickAction { get; set; }
     public string ViewCookiesLink { get; set; }
     public string ReturnUrl { get; set; }
