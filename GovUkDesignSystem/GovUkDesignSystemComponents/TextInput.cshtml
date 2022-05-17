@@ -29,6 +29,7 @@
            value="@(Model.Value)"
            aria-describedby="@(describedBy?.Trim())"
            autocomplete="@(Model.Autocomplete)"
+           placeholder="@(Model.Placeholder)"
            pattern="@(Model.Pattern)"
            inputmode="@(Model.InputMode)"
            @(Html.Raw(Model.Attributes.ToTagAttributes()))/>

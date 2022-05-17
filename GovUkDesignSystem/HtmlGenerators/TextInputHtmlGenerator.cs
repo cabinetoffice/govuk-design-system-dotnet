@@ -18,6 +18,8 @@ namespace GovUkDesignSystem.HtmlGenerators
             FormGroupViewModel formGroupOptions = null,
             string classes = null,
             TextInputAppendixViewModel textInputAppendix = null,
+            string autocomplete = null,
+            string placeholder = null,
             string pattern = null,
             string idPrefix = null
         )
@@ -44,6 +46,8 @@ namespace GovUkDesignSystem.HtmlGenerators
                 FormGroup = formGroupOptions,
                 Classes = classes,
                 TextInputAppendix = textInputAppendix,
+                Autocomplete = autocomplete,
+                Placeholder = placeholder,
                 Value = inputValue,
                 Pattern = pattern
             };
