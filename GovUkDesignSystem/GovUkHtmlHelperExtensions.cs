@@ -532,6 +532,8 @@ namespace GovUkDesignSystem
             FormGroupViewModel formGroupOptions = null,
             string classes = null,
             TextInputAppendixViewModel textInputAppendix = null,
+            string autocomplete = null,
+            string placeholder = null,
             string pattern = null,
             string idPrefix = null)
             where TModel : class
@@ -544,6 +546,8 @@ namespace GovUkDesignSystem
                 formGroupOptions,
                 classes,
                 textInputAppendix,
+                autocomplete,
+                placeholder,
                 pattern,
                 idPrefix);
         }
