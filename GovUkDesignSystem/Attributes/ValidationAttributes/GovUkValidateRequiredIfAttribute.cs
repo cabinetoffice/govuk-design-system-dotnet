@@ -15,7 +15,7 @@ namespace GovUkDesignSystem.Attributes.ValidationAttributes
             if (isRequiredPropertyInfo is null)
             {
                 throw new ArgumentException(
-                    "'isRequiredPropertyName' must be a boolean property in the model the attribute is included in");
+                    $"'{IsRequiredPropertyName}' must be a boolean property in the model the attribute is included in");
             }
             
             var isRequired = (bool)isRequiredPropertyInfo.GetValue(validationContext.ObjectInstance, null)!;
