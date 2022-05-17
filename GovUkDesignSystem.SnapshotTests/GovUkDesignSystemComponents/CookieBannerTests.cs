@@ -13,7 +13,7 @@ namespace GovUkDesignSystem.SnapshotTests.GovUkDesignSystemComponents
             {
                 BannerState = BannerState.ShowBanner,
                 CookieType = CookieType.Analytics,
-                AntiForgeryToken = false,
+                UseAntiForgeryToken = false,
                 ButtonClickAction = "link_after_accept_or_reject",
                 ViewCookiesLink = "link_to_view_cookies",
                 ReturnUrl = "original_url"

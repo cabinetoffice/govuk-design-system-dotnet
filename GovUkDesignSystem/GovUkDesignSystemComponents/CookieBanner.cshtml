@@ -17,7 +17,7 @@
 @if (Model.BannerState is not BannerState.Hide)
 {
     <form method="POST" action="@Model.ButtonClickAction">
-        @if (Model.AntiForgeryToken)
+        @if (Model.UseAntiForgeryToken)
         {
             @Html.AntiForgeryToken()
         }
