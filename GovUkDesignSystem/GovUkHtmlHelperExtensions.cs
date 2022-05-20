@@ -538,6 +538,13 @@ namespace GovUkDesignSystem
             return await htmlHelper.PartialAsync("/GovUkDesignSystemComponents/TextInput.cshtml", textInputViewModel);
         }
 
+        public static async Task<IHtmlContent> GovUkWarningText(
+            this IHtmlHelper htmlHelper,
+            WarningTextViewModel warningTextViewModel)
+        {
+            return await htmlHelper.PartialAsync("/GovUkDesignSystemComponents/WarningText.cshtml", warningTextViewModel);
+        }
+
         public static async Task<IHtmlContent> GovUkTextInputFor<TModel, TProperty>(
             this IHtmlHelper<TModel> htmlHelper,
             Expression<Func<TModel, TProperty>> propertyExpression,
