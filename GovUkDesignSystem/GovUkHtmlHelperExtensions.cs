@@ -153,6 +153,13 @@ namespace GovUkDesignSystem
         {
             return await htmlHelper.PartialAsync("/GovUkDesignSystemComponents/CheckboxItem.cshtml", checkboxItemViewModel);
         }
+        
+        public static async Task<IHtmlContent> GovUkCookieBanner(
+            this IHtmlHelper htmlHelper,
+            CookieBannerViewModel cookieBannerViewModel)
+        {
+            return await htmlHelper.PartialAsync("/GovUkDesignSystemComponents/CookieBanner.cshtml", cookieBannerViewModel);
+        }
 
         public static async Task<IHtmlContent> GovUkDateInput(
             this IHtmlHelper htmlHelper,
@@ -332,6 +339,13 @@ namespace GovUkDesignSystem
             PhaseBannerViewModel phaseBannerViewModel)
         {
             return await htmlHelper.PartialAsync("/GovUkDesignSystemComponents/PhaseBanner.cshtml", phaseBannerViewModel);
+        }
+        
+        public static async Task<IHtmlContent> GovUkRadios(
+            this IHtmlHelper htmlHelper,
+            RadiosViewModel radiosViewModel)
+        {
+            return await htmlHelper.PartialAsync("/GovUkDesignSystemComponents/Radios.cshtml", radiosViewModel);
         }
 
         public static async Task<IHtmlContent> GovUkRadiosFor<TModel, TEnum>(
@@ -524,6 +538,13 @@ namespace GovUkDesignSystem
             return await htmlHelper.PartialAsync("/GovUkDesignSystemComponents/TextInput.cshtml", textInputViewModel);
         }
 
+        public static async Task<IHtmlContent> GovUkWarningText(
+            this IHtmlHelper htmlHelper,
+            WarningTextViewModel warningTextViewModel)
+        {
+            return await htmlHelper.PartialAsync("/GovUkDesignSystemComponents/WarningText.cshtml", warningTextViewModel);
+        }
+
         public static async Task<IHtmlContent> GovUkTextInputFor<TModel, TProperty>(
             this IHtmlHelper<TModel> htmlHelper,
             Expression<Func<TModel, TProperty>> propertyExpression,
@@ -532,6 +553,8 @@ namespace GovUkDesignSystem
             FormGroupViewModel formGroupOptions = null,
             string classes = null,
             TextInputAppendixViewModel textInputAppendix = null,
+            string autocomplete = null,
+            string placeholder = null,
             string pattern = null,
             string idPrefix = null)
             where TModel : class
@@ -544,6 +567,8 @@ namespace GovUkDesignSystem
                 formGroupOptions,
                 classes,
                 textInputAppendix,
+                autocomplete,
+                placeholder,
                 pattern,
                 idPrefix);
         }

@@ -143,3 +143,32 @@ public IActionResult ActionName(MyViewModel viewModel)
     }
 }
 ```
+
+## Packaging
+
+Currently this project is not published on Nuget.
+
+To manually create a Nuget package from the code:
+- Ensure you have the `dotnet` cli tool installed (if `dotnet --version` works then you should be fine, otherwise in stall the .NET Core SDK from https://www.microsoft.com/net/download/)
+- Change directory to GovUkDesignSystem
+- Run `dotnet pack -p:PackageVersion=<your version here> -c Release -o .`
+
+## Development
+
+### Pre-requisites
+* .Net 3.1 (https://dotnet.microsoft.com/en-us/download/dotnet/3.1)
+* Winmerge (https://winmerge.org/)
+
+### Project structure
+
+The project contains 3 general folders:
+
+* GovUkDesignSystem: Where all features such as components and attributes are located
+* GovUkDesignSystem.UnitTests: Where tests regarding functionality should be added
+* GovUkDesignSystem.SnapshotTests: Where tests regarding how HTML components are rendered should be added
+
+### Snapshot tests
+
+We use Approval tests (https://approvaltests.com/) to ensure HTML components are rendered properly.
+
+After writing a test and running it, a Winmerge window will open with the test result on the left, and the expected value on the right. Edit the file to the right to represent what the test outcome should be (in the case of newly added components, for example, copying the contents of the left file) and save the changes.
