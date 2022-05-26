@@ -33,10 +33,10 @@ namespace GovUkDesignSystem.SnapshotTests.GovUkDesignSystemComponents
         public async Task Render_Html()
         {
             // Arrange
-
             var viewModel = DefaultWarningTextViewModel();
             viewModel.Text = null;
             viewModel.Html = o => "html";
+            
             // Act & Assert
             await VerifyPartial("WarningText", viewModel);
         }
