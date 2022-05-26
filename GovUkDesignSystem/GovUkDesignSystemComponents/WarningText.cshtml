@@ -1,8 +1,10 @@
-﻿@model GovUkDesignSystem.GovUkDesignSystemComponents.WarningTextViewModel
-<div class="govuk-warning-text">
+﻿@using GovUkDesignSystem.Helpers
+@model GovUkDesignSystem.GovUkDesignSystemComponents.WarningTextViewModel
+<div class="govuk-warning-text @( Model.Classes)"
+     @( Html.Raw(Model.Attributes.ToTagAttributes()))>
     <span class="govuk-warning-text__icon" aria-hidden="true">!</span>
     <strong class="govuk-warning-text__text">
         <span class="govuk-warning-text__assistive">@Model.IconFallbackText</span>
-        @Model.Text
+        @{ await Html.RenderPartialAsync("/GovUkDesignSystemComponents/SubComponents/HtmlText.cshtml", Model); }
     </strong>
 </div>
