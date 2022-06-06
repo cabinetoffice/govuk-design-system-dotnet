@@ -1,4 +1,12 @@
-﻿@model GovUkDesignSystem.GovUkDesignSystemComponents.CookieBannerViewModel
+﻿@using GovUkDesignSystem.Helpers
+@model GovUkDesignSystem.GovUkDesignSystemComponents.CookieBannerViewModel
 
-@{// TODO
-}
+<div class="govuk-cookie-banner @Model.Classes" data-nosnippet role="region" aria-label="@(Model.AriaLabel ?? "CookieBanner")"
+     @(Model.Hidden ? "hidden" : "")
+     @Html.Raw(Model.Attributes.ToTagAttributes())>
+    
+    @foreach (var messageViewModel in Model.Messages)
+    {
+        await Html.RenderPartialAsync("/GovUkDesignSystemComponents/SubComponents/CookieBannerMessage.cshtml", messageViewModel);
+    }
+</div>
