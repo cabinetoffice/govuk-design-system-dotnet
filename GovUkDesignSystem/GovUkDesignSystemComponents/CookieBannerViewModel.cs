@@ -49,7 +49,7 @@ public class CookieBannerMessageViewModel : IHtmlText
     ///     The heading HTML to use within the message. You can use any string with this option.
     ///     If you set headingHtml, headingText is ignored. If you are not passing HTML, use headingText.
     /// </summary>
-    public string HeadingHtml { get; set; }
+    public Func<object, object> HeadingHtml { get; set; }
     
     /// <summary>
     /// 	<b>Required</b>. The text for the main content within the message. You can use any string with this option.
