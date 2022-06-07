@@ -1,0 +1,35 @@
+﻿@using GovUkDesignSystem
+@using GovUkDesignSystem.GovUkDesignSystemComponents
+@using GovUkDesignSystem.Helpers
+@model GovUkDesignSystem.GovUkDesignSystemComponents.SubComponents.CookieBannerMessageActionViewModel
+
+@if (Model.Href is not null)
+{
+    if (Model.Type is "button")
+    {
+        @(await Html.GovUkButton(new ButtonViewModel
+        {
+            Text = Model.Text,
+            Type = Model.Type,
+            Classes = Model.Classes,
+            Href = Model.Href,
+            Attributes = Model.Attributes
+        }))
+    }
+    else
+    {
+        <a class="govuk-link @Model.Classes" href=@Model.Href @Model.Attributes.ToTagAttributes()>@Model.Text</a>
+    }  
+}
+else
+{
+    @(await Html.GovUkButton(new ButtonViewModel
+    {
+        Text = Model.Text,
+        Type = Model.Type,
+        Classes = Model.Classes,
+        Name = Model.Name,
+        Value = Model.Value,
+        Attributes = Model.Attributes
+    }))
+}

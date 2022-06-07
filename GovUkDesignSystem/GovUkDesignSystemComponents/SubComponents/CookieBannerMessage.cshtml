@@ -1,0 +1,34 @@
+﻿@using GovUkDesignSystem.GovUkDesignSystemComponents.SubComponents
+@using GovUkDesignSystem.Helpers
+@model GovUkDesignSystem.GovUkDesignSystemComponents.SubComponents.CookieBannerMessageViewModel
+
+<div class="govuk-cookie-banner__message govuk-width-container @Model.Classes"
+     @(Model.Role is not null ? $"role=\"{Model.Role}\"" : "")
+     @Html.Raw(Model.Attributes.ToTagAttributes())
+     @(Model.Hidden ? "hidden" : "")>
+     
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
+            @if (Model.HeadingHtml is not null || Model.HeadingText is not null)
+            {
+                <h2 class="govuk-cookie-banner__heading govuk-heading-m">
+                    @{ await Html.RenderPartialAsync("/GovUkDesignSystemComponents/SubComponents/HtmlText.cshtml", new HtmlText(Model.HeadingHtml, Model.HeadingText)); }
+                </h2>
+            }
+            
+            <div class="govuk-cookie-banner__content">
+                @{ await Html.RenderPartialAsync("/GovUkDesignSystemComponents/SubComponents/HtmlText.cshtml", Model); }
+            </div>
+            
+            @if (Model.Actions is not null)
+            {
+                <div class="govuk-button-group">
+                    @foreach (var actionViewModel in Model.Actions)
+                    {
+                        await Html.RenderPartialAsync("/GovUkDesignSystemComponents/SubComponents/CookieBannerMessageAction.cshtml", actionViewModel);
+                    }
+                </div>
+            }
+        </div>
+    </div>
+</div>

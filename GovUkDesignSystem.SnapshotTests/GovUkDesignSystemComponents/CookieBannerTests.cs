@@ -1,5 +1,7 @@
-﻿using System.Threading.Tasks;
+﻿using System.Collections.Generic;
+using System.Threading.Tasks;
 using GovUkDesignSystem.GovUkDesignSystemComponents;
+using GovUkDesignSystem.GovUkDesignSystemComponents.SubComponents;
 using GovUkDesignSystem.SnapshotTests.Helpers;
 using Xunit;
 
@@ -11,12 +13,28 @@ namespace GovUkDesignSystem.SnapshotTests.GovUkDesignSystemComponents
         {
             return new CookieBannerViewModel
             {
-                BannerState = BannerState.ShowBanner,
-                CookieType = CookieType.Analytics,
-                UseAntiForgeryToken = false,
-                ButtonClickAction = "link_after_accept_or_reject",
-                ViewCookiesLink = "link_to_view_cookies",
-                ReturnUrl = "original_url"
+                AriaLabel = "Cookies on unnamed service",
+                Classes = "banner-classes",
+                Messages = new List<CookieBannerMessageViewModel>
+                {
+                    new CookieBannerMessageViewModel
+                    {
+                        Actions = new List<CookieBannerMessageActionViewModel>
+                        {
+                            new CookieBannerMessageActionViewModel
+                            {
+                                Classes = "action-classes",
+                                Href = "#",
+                                Text = "Button text",
+                                Type = "button"
+                            }
+                        },
+                        Classes = "message-classes",
+                        HeadingText = "Heading text",
+                        Role = "Banner",
+                        Text = "Message text"
+                    }
+                }
             };
         }
 
@@ -25,50 +43,6 @@ namespace GovUkDesignSystem.SnapshotTests.GovUkDesignSystemComponents
         {
             // Act & Assert
             await VerifyPartial("CookieBanner", DefaultCookieBannerViewModel());
-        }
-        
-        [Fact]
-        public async Task Render_AdditionalCookies()
-        {
-            // Arrange
-            var viewModel = DefaultCookieBannerViewModel();
-            viewModel.CookieType = CookieType.Additional;
-            
-            // Act & Assert
-            await VerifyPartial("CookieBanner", viewModel);
-        }
-        
-        [Fact]
-        public async Task Render_AcceptedBanner()
-        {
-            // Arrange
-            var viewModel = DefaultCookieBannerViewModel();
-            viewModel.BannerState = BannerState.ShowAccepted;
-            
-            // Act & Assert
-            await VerifyPartial("CookieBanner", viewModel);
-        }
-        
-        [Fact]
-        public async Task Render_RejectedBanner()
-        {
-            // Arrange
-            var viewModel = DefaultCookieBannerViewModel();
-            viewModel.BannerState = BannerState.ShowRejected;
-            
-            // Act & Assert
-            await VerifyPartial("CookieBanner", viewModel);
-        }
-        
-        [Fact]
-        public async Task Render_HiddenBanner()
-        {
-            // Arrange
-            var viewModel = DefaultCookieBannerViewModel();
-            viewModel.BannerState = BannerState.Hide;
-            
-            // Act & Assert
-            await VerifyPartial("CookieBanner", viewModel);
         }
     }
 }
