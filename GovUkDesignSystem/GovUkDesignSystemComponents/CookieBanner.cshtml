@@ -1,7 +1,7 @@
 ﻿@using GovUkDesignSystem.Helpers
 @model GovUkDesignSystem.GovUkDesignSystemComponents.CookieBannerViewModel
 
-<div class="govuk-cookie-banner @Model.Classes" data-nosnippet role="region" aria-label="@(Model.AriaLabel ?? "CookieBanner")"
+<div class="govuk-cookie-banner @Model.Classes" data-nosnippet role="region" aria-label="@(Model.AriaLabel ?? "Cookie banner")"
      @(Model.Hidden ? "hidden" : "")
      @Html.Raw(Model.Attributes.ToTagAttributes())>
     
