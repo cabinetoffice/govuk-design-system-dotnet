@@ -44,7 +44,7 @@
                     <nav aria-label="Menu" class="govuk-header__navigation">
                         <button type="button" class="govuk-header__menu-button govuk-js-header-toggle" aria-controls="navigation" aria-label="Show or hide menu">Menu</button>
 
-                        <ul id="navigation" class="govuk-header__navigation-list">
+                        <ul id="navigation" class="govuk-header__navigation-list @(Model.NavigationClasses ?? "")">
                             @foreach (HeaderNavigationViewModel navigationItem in Model.Navigation)
                             {
                                 @if (!string.IsNullOrEmpty(navigationItem.Href) && !string.IsNullOrEmpty(navigationItem.Text))
