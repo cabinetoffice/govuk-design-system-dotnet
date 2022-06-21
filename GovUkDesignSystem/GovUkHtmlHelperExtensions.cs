@@ -327,6 +327,14 @@ namespace GovUkDesignSystem
             return await htmlHelper.PartialAsync("/GovUkDesignSystemComponents/Legend.cshtml", legendViewModel);
         }
 
+        public static async Task<IHtmlContent> GovUkNotificationBanner(
+            this IHtmlHelper htmlHelper,
+            NotificationBannerViewModel notificationBannerViewModel)
+        {
+            return await htmlHelper.PartialAsync("/GovUkDesignSystemComponents/NotificationBanner.cshtml",
+                notificationBannerViewModel);
+        }
+
         public static async Task<IHtmlContent> GovUkPanel(
             this IHtmlHelper htmlHelper,
             PanelViewModel panelViewModel)
