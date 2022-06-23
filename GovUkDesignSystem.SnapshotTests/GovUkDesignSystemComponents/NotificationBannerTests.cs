@@ -35,12 +35,14 @@ namespace GovUkDesignSystem.SnapshotTests.GovUkDesignSystemComponents
         [Fact]
         public async Task Render_WithHtml()
         {
+            // Arrange
             var viewModel = DefaultNotificationBannerViewModel();
             viewModel.Text = null;
             viewModel.Html = o => "html text";
             viewModel.TitleText = null;
             viewModel.TitleHtml = o => "html title";
             viewModel.Role = "region";
+            
             // Act & Assert
             await VerifyPartial("NotificationBanner", viewModel);
         }
