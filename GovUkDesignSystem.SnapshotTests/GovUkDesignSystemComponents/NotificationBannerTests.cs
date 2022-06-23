@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using GovUkDesignSystem.GovUkDesignSystemComponents;
+using GovUkDesignSystem.GovUkDesignSystemComponents.Enums;
 using GovUkDesignSystem.GovUkDesignSystemComponents.SubComponents;
 using GovUkDesignSystem.SnapshotTests.Helpers;
 using Xunit;
@@ -16,7 +17,7 @@ namespace GovUkDesignSystem.SnapshotTests.GovUkDesignSystemComponents
             {
                 Text = "Banner text",
                 TitleText = "Title text",
-                TitleHeadingLevel = "3",
+                TitleHeadingLevel = HeadingLevel.h3,
                 Type = "success",
                 TitleId = "title-id",
                 DisableAutoFocus = true,
