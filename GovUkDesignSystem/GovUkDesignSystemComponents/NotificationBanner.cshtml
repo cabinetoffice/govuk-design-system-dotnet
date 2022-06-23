@@ -17,7 +17,7 @@
      role="@role"
      aria-labelledby="@(Model.TitleId ?? "govuk-notification-banner-title")"
      data-module="govuk-notification-banner"
-     @(Model.DisableAutoFocus ? "data-disable-auto-focus=\"true\"" : "")
+     @(Model.DisableAutoFocus ? "data-disable-auto-focus=true" : "")
      @Html.Raw(Model.Attributes.ToTagAttributes())>
     <div class="govuk-notification-banner__header">
         <@titleHeading class="govuk-notification-banner__title" id="@(Model.TitleId ?? "govuk-notification-banner-title")">
