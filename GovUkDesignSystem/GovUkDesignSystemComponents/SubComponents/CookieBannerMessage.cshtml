@@ -3,7 +3,7 @@
 @model GovUkDesignSystem.GovUkDesignSystemComponents.SubComponents.CookieBannerMessageViewModel
 
 <div class="govuk-cookie-banner__message govuk-width-container @Model.Classes"
-     @(Model.Role is not null ? $"role=\"{Model.Role}\"" : "")
+     @(Model.Role is not null ? $"role={Model.Role}" : "")
      @Html.Raw(Model.Attributes.ToTagAttributes())
      @(Model.Hidden ? "hidden" : "")>
      

@@ -1,0 +1,45 @@
+﻿@using GovUkDesignSystem.GovUkDesignSystemComponents.SubComponents
+@using GovUkDesignSystem.Helpers
+@model GovUkDesignSystem.GovUkDesignSystemComponents.NotificationBannerViewModel
+
+@{
+    var successBanner = Model.Type.Equals("success");
+    var typeClass = "";
+    if (successBanner)
+    {
+        typeClass = $"govuk-notification-banner--{Model.Type}";
+    }
+    var role = Model.Role ?? (successBanner ? "alert" : "region");
+    var titleHeading = Model.TitleHeadingLevel.ToString() ?? "h2";
+}
+
+<div class="govuk-notification-banner @typeClass @Model.Classes"
+     role="@role"
+     aria-labelledby="@(Model.TitleId ?? "govuk-notification-banner-title")"
+     data-module="govuk-notification-banner"
+     @(Model.DisableAutoFocus ? "data-disable-auto-focus=true" : "")
+     @Html.Raw(Model.Attributes.ToTagAttributes())>
+    <div class="govuk-notification-banner__header">
+        <@titleHeading class="govuk-notification-banner__title" id="@(Model.TitleId ?? "govuk-notification-banner-title")">
+            @{
+                if (Model.TitleHtml is not null || Model.TitleText is not null)
+                {
+                    await Html.RenderPartialAsync("/GovUkDesignSystemComponents/SubComponents/HtmlText.cshtml", 
+                        new HtmlText(Model.TitleHtml, Model.TitleText));
+                }
+                else
+                {
+                    <text>
+                        @(successBanner ? "Success" : "Important")
+                    </text>
+                }
+            }
+        </@titleHeading>
+    </div>
+    <div class="govuk-notification-banner__content">
+        @{
+            await Html.RenderPartialAsync("/GovUkDesignSystemComponents/SubComponents/HtmlText.cshtml", Model.Html is not null
+                ? Model
+                : new HtmlText(@<p class="govuk-notification-banner__heading">@Model.Text</p>, null));}
+    </div>
+</div>
