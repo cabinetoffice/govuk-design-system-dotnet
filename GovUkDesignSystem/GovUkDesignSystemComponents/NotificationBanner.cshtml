@@ -10,7 +10,7 @@
         typeClass = $"govuk-notification-banner--{Model.Type}";
     }
     var role = Model.Role ?? (successBanner ? "alert" : "region");
-    var titleHeading = "h" + (Model.TitleHeadingLevel ?? "2");
+    var titleHeading = Model.TitleHeadingLevel.ToString() ?? "h2";
 }
 
 <div class="govuk-notification-banner @typeClass @Model.Classes"

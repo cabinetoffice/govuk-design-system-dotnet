@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using GovUkDesignSystem.GovUkDesignSystemComponents.Enums;
 using GovUkDesignSystem.GovUkDesignSystemComponents.SubComponents;
 
 namespace GovUkDesignSystem.GovUkDesignSystemComponents;
@@ -53,7 +54,7 @@ public class NotificationBannerViewModel: IHtmlText
     /// Sets heading level for the title only. You can only use values between 1 and 6 with this option.
     /// The default is 2.
     /// </summary>
-    public string TitleHeadingLevel { get; set; }
+    public HeadingLevel? TitleHeadingLevel { get; set; }
     
     /// <summary>
     /// The type of notification to render. You can use only the "success" or null values with this option.
