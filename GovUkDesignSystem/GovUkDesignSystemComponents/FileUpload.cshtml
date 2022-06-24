@@ -23,8 +23,8 @@
         }
     }
     <input class="govuk-file-upload  @(Model.Classes) @(Model.ErrorMessage != null ? "govuk-file-upload--error" : "")"
-           id=@(Model.Id)
-           name=@(Model.Name)
+           id="@(Model.Id)"
+           name="@(Model.Name)"
            type="file"
            aria-describedby="@(describedBy?.Trim())"
            @(Html.Raw(Model.Attributes.ToTagAttributes()))>
