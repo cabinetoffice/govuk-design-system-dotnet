@@ -1,15 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using GovUkDesignSystem.GovUkDesignSystemComponents;
 using GovUkDesignSystem.GovUkDesignSystemComponents.Enums;
-using GovUkDesignSystem.GovUkDesignSystemComponents.SubComponents;
 using GovUkDesignSystem.SnapshotTests.Helpers;
 using Xunit;
 
 namespace GovUkDesignSystem.SnapshotTests.GovUkDesignSystemComponents
 {
-    public class CNotificationBannerTests : SnapshotTestBase
+    public class NotificationBannerTests : SnapshotTestBase
     {
         private NotificationBannerViewModel DefaultNotificationBannerViewModel()
         {
