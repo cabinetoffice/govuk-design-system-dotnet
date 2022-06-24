@@ -37,7 +37,7 @@
                     }
                 }
                 <div class="@( Model.StyleNamePrefix) @( Model.Classes) @(isConditional ? $"{Model.StyleNamePrefix}--conditional" : "")" 
-                     @(isConditional ? $"data-module={Model.StyleNamePrefix}" : "")
+                     @{ if (isConditional) { <text>data-module="@Model.StyleNamePrefix" </text> }}
                      @(Html.Raw(Model.Attributes.ToTagAttributes()))>
                     @for (var index = 0; index < Model.Items.Count; index++)
                     {
