@@ -22,8 +22,8 @@
            value="@(Model.Value)"
            @(Model.Checked ? "checked" : "")
            @(Model.Disabled ? "disabled" : "")
-           data-aria-controls="@conditionalId"
-           aria-describedby="@hintId"
+           @{ if (!String.IsNullOrEmpty(conditionalId)) { <text>data-aria-controls="@conditionalId" </text> } }
+           @{ if (!String.IsNullOrEmpty(hintId)) { <text>aria-describedby="@hintId" </text> } }
            @(Html.Raw(Model.Attributes.ToTagAttributes()))>
 
     @{
