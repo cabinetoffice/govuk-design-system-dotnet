@@ -9,7 +9,7 @@ using Xunit;
 
 namespace GovUkDesignSystem.SnapshotTests.GovUkDesignSystemComponents
 {
-    public class CNotificationBannerTests : SnapshotTestBase
+    public class NotificationBannerTests : SnapshotTestBase
     {
         private NotificationBannerViewModel DefaultNotificationBannerViewModel()
         {
