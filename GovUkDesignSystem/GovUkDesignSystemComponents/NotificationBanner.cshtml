@@ -3,7 +3,7 @@
 @model GovUkDesignSystem.GovUkDesignSystemComponents.NotificationBannerViewModel
 
 @{
-    var successBanner = Model.Type.Equals("success");
+    var successBanner = Model.Type == "success";
     var typeClass = "";
     if (successBanner)
     {
