@@ -563,6 +563,8 @@ namespace GovUkDesignSystem
             TextInputAppendixViewModel textInputAppendix = null,
             string autocomplete = null,
             string placeholder = null,
+            string type = null,
+            bool spellcheck = false,
             string pattern = null,
             string idPrefix = null)
             where TModel : class
@@ -577,6 +579,8 @@ namespace GovUkDesignSystem
                 textInputAppendix,
                 autocomplete,
                 placeholder,
+                type,
+                spellcheck,
                 pattern,
                 idPrefix);
         }

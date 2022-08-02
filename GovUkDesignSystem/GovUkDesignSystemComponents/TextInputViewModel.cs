@@ -72,6 +72,11 @@ namespace GovUkDesignSystem.GovUkDesignSystemComponents
         ///     value.
         /// </summary>
         public string Pattern { get; set; }
+        
+        /// <summary>
+        /// 	Optional field to enable or disable the spellcheck attribute on the input.
+        /// </summary>
+        public bool Spellcheck { get; set; }
 
         /// <summary>
         ///     Classes to add to the textarea.
