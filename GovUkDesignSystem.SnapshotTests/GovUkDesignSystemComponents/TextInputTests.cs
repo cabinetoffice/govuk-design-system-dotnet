@@ -25,6 +25,7 @@ namespace GovUkDesignSystem.SnapshotTests.GovUkDesignSystemComponents
                 Autocomplete = "test autocomplete",
                 Classes = "test-css-class",
                 Pattern = "test-pattern",
+                Spellcheck = true,
                 Attributes = new Dictionary<string, string> { { "attr-name", "attr-value" } },
                 TextInputAppendix = new TextInputAppendixViewModel { Text = "text-appendix" }
             };

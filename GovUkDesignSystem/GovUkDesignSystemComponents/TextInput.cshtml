@@ -30,6 +30,7 @@
            aria-describedby="@(describedBy?.Trim())"
            autocomplete="@(Model.Autocomplete)"
            placeholder="@(Model.Placeholder)"
+           spellcheck="@(Model.Spellcheck ? "true" : "false")"
            pattern="@(Model.Pattern)"
            inputmode="@(Model.InputMode)"
            @(Html.Raw(Model.Attributes.ToTagAttributes()))/>

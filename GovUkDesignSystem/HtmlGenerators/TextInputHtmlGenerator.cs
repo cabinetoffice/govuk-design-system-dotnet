@@ -20,6 +20,8 @@ namespace GovUkDesignSystem.HtmlGenerators
             TextInputAppendixViewModel textInputAppendix = null,
             string autocomplete = null,
             string placeholder = null,
+            string type = null,
+            bool spellcheck = false,
             string pattern = null,
             string idPrefix = null
         )
@@ -41,6 +43,7 @@ namespace GovUkDesignSystem.HtmlGenerators
             {
                 Id = propertyId,
                 Name = propertyName,
+                Type = type,
                 Label = labelOptions,
                 Hint = hintOptions,
                 FormGroup = formGroupOptions,
@@ -48,6 +51,7 @@ namespace GovUkDesignSystem.HtmlGenerators
                 TextInputAppendix = textInputAppendix,
                 Autocomplete = autocomplete,
                 Placeholder = placeholder,
+                Spellcheck = spellcheck,
                 Value = inputValue,
                 Pattern = pattern
             };
