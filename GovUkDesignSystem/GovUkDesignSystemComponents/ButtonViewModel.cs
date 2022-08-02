@@ -49,6 +49,12 @@ namespace GovUkDesignSystem.GovUkDesignSystemComponents
         public bool PreventDoubleClick { get; set; }
 
         /// <summary>
+        ///     If PreventDoubleClick is set, this indicates how many seconds before two consecutive clicks are treated
+        ///     as different clicks.
+        /// </summary>
+        public int PreventDoubleClickTimeout { get; set; }
+        
+        /// <summary>
         ///     Use for the main call to action on your service's start page.
         /// </summary>
         public bool IsStartButton { get; set; }

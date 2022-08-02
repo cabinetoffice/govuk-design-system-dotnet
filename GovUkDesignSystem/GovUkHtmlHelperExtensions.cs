@@ -154,6 +154,26 @@ namespace GovUkDesignSystem
             return await htmlHelper.PartialAsync("/GovUkDesignSystemComponents/CheckboxItem.cshtml", checkboxItemViewModel);
         }
         
+        public static IHtmlContent GovUkCheckboxItemFor<TModel>(
+            this IHtmlHelper<TModel> htmlHelper,
+            Expression<Func<TModel, bool>> propertyLambdaExpression,
+            LabelViewModel labelOptions = null,
+            HintViewModel hintOptions = null,
+            Conditional conditional = null,
+            bool disabled = false,
+            string onChange = null)
+            where TModel : class
+        {
+            return CheckboxItemHtmlGenerator.GenerateHtml(
+                htmlHelper,
+                propertyLambdaExpression,
+                labelOptions,
+                hintOptions,
+                conditional,
+                disabled,
+                onChange);
+        }
+        
         public static async Task<IHtmlContent> GovUkCookieBanner(
             this IHtmlHelper htmlHelper,
             CookieBannerViewModel cookieBannerViewModel)
