@@ -48,6 +48,7 @@
                 @(Model.Disabled ? "disabled" : "")
                 aria-disabled="@(Model.Disabled ? "true" : "false")"
                 data-prevent-double-click="@(Model.PreventDoubleClick ? "true" : "false")"
+                data-prevent-double-click-timeout="@(Model.PreventDoubleClickTimeout)"
                 @(Html.Raw(Model.Attributes.ToTagAttributes()))>
             @{ await Html.RenderPartialAsync("/GovUkDesignSystemComponents/SubComponents/HtmlText.cshtml", Model); }
             @{

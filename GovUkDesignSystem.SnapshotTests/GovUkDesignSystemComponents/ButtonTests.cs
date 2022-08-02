@@ -16,6 +16,7 @@ namespace GovUkDesignSystem.SnapshotTests.GovUkDesignSystemComponents
                 Value = "test-value",
                 Disabled = false,
                 PreventDoubleClick = true,
+                PreventDoubleClickTimeout = 2,
                 IsStartButton = false,
                 Classes = "test-css-class",
                 Attributes = new Dictionary<string, string> { { "attr-name", "attr-value" } },
