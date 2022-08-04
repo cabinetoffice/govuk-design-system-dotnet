@@ -8,8 +8,6 @@ namespace GovUkDesignSystem.Attributes.ValidationAttributes
     {
         
         public string Pattern { get; set;  }
-        
-        public string ErrorMessage { get; set; }
 
         public GovUkValidationRegularExpressionAttribute(string pattern, string errorMessage)
         {
