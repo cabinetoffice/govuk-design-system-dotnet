@@ -311,6 +311,19 @@ namespace GovUkDesignSystem
         {
             return await htmlHelper.PartialAsync("/GovUkDesignSystemComponents/SubComponents/HtmlText.cshtml", htmlText);
         }
+        
+        public static async Task<IHtmlContent> GovUkHtmlTextFor<TModel, TProperty>(
+            this IHtmlHelper<TModel> htmlHelper,
+            Expression<Func<TModel, TProperty>> propertyLambdaExpression,
+            string appendix = null)
+            where TModel : class
+        {
+            return await HtmlTextGenerator.GenerateHtml(
+                htmlHelper,
+                propertyLambdaExpression,
+                appendix
+            );
+        }
 
         public static async Task<IHtmlContent> GovUkInsetText(
             this IHtmlHelper htmlHelper,
