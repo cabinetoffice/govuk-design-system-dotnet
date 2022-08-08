@@ -154,7 +154,7 @@ namespace GovUkDesignSystem
             return await htmlHelper.PartialAsync("/GovUkDesignSystemComponents/CheckboxItem.cshtml", checkboxItemViewModel);
         }
         
-        public static IHtmlContent GovUkCheckboxItemFor<TModel>(
+        public static async Task<IHtmlContent> GovUkCheckboxItemFor<TModel>(
             this IHtmlHelper<TModel> htmlHelper,
             Expression<Func<TModel, bool>> propertyLambdaExpression,
             LabelViewModel labelOptions = null,
@@ -164,7 +164,7 @@ namespace GovUkDesignSystem
             string onChange = null)
             where TModel : class
         {
-            return CheckboxItemHtmlGenerator.GenerateHtml(
+            return await CheckboxItemHtmlGenerator.GenerateHtml(
                 htmlHelper,
                 propertyLambdaExpression,
                 labelOptions,

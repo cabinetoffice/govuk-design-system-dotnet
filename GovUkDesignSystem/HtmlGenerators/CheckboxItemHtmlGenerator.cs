@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq.Expressions;
 using System.Reflection;
+using System.Threading.Tasks;
 using GovUkDesignSystem.GovUkDesignSystemComponents;
 using GovUkDesignSystem.Helpers;
 using Microsoft.AspNetCore.Html;
@@ -12,7 +13,7 @@ namespace GovUkDesignSystem.HtmlGenerators
     public class CheckboxItemHtmlGenerator
     {
 
-        public static IHtmlContent GenerateHtml<TModel>(
+        public static async Task<IHtmlContent> GenerateHtml<TModel>(
             IHtmlHelper<TModel> htmlHelper,
             Expression<Func<TModel, bool>> propertyLambdaExpression,
             LabelViewModel labelOptions = null,
@@ -53,7 +54,7 @@ namespace GovUkDesignSystem.HtmlGenerators
                 Attributes = attributesDictionary
             };
 
-            return htmlHelper.Partial("/GovUkDesignSystemComponents/CheckboxItem.cshtml", checkboxItemViewModel);
+            return await htmlHelper.PartialAsync("/GovUkDesignSystemComponents/CheckboxItem.cshtml", checkboxItemViewModel);
         }
 
     }
