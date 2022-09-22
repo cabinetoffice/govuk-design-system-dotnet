@@ -1,0 +1,87 @@
+﻿@using GovUkDesignSystem.Helpers
+@model GovUkDesignSystem.GovUkDesignSystemComponents.PaginationViewModel
+
+@{
+    var blockLevel = Model.Items is null && (Model.Next is not null || Model.Previous is not null);
+}
+
+<nav class="govuk-pagination @Model.Classes @(blockLevel ? "govuk-pagination--block" : "")"
+     role="navigation"
+     aria-label="@(Model.LandmarkLabel ?? "results")"
+     @Html.Raw(Model.Attributes.ToTagAttributes())>
+    @if (Model.Previous?.Href is not null)
+    {
+        <div class="govuk-pagination__prev">
+            <a class="govuk-link govuk-pagination__link"
+               href=@Model.Previous.Href
+               rel="prev"
+               @Html.Raw(Model.Previous.Attributes.ToTagAttributes())>
+                <svg class="govuk-pagination__icon govuk-pagination__icon--prev" xmlns="http://www.w3.org/2000/svg" height="13" width="15" aria-hidden="true" focusable="false" viewBox="0 0 15 13">
+                    <path d="m6.5938-0.0078125-6.7266 6.7266 6.7441 6.4062 1.377-1.449-4.1856-3.9768h12.896v-2h-12.984l4.2931-4.293-1.414-1.414z"></path>
+                </svg>
+                <span class="govuk-pagination__link-title @(blockLevel && Model.Previous.LabelText is null ? "govuk-pagination__link-title--decorated" : "")">
+                    @(Model.Previous.Text ?? "Previous")
+                </span>
+                @if (blockLevel && Model.Previous.LabelText is not null)
+                {
+                    <span class="govuk-visually-hidden">:</span>
+                    <span class="govuk-pagination__link-label">@Model.Previous.LabelText</span>
+                }
+            </a>
+        </div>
+    }
+    
+    @if (Model.Items is not null)
+    {
+        <ul class="govuk-pagination__list">
+            @foreach (var item in Model.Items)
+            {
+                if (item.Ellipsis)
+                {
+                    <li class="govuk-pagination__item govuk-pagination__item--ellipses">&ctdot;</li>
+                } else if (item.Number is not null)
+                {
+                    <li class="govuk-pagination__item @(item.Current ? "govuk-pagination__item--current" : "")">
+                        <a class="govuk-link govuk-pagination__link"
+                           @if (item.Current) {<text>aria-current="page"</text>}
+                           href=@item.Href 
+                           aria-label=@(item.VisuallyHiddenText ?? ("Page " + item.Number))
+                           @Html.Raw(item.Attributes.ToTagAttributes())>@item.Number</a>
+                    </li>
+                }
+            }
+        </ul>
+    }
+    
+    @if (Model.Next?.Href is not null)
+    {
+        Func<object, object> nextArrow = 
+            @<svg class="govuk-pagination__icon govuk-pagination__icon--next" xmlns="http://www.w3.org/2000/svg" height="13" width="15" aria-hidden="true" focusable="false" viewBox="0 0 15 13">
+                <path d="m8.107-0.0078125-1.4136 1.414 4.2926 4.293h-12.986v2h12.896l-4.1855 3.9766 1.377 1.4492 6.7441-6.4062-6.7246-6.7266z"></path>
+            </svg>;
+        
+        <div class="govuk-pagination__next">
+            <a class="govuk-link govuk-pagination__link"
+               href=@Model.Next.Href
+               rel="next"
+               @Html.Raw(Model.Next.Attributes.ToTagAttributes())>
+                @if (blockLevel)
+                {
+                    @nextArrow
+                }
+                <span class="govuk-pagination__link-title @(blockLevel && Model.Next.LabelText is null ? "govuk-pagination__link-title--decorated" : "")">
+                    @(Model.Next.Text ?? "Next")
+                </span>
+                @if (blockLevel && Model.Next.LabelText is not null)
+                {
+                    <span class="govuk-visually-hidden">:</span>
+                    <span class="govuk-pagination__link-label">@Model.Next.LabelText</span>
+                }
+                @if (!blockLevel)
+                {
+                    @nextArrow
+                }
+            </a>
+        </div>
+    }
+</nav>

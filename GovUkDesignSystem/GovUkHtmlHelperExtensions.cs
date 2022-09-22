@@ -368,6 +368,14 @@ namespace GovUkDesignSystem
                 notificationBannerViewModel);
         }
 
+        public static async Task<IHtmlContent> GovUkPagination(
+            this IHtmlHelper htmlHelper,
+            PaginationViewModel paginationViewModel)
+        {
+            return await htmlHelper.PartialAsync("/GovUkDesignSystemComponents/Pagination.cshtml",
+                paginationViewModel);
+        }
+
         public static async Task<IHtmlContent> GovUkPanel(
             this IHtmlHelper htmlHelper,
             PanelViewModel panelViewModel)
