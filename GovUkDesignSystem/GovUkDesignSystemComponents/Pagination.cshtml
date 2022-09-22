@@ -1,4 +1,6 @@
-﻿@using GovUkDesignSystem.Helpers
+﻿@using GovUkDesignSystem
+@using GovUkDesignSystem.GovUkDesignSystemComponents.SubComponents
+@using GovUkDesignSystem.Helpers
 @model GovUkDesignSystem.GovUkDesignSystemComponents.PaginationViewModel
 
 @{
@@ -13,7 +15,7 @@
     {
         <div class="govuk-pagination__prev">
             <a class="govuk-link govuk-pagination__link"
-               href=@Model.Previous.Href
+               href="@Model.Previous.Href"
                rel="prev"
                @Html.Raw(Model.Previous.Attributes.ToTagAttributes())>
                 <svg class="govuk-pagination__icon govuk-pagination__icon--prev" xmlns="http://www.w3.org/2000/svg" height="13" width="15" aria-hidden="true" focusable="false" viewBox="0 0 15 13">
@@ -44,8 +46,8 @@
                     <li class="govuk-pagination__item @(item.Current ? "govuk-pagination__item--current" : "")">
                         <a class="govuk-link govuk-pagination__link"
                            @if (item.Current) {<text>aria-current="page"</text>}
-                           href=@item.Href 
-                           aria-label=@(item.VisuallyHiddenText ?? ("Page " + item.Number))
+                           href="@item.Href"
+                           aria-label="@(item.VisuallyHiddenText ?? ("Page " + item.Number))"
                            @Html.Raw(item.Attributes.ToTagAttributes())>@item.Number</a>
                     </li>
                 }
@@ -55,14 +57,14 @@
     
     @if (Model.Next?.Href is not null)
     {
-        Func<object, object> nextArrow = 
+        var nextArrow = await Html.GovUkHtmlText(new HtmlText(
             @<svg class="govuk-pagination__icon govuk-pagination__icon--next" xmlns="http://www.w3.org/2000/svg" height="13" width="15" aria-hidden="true" focusable="false" viewBox="0 0 15 13">
                 <path d="m8.107-0.0078125-1.4136 1.414 4.2926 4.293h-12.986v2h12.896l-4.1855 3.9766 1.377 1.4492 6.7441-6.4062-6.7246-6.7266z"></path>
-            </svg>;
+            </svg>, null));
         
         <div class="govuk-pagination__next">
             <a class="govuk-link govuk-pagination__link"
-               href=@Model.Next.Href
+               href="@Model.Next.Href"
                rel="next"
                @Html.Raw(Model.Next.Attributes.ToTagAttributes())>
                 @if (blockLevel)
