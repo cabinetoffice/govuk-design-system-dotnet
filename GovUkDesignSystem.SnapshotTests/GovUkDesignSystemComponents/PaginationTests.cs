@@ -12,13 +12,13 @@ namespace GovUkDesignSystem.SnapshotTests.GovUkDesignSystemComponents
         {
             return new PaginationViewModel
             {
-                Previous = new PaginationPreviousViewModel
+                Previous = new PaginationLinkViewModel
                 {
                     Text = "Prev text",
                     LabelText = "Prev label text",
                     Href = "#"
                 }, 
-                Next = new PaginationNextViewModel 
+                Next = new PaginationLinkViewModel 
                 { 
                     Text = "Next text",
                     LabelText = "Next label text",

@@ -12,12 +12,12 @@ public class PaginationViewModel
     /// <summary>
     /// A link to the previous page, if there is a previous page.
     /// </summary>
-    public PaginationPreviousViewModel Previous { get; set; }
+    public PaginationLinkViewModel Previous { get; set; }
     
     /// <summary>
     /// A link to the next page, if there is a next page.
     /// </summary>
-    public PaginationNextViewModel Next { get; set; }
+    public PaginationLinkViewModel Next { get; set; }
     
     /// <summary>
     /// The label for the navigation landmark that wraps the pagination. Defaults to 'results'.
@@ -70,45 +70,21 @@ public class PaginationItemViewModel
     public Dictionary<string, string> Attributes { get; set; }
 }
 
-public class PaginationPreviousViewModel
+public class PaginationLinkViewModel
 {
     /// <summary>
-    /// The link text to the previous page. Defaults to 'Previous page', where 'page' is visually hidden.
+    /// The link text to the previous or next page. Defaults to 'Previous page' or 'Next page', where 'page' is visually hidden.
     /// </summary>
     public string Text { get; set; }
     
     /// <summary>
-    /// The optional label that goes underneath the link to the previous page,
+    /// The optional label that goes underneath the link to the previous or next page,
     /// providing further context for the user about where the link goes.
     /// </summary>
     public string LabelText { get; set; }
     
     /// <summary>
-    /// <b>Required</b>. The previous page's URL.
-    /// </summary>
-    public string Href { get; set; }
-    
-    /// <summary>
-    /// The HTML attributes (for example, data attributes) you want to add to the anchor.
-    /// </summary>
-    public Dictionary<string, string> Attributes { get; set; }
-}
-
-public class PaginationNextViewModel
-{
-    /// <summary>
-    /// The link text to the next page. Defaults to 'Next page', where 'page' is visually hidden.
-    /// </summary>
-    public string Text { get; set; }
-    
-    /// <summary>
-    /// The optional label that goes underneath the link to the next page,
-    /// providing further context for the user about where the link goes.
-    /// </summary>
-    public string LabelText { get; set; }
-    
-    /// <summary>
-    /// <b>Required</b>. The next page's URL.
+    /// <b>Required</b>. The previous or next page's URL.
     /// </summary>
     public string Href { get; set; }
     
