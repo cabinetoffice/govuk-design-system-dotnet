@@ -1,24 +1,18 @@
-﻿@using GovUkDesignSystem.GovUkDesignSystemComponents.SubComponents
-@using GovUkDesignSystem.Helpers
+﻿@using GovUkDesignSystem.Helpers
 @model GovUkDesignSystem.GovUkDesignSystemComponents.LabelViewModel
 
-@{
-    Func<object, object> componentAsHtml =
-        @<text>
-            <label class="govuk-label @( Model.Classes)"
-                   @( Html.Raw(Model.Attributes.ToTagAttributes()))
-                   for="@(Model.For)">
-                @{ await Html.RenderPartialAsync("/GovUkDesignSystemComponents/SubComponents/HtmlText.cshtml", Model); }
-            </label>
-         </text>;
+@if (Model.IsPageHeading)
+{
+    <h1 class="govuk-label-wrapper" indent="2">
+        <label class="govuk-label @(Model.Classes)" @(Html.Raw(Model.Attributes.ToTagAttributes())) for="@(Model.For)">
+            @{ await Html.RenderPartialAsync("/GovUkDesignSystemComponents/SubComponents/HtmlText.cshtml", Model); }
+        </label>
+    </h1>
+}
+else
+{
+    <label class="govuk-label @(Model.Classes)" @(Html.Raw(Model.Attributes.ToTagAttributes())) for="@(Model.For)">
+        @{ await Html.RenderPartialAsync("/GovUkDesignSystemComponents/SubComponents/HtmlText.cshtml", Model); }
+    </label>;
 }
 
-@{ await Html.RenderPartialAsync(
-       "/GovUkDesignSystemComponents/SubComponents/PageHeadingHtml.cshtml",
-       new PageHeadingHtml
-       {
-           ComponentAsHtml = componentAsHtml,
-           IsPageHeading = Model.IsPageHeading
-       }
-    );
-}
