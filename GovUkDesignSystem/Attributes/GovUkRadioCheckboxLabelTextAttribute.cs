@@ -1,4 +1,5 @@
 ﻿using System;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Reflection;
 
@@ -14,8 +15,9 @@ namespace GovUkDesignSystem.Attributes
         public string Text { get; set; }
         
         /// <summary>
-        /// Returns the Text property of any GovUkRadioCheckboxLabelTextAttribute on the enum value
-        /// If no attribute exists returns enumValue.ToString()
+        /// Returns the Text property of any GovUkRadioCheckboxLabelTextAttribute on the enum value.
+        /// If no copy of this attribute exists, instead returns the value of the Display attribute.
+        /// If neither attribute exists returns enumValue.ToString()
         /// </summary>
         /// <param name="enumValue"></param>
         /// <returns></returns>
@@ -25,8 +27,9 @@ namespace GovUkDesignSystem.Attributes
                 .GetMember(enumValue.ToString())
                 .Single()
                 .GetCustomAttribute<GovUkRadioCheckboxLabelTextAttribute>();
+            string displayName = enumValue.GetType().GetMember(enumValue.ToString()).First().GetCustomAttribute<DisplayAttribute>()?.Name;
 
-            return attribute == null ? enumValue.ToString() : attribute.Text;
+            return attribute != null ? attribute.Text : displayName ?? enumValue.ToString();
         }
 
     }
