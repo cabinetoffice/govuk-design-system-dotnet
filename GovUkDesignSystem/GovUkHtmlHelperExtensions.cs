@@ -242,12 +242,12 @@ namespace GovUkDesignSystem
         public static async Task<IHtmlContent> GovUkErrorSummary(
             this IHtmlHelper htmlHelper,
             ModelStateDictionary modelState,
-            string[] optionalOrderOfPropertyNamesInTheView = null)
+            string[] optionalOrderOfPropertyNamesInTheView = null, string errorSummaryTitle = "There is a problem")
         {
             // Give 'optionalOrderOfPropertiesInTheView' a default value (of an empty array)
             var orderOfPropertyNamesInTheView = optionalOrderOfPropertyNamesInTheView ?? new string[0];
 
-            return await ErrorSummaryHtmlGenerator.GenerateHtml(htmlHelper, modelState, orderOfPropertyNamesInTheView);
+            return await ErrorSummaryHtmlGenerator.GenerateHtml(htmlHelper, modelState, orderOfPropertyNamesInTheView, errorSummaryTitle);
         }
 
         public static async Task<IHtmlContent> GovUkFieldset(

@@ -14,7 +14,7 @@ namespace GovUkDesignSystem.HtmlGenerators
         internal static async Task<IHtmlContent> GenerateHtml(
             this IHtmlHelper htmlHelper,
             ModelStateDictionary modelState,
-            string[] orderOfPropertyNamesInTheView,
+            string[] orderOfPropertyNamesInTheView, string errorSummaryTitle,
             string idPrefix = null)
         {
             if (modelState.IsValid)
@@ -38,7 +38,7 @@ namespace GovUkDesignSystem.HtmlGenerators
             {
                 Title = new ErrorSummaryTitle
                 {
-                    Text = "There is a problem"
+                    Text = errorSummaryTitle
                 },
                 Errors = errorSummaryItems
             };
