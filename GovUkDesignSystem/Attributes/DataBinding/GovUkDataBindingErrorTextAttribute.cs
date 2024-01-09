@@ -1,4 +1,7 @@
 ﻿using System;
+using System.Reflection;
+using System.Resources;
+using System.Globalization;
 
 namespace GovUkDesignSystem.Attributes.DataBinding
 {
@@ -8,5 +11,19 @@ namespace GovUkDesignSystem.Attributes.DataBinding
     [AttributeUsage(AttributeTargets.Property, Inherited = true)]
     public abstract class GovUkDataBindingErrorTextAttribute : Attribute
     {
+        private ResourceManager _resourceManager = null;
+        protected Type ResourceType { get; set; }
+        
+        protected string ResourceName { get; set; }
+
+        protected string GetResourceValue(string resourceKey)
+        {
+            if (ResourceType != null && Assembly.GetAssembly(ResourceType) != null)
+            {
+                _resourceManager ??= new ResourceManager(ResourceName, Assembly.GetAssembly(ResourceType));
+            }
+            
+            return _resourceManager.GetString(resourceKey, CultureInfo.CurrentCulture) ?? resourceKey;
+        }
     }
 }
