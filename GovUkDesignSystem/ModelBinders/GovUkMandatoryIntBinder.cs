@@ -21,7 +21,7 @@ namespace GovUkDesignSystem.ModelBinders
                 throw new Exception("When using the GovUkMandatoryIntBinder you must also provide a GovUkDataBindingMandatoryIntErrorTextAttribute attribute and ensure that you register GovUkDataBindingErrorTextProvider in your application's Startup.ConfigureServices method.");
             }
 
-            return BindModelBase(bindingContext, errorTextAttribute.ErrorMessageIfMissing, errorTextAttribute.NameAtStartOfSentence);
+            return BindModelBase(bindingContext, errorTextAttribute.ErrorMessageIfMissing, errorTextAttribute.NameAtStartOfSentence, errorTextAttribute.MustBeNumberErrorMessage, errorTextAttribute.IsWholeNumberErrorMessage);
         }
     }
 }

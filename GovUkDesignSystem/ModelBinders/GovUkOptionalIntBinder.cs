@@ -20,8 +20,8 @@ namespace GovUkDesignSystem.ModelBinders
             {
                 throw new Exception("When using the GovUkOptionalIntBinder you must also provide a GovUkDataBindingOptionalIntErrorTextAttribute attribute and ensure that you register GovUkDataBindingErrorTextProvider in your application's Startup.ConfigureServices method.");
             }
-
-            return BindModelBase(bindingContext, null, errorTextAttribute.NameAtStartOfSentence);
+            
+            return BindModelBase(bindingContext, null, errorTextAttribute.NameAtStartOfSentence, errorTextAttribute.MustBeNumberErrorMessage, errorTextAttribute.IsWholeNumberErrorMessage);
         }
     }
 }

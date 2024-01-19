@@ -13,7 +13,7 @@ namespace GovUkDesignSystem.ModelBinders
         /// <summary>
         /// Try to bind the provided value to the model state. If errorMessageIfMissing is null then treat the property as optional
         /// </summary>
-        public Task BindModelBase(ModelBindingContext bindingContext, string errorMessageIfMissing, string nameAtStartOfSentence)
+        public Task BindModelBase(ModelBindingContext bindingContext, string errorMessageIfMissing, string nameAtStartOfSentence, string mustBeNumberErrorMessage = "")
         {
             var modelName = bindingContext.ModelName;
 
@@ -62,7 +62,15 @@ namespace GovUkDesignSystem.ModelBinders
             // Ensure that the value is a number
             if (!decimal.TryParse(value, out var decimalValue))
             {
-                bindingContext.ModelState.TryAddModelError(modelName, $"{nameAtStartOfSentence} must be a number");
+                if (string.IsNullOrEmpty(mustBeNumberErrorMessage))
+                {
+                    bindingContext.ModelState.TryAddModelError(modelName, $"{nameAtStartOfSentence} must be a number");
+                }
+                else
+                {
+                    bindingContext.ModelState.TryAddModelError(modelName, mustBeNumberErrorMessage);
+                }
+
                 return Task.CompletedTask;
             }
 

@@ -32,6 +32,15 @@ namespace GovUkDesignSystem.GovUkDesignSystemComponents
         /// </summary>
         public Dictionary<string, string> Attributes { get; set; }
 
+        /// <summary>
+        /// HTML override to the text in the license description, to allow for localisation.
+        /// </summary>
+        public FooterLicenseDescriptionViewModel FooterLicenseDescription { get; set; } = null;
+        
+        /// <summary>
+        /// Text override to the copyright text, to allow for localisation.
+        /// </summary>
+        public FooterCopyrightTextViewModel FooterCopyrightText { get; set; }
     }
 
     public class FooterMetaNavigationViewModel : IHtmlText
@@ -105,5 +114,34 @@ namespace GovUkDesignSystem.GovUkDesignSystemComponents
             "This doesn't work yet - The GenderPayGap.WebUI.Classes.TagHelpers.AnchorTagHelper doesn't currently allow arbitrary attributes")]
         public Dictionary<string, string> Attributes { get; set; }
 
+    }
+    
+    /// <summary>
+    /// If either the HTML or Text are specified here, they will override the default English text for the license description
+    /// </summary>
+    public class FooterLicenseDescriptionViewModel: IHtmlText
+    {
+        /// <summary>
+        ///     HTML to add to the license description in the footer
+        ///     Set this using the @&lt;text&gt;&lt;/text&gt; syntax
+        /// </summary>
+        public Func<object, object> Html { get; set; } = null;
+        
+        /// <summary>
+        ///     Text to override the licence description in the footer.
+        ///     If either the 'Html' specified, this option is ignored.
+        /// </summary>
+        public string Text { get; set; }
+    }
+
+    /// <summary>
+    /// If either the HTML or Text are specified here, they will override the default English text for copyright in the footer
+    /// </summary>
+    public class FooterCopyrightTextViewModel
+    {
+        /// <summary>
+        ///     Text to override the copyright text in the footer.
+        /// </summary>
+        public string Text { get; set; }
     }
 }

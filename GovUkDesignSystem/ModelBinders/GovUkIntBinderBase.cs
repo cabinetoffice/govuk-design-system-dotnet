@@ -13,7 +13,7 @@ namespace GovUkDesignSystem.ModelBinders
         /// <summary>
         /// Try to bind the provided value to the model state. If errorMessageIfMissing is null then treat the property as optional
         /// </summary>
-        public Task BindModelBase(ModelBindingContext bindingContext, string errorMessageIfMissing, string nameAtStartOfSentence)
+        public Task BindModelBase(ModelBindingContext bindingContext, string errorMessageIfMissing, string nameAtStartOfSentence, string mustBeNumberErrorMessage = "", string isWholeNumberErrorMessage = "")
         {
             var modelName = bindingContext.ModelName;
 
@@ -62,14 +62,29 @@ namespace GovUkDesignSystem.ModelBinders
             // Ensure that the value is a number
             if (!double.TryParse(value, out _))
             {
-                bindingContext.ModelState.TryAddModelError(modelName, $"{nameAtStartOfSentence} must be a number");
+                if (string.IsNullOrEmpty(mustBeNumberErrorMessage))
+                {
+                    bindingContext.ModelState.TryAddModelError(modelName, $"{nameAtStartOfSentence} must be a number");
+                }
+                else
+                {
+                    bindingContext.ModelState.TryAddModelError(modelName, mustBeNumberErrorMessage);
+                }
                 return Task.CompletedTask;
             }
 
             //Ensure that the value is an integer
             if (!int.TryParse(value, out var intValue))
             {
-                bindingContext.ModelState.TryAddModelError(modelName, $"{nameAtStartOfSentence} must be a whole number");
+                if (string.IsNullOrEmpty(isWholeNumberErrorMessage))
+                {
+                    bindingContext.ModelState.TryAddModelError(modelName, $"{nameAtStartOfSentence} must be a whole number");
+                }
+                else
+                {
+                    bindingContext.ModelState.TryAddModelError(modelName, isWholeNumberErrorMessage);
+                }
+
                 return Task.CompletedTask;
             }
 
