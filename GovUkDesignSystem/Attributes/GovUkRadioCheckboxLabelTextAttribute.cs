@@ -27,7 +27,7 @@ namespace GovUkDesignSystem.Attributes
                 .GetMember(enumValue.ToString())
                 .Single()
                 .GetCustomAttribute<GovUkRadioCheckboxLabelTextAttribute>();
-            string displayName = enumValue.GetType().GetMember(enumValue.ToString()).First().GetCustomAttribute<DisplayAttribute>()?.Name;
+            string displayName = enumValue.GetType().GetMember(enumValue.ToString()).First().GetCustomAttribute<DisplayAttribute>()?.GetDescription();
 
             return attribute != null ? attribute.Text : displayName ?? enumValue.ToString();
         }
